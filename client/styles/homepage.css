@@ -1,0 +1,283 @@
+#nav-bar {
+    background-image: url("../images/background.png");
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.5);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.nav-list {
+    padding: 1rem 3rem;
+    border-radius: var(--radius);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+  }
+  
+  .nav-item {
+    list-style: none;
+    margin-right: 3rem;
+    font-size: 1.3em;
+  }
+  
+  .nav-item a {
+    text-decoration: none;
+    color: white;
+    transition: all 200ms ease-in;
+  }
+  
+  .nav-item a:hover {
+    color: var(--clr-primary-dark);
+  }
+  
+  .nav-item:first-child {
+    margin-right: auto;
+    margin-left: 3rem;
+  }
+  
+  .btn-primary {
+    font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    background: var(--clr-primary);
+    border: none;
+    outline: none;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 200ms ease-in;
+  }
+  
+  .btn-primary:hover {
+    background: var(--clr-primary-hover);
+  }
+
+  #logo {
+      font-size: 2em;
+  }
+
+  #title {
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 5%;
+    font-size: 5em;
+  }
+
+  #learn-more-btn {
+      width: 220px;
+      height: 70px;
+      font-size: 1.2em;
+      border-radius: 50px;
+      background-color: rgba(0,0,0,0.0);
+      border: 3px solid white;
+      color: white;
+  }
+
+  #btn-section {
+      width: 70%;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 3%;
+  }
+
+  body {
+    letter-spacing: 0.6em;
+  }
+
+  #btn-login {
+      width: 180px;
+      height: 55px;
+      border: 3px solid white;
+      border-radius: 50px;
+      background-color: rgba(0,0,0,0.0);
+      font-size: 0.8em;
+  }
+
+  #login-logo {
+      width: 14%;
+      height: auto;
+      margin-right: 1rem;
+  }
+
+  #search-bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 30%;
+      height: 80px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 10%;
+      background-color: white;
+      padding: 10px 15px 15px 10px;
+      border-radius: 50px;
+  }
+
+#search-logo {
+    width: 10%;
+    height: 60%;
+}
+
+#search-img {
+    width: 100%;
+    height: 100%;
+}
+
+#search-input {
+    width: 90%;
+    height: 80%;
+}
+
+#submit-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8%;
+    height: 100%;
+    background-color: #91CB82;
+    border-radius: 50%;
+    border: 1px;
+}
+
+#submit-btn:hover {
+    padding-left: 25px;
+}
+
+#submit-img {
+    width: 50%;
+    height: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#input-field {
+    width: 95%;
+    height: 100%;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+}
+
+/* Explore Section CSS */
+#explore-section {
+    height: 130vh;
+}
+
+.explore-title {
+    width: 35%;
+    height: 50px;
+    margin-top: 3%;
+    margin-left: 3%;
+    font-size: 2em;
+    border-bottom: 2px solid #91CB82;
+}
+
+.inspiration-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+}
+
+.trip-container {
+    padding-bottom:27.08%;
+    width: 25%;
+    height: 500px;
+    background-color: black;
+    border-radius: 50px;
+}
+
+#trip-1 {
+    background-image: url("../images/cancun.png");
+    background-size: cover;
+    background-position: center;
+    border: 0px;
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.3);
+    position: relative;
+}
+
+#trip-2 {
+    background-image: url("../images/vietnam.png");
+    background-size: cover;
+    background-position: center;
+    border: 0px;
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.3);
+    position: relative;
+}
+
+#trip-3 {
+    background-image: url("../images/phillipines.png");
+    background-size: cover;
+    background-position: center;
+    border: 0px;
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.trip-title {
+    width: 80%;
+    margin-left: 5%;
+    margin-top: 60%;
+    color: white;
+    font-size: 3em;
+    text-align: left;
+    letter-spacing: 0.15em;
+}
+
+.trip-description {
+    width: 90%;
+    height: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+    color: white;
+    text-align: left;
+    letter-spacing: 0.15em;
+}
+
+.enter-arrow-img {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+}
+
+.highlight-container {
+    width: 18%;
+    height: 500px;
+}
+
+#hightlight-img {
+    background-image: url("../images/cancun.png");
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 500px;
+    border-radius: 30px 30px 30px 0px;
+}
+
+.highlight-title {
+    width: 100%;
+    margin-top: 3%;
+    font-size: 2em;
+    
+}
+
+.highlight-bio {
+    width: 50%;
+    margin-top: 3%;
+    float: left;
+}
+
+.highlight-date {
+    width: 50%;
+    float: left;
+    margin-top: 3%;
+    text-align: right;
+    font-size: 0.8em;
+    color: #898989;
+}
