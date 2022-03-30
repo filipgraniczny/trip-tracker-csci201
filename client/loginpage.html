@@ -8,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/loginpage.css">
 
     <title>LOGIN/REGISTER</title>
 
@@ -15,10 +16,26 @@
     <script src="https://kit.fontawesome.com/36b78d402d.js" crossorigin="anonymous"></script>
   </head>
   <body>
+
+    <div id="nav-bar">
+      <nav>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a id="logo" href="homepage.html"><strong>T | L</strong></a>
+            </li>
+            <li class="nav-item">
+              <a href="homepage.html"><strong>HOME</strong></a>
+            </li>
+            <li class="nav-item">
+              <a href="explorepage.html"><strong>EXPLORE</strong></a>
+            </li>
+          </ul>
+      </nav>
+
       <div class="container">
           <div class="row">
               <div class="col">
-                <h1>LOGIN</h1>
+                <h1 class="login-register-labels">LOGIN</h1>
                 <form id="login-form">
                     <div class="form-group">
                         <label for="login-email-input">EMAIL ADDRESS</label>
@@ -28,11 +45,17 @@
                         <label for="login-pwd-input">PASSWORD</label>
                         <input type="password" class="form-control" id="login-pwd-input">
                       </div>
-                      <button type="submit" class="btn btn-outline-info"><i class="fa-solid fa-user"></i> LOG IN</button>
-                </form>
+                      <!-- <button type="submit" class="btn btn-outline-info"><i class="fa-solid fa-user"></i> LOG IN</button> -->
+                      <button id="btn-login">
+                        <a href="#">
+                            <img id="login-logo" src="./images/user-icon.svg" alt="logo">
+                            <strong>LOG IN</strong>
+                        </a>
+                    </button>
+                    </form>
               </div>
               <div class="col">
-                <h1>REGISTER</h1>
+                <h1 class="login-register-labels">REGISTER</h1>
                 <form id="register-form">
                     <div class="form-group">
                         <label for="register-name-input">NAME</label>
@@ -50,8 +73,14 @@
                         <label for="register-conf-pwd-input">CONFIRM PASSWORD</label>
                         <input type="password" class="form-control" id="register-conf-pwd-input">
                     </div>
-                    <button type="submit" class="btn btn-outline-info"><i class="fa-solid fa-user-plus"></i> REGISTER</button>
-                </form>
+                    <!-- <button type="submit" class="btn btn-outline-info"><i class="fa-solid fa-user-plus"></i> REGISTER</button> -->
+                    <button id="btn-register">
+                      <a href="#">
+                          <img id="register-logo" src="./images/user-icon.svg" alt="logo">
+                          <strong>REGISTER</strong>
+                      </a>
+                  </button>
+                  </form>
               </div>
           </div>
       </div>
