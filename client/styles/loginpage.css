@@ -81,3 +81,12 @@ label {
     color: white;
     letter-spacing: 0.1em;
 }
+
+.buttons {
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+  color: white;
+}
