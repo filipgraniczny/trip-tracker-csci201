@@ -9,7 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./styles/loginpage.css">
+    <link rel="stylesheet" href="./styles/addtrip.css">
 
     <title>ADD TRIP</title>
 
@@ -17,7 +17,63 @@
     <script src="https://kit.fontawesome.com/36b78d402d.js" crossorigin="anonymous"></script>
   </head>
   <body>
+    <h1 id="addtrip-title">ADD TRIP</h1>
 
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="trip-title">TITLE OF TRIP*</label>
+          <input type="text" class="form-control" id="trip-title" placeholder="Title" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="location">LOCATION*</label>
+          <input type="text" class="form-control" id="location" placeholder="Location">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="start-date">START DATE*</label>
+          <input type="date" class="form-control" id="start-date" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="end-date">END DATE</label>
+          <input type="date" class="form-control" id="end-date">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="trip-description">TRIP DESCRIPTION*</label>
+        <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
+          <select id="accommodations-select" class="form-control">
+            <option selected>Choose...</option>
+            <option>HOTEL</option>
+            <option>AIRBNB</option>
+            <option>HOUSE</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <div class="form-check">
+            <p>VISIBILITY*</p>
+            <input type="radio" id="public" name="visibility" value="public" checked>
+            <label for="public">PUBLIC</label><br>
+            <input type="radio" id="private" name="visibility" value="private">
+            <label for="private">PRIVATE</label><br>
+          </div>
+        </div>
+        <div class="form-group col-md-2">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="pinned-check">
+            <label class="form-check-label" for="pinned-check">
+            PIN THIS TRIP?
+            </label>
+          </div>
+        </div>
+      </div>
+      <button type="submit" id="create-trip-btn">CREATE TRIP</button>
+    </form>
 
     
     <!-- Optional JavaScript -->
