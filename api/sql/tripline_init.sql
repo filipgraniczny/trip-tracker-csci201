@@ -20,7 +20,7 @@ CREATE TABLE Trip (
 	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     title VARCHAR(255),
     description VARCHAR(255),
-    location VARCHAR(255),
+    location_id INT,
     from_time timestamp NOT NULL,
     to_time timestamp,
     author_id INT
@@ -57,6 +57,7 @@ ALTER TABLE Photo ADD FOREIGN KEY (trip_id) REFERENCES Trip(id);
 ALTER TABLE Photo ADD FOREIGN KEY (event_id) REFERENCES Event(id);
 ALTER TABLE User ADD FOREIGN KEY (pfp_id) REFERENCES Photo(id);
 ALTER TABLE Trip ADD FOREIGN KEY (author_id) REFERENCES User(id);
+ALTER TABLE Trip ADD FOREIGN KEY (location_id) REFERENCES Location(id);
 ALTER TABLE Event ADD FOREIGN KEY (trip_id) REFERENCES Trip(id);
 
 
