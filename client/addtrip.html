@@ -1,5 +1,4 @@
 <!-- ADD TRIP POPUP PAGE: ARIANA/HENRY-->
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,6 +14,11 @@
 
     <!-- FontAwesome-->
     <script src="https://kit.fontawesome.com/36b78d402d.js" crossorigin="anonymous"></script>
+  
+    <!-- stuff for location search -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="./map.js"></script>
+
   </head>
   <body>
     <h1 id="addtrip-title">ADD TRIP</h1>
@@ -30,6 +34,57 @@
           <input type="text" class="form-control" id="location" placeholder="Location">
         </div>
       </div>
+
+      <!-- START LOCATION SEARCH WITH GOOGLE MAPS -->
+      <div>
+        <div class="pac-card" id="pac-card">
+          <div>
+            <div id="title">Autocomplete search</div>
+            <div id="type-selector" class="pac-controls">
+              <input
+                type="radio"
+                name="type"
+                id="changetype-all"
+                checked="checked"
+              />
+              <label for="changetype-all">All</label>
+    
+              <input type="radio" name="type" id="changetype-establishment" />
+              <label for="changetype-establishment">establishment</label>
+    
+              <input type="radio" name="type" id="changetype-address" />
+              <label for="changetype-address">address</label>
+    
+              <input type="radio" name="type" id="changetype-geocode" />
+              <label for="changetype-geocode">geocode</label>
+    
+              <input type="radio" name="type" id="changetype-cities" />
+              <label for="changetype-cities">(cities)</label>
+    
+              <input type="radio" name="type" id="changetype-regions" />
+              <label for="changetype-regions">(regions)</label>
+            </div>
+            <br />
+            <div id="strict-bounds-selector" class="pac-controls">
+              <input type="checkbox" id="use-location-bias" value="" checked />
+              <label for="use-location-bias">Bias to map viewport</label>
+    
+              <input type="checkbox" id="use-strict-bounds" value="" />
+              <label for="use-strict-bounds">Strict bounds</label>
+            </div>
+          </div>
+          <div id="pac-container">
+            <input id="pac-input" type="text" placeholder="Enter a location" />
+          </div>
+        </div>
+        <div id="map"></div>
+        <div id="infowindow-content">
+          <span id="place-name" class="title"></span><br />
+          <span id="place-address"></span>
+        </div>
+      </div>
+      <!-- END LOCATION SEARCH WITH GOOGLE MAPS -->
+
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="start-date">START DATE*</label>
@@ -81,5 +136,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+    <!-- for location search -->
+    <script>
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUwioqAwZGbxwkX5J_M9yYPnfJh5hMso0&callback=initMap&libraries=places&v=weekly"
+      async
+    </script>
+  
   </body>
 </html>
