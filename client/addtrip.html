@@ -38,19 +38,25 @@
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
           <label for="start-date">START DATE*</label>
           <input type="date" class="form-control" id="start-date">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
           <label for="end-date">END DATE</label>
           <input type="date" class="form-control" id="end-date">
         </div>
+        <div class="form-group col-md-4">
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img" name="img" accept="image/*" multiple>
+        </div>
       </div>
+
       <div class="form-group">
         <label for="trip-description">TRIP DESCRIPTION*</label>
         <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
       </div>
+
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
@@ -65,9 +71,9 @@
           <div class="form-check">
             <p>VISIBILITY*</p>
             <input type="radio" id="public" name="visibility" value="public" checked>
-            <label for="public">PUBLIC</label><br>
+            <label for="public">PUBLIC</label>
             <input type="radio" id="private" name="visibility" value="private">
-            <label for="private">PRIVATE</label><br>
+            <label for="private">PRIVATE</label>
           </div>
         </div>
         <div class="form-group col-md-2">
@@ -79,6 +85,45 @@
           </div>
         </div>
       </div>
+
+
+      <br>
+      <label>EVENTS</label>
+      <br><br>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="trip-title">EVENT #1 NAME*</label>
+          <input type="text" class="form-control" id="trip-title" placeholder="Title">
+        </div>
+        <div class="form-group col-md-6 pac-card">
+          <div id="pac-container">
+            <label for="location">EVENT #1 LOCATION*</label>
+            <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="trip-description">EVENT #1 DESCRIPTION*</label>
+        <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
+          <select id="accommodations-select" class="form-control">
+            <option selected>Choose...</option>
+            <option>HOTEL</option>
+            <option>AIRBNB</option>
+            <option>HOUSE</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img2" name="img2" accept="image/*" multiple>
+        </div>
+      </div>
+      
       <button type="submit" id="create-trip-btn">CREATE TRIP</button>
     </form>
 
