@@ -30,6 +30,10 @@ body {
     padding-bottom: 1%;
 }
 
+#img {
+   background-color: white; 
+}
+
 /* CSS FOR LOCATION SEARCH WITH GOOGLE MAPS */
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
