@@ -23,6 +23,12 @@
     float: right;
 }
 
+body {
+    padding-top: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 1%;
+}
 
 /* CSS FOR LOCATION SEARCH WITH GOOGLE MAPS */
 /* Always set the map height explicitly to define the size of the div
@@ -32,12 +38,12 @@ height: 100%;
 }
 
 /* Optional: Makes the sample page fill the window. */
-html,
+/* html,
 body {
 height: 100%;
 margin: 0;
 padding: 0;
-}
+} */
 
 #description {
 font-family: Roboto;
@@ -57,7 +63,7 @@ display: none;
 display: inline;
 }
 
-.pac-card {
+/* .pac-card {
 background-color: #fff;
 border: 0;
 border-radius: 2px;
@@ -68,12 +74,12 @@ font: 400 18px Roboto, Arial, sans-serif;
 overflow: hidden;
 font-family: Roboto;
 padding: 0;
-}
+} */
 
-#pac-container {
+/* #pac-container {
 padding-bottom: 12px;
 margin-right: 12px;
-}
+} */
 
 .pac-controls {
 display: inline-block;
@@ -86,7 +92,7 @@ font-size: 13px;
 font-weight: 300;
 }
 
-#pac-input {
+/* #pac-input {
 background-color: #fff;
 font-family: Roboto;
 font-size: 15px;
@@ -95,11 +101,11 @@ margin-left: 12px;
 padding: 0 11px 0 13px;
 text-overflow: ellipsis;
 width: 400px;
-}
+} */
 
-#pac-input:focus {
+/* #pac-input:focus {
 border-color: #4d90fe;
-}
+} */
 
 #title {
 color: #fff;
