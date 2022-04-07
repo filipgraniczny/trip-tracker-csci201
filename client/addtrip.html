@@ -27,68 +27,20 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="trip-title">TITLE OF TRIP*</label>
-          <input type="text" class="form-control" id="trip-title" placeholder="Title" required>
+          <input type="text" class="form-control" id="trip-title" placeholder="Title">
         </div>
-        <div class="form-group col-md-6">
-          <label for="location">LOCATION*</label>
-          <input type="text" class="form-control" id="location" placeholder="Location">
-        </div>
-      </div>
-
-      <!-- START LOCATION SEARCH WITH GOOGLE MAPS -->
-      <div>
-        <div class="pac-card" id="pac-card">
-          <div>
-            <div id="title">Autocomplete search</div>
-            <div id="type-selector" class="pac-controls">
-              <input
-                type="radio"
-                name="type"
-                id="changetype-all"
-                checked="checked"
-              />
-              <label for="changetype-all">All</label>
-    
-              <input type="radio" name="type" id="changetype-establishment" />
-              <label for="changetype-establishment">establishment</label>
-    
-              <input type="radio" name="type" id="changetype-address" />
-              <label for="changetype-address">address</label>
-    
-              <input type="radio" name="type" id="changetype-geocode" />
-              <label for="changetype-geocode">geocode</label>
-    
-              <input type="radio" name="type" id="changetype-cities" />
-              <label for="changetype-cities">(cities)</label>
-    
-              <input type="radio" name="type" id="changetype-regions" />
-              <label for="changetype-regions">(regions)</label>
-            </div>
-            <br />
-            <div id="strict-bounds-selector" class="pac-controls">
-              <input type="checkbox" id="use-location-bias" value="" checked />
-              <label for="use-location-bias">Bias to map viewport</label>
-    
-              <input type="checkbox" id="use-strict-bounds" value="" />
-              <label for="use-strict-bounds">Strict bounds</label>
-            </div>
-          </div>
+        <div class="form-group col-md-6 pac-card">
           <div id="pac-container">
-            <input id="pac-input" type="text" placeholder="Enter a location" />
+            <label for="location">LOCATION*</label>
+            <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
           </div>
         </div>
-        <div id="map"></div>
-        <div id="infowindow-content">
-          <span id="place-name" class="title"></span><br />
-          <span id="place-address"></span>
-        </div>
       </div>
-      <!-- END LOCATION SEARCH WITH GOOGLE MAPS -->
 
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="start-date">START DATE*</label>
-          <input type="date" class="form-control" id="start-date" required>
+          <input type="date" class="form-control" id="start-date">
         </div>
         <div class="form-group col-md-6">
           <label for="end-date">END DATE</label>
@@ -138,9 +90,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   
     <!-- for location search -->
-    <script>
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUwioqAwZGbxwkX5J_M9yYPnfJh5hMso0&callback=initMap&libraries=places&v=weekly"
-      async
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXd77Qkx4o0sxKlQQKYQJhk_wbFk7vm9o&callback=initMap&libraries=places&v=weekly"
+      async>
     </script>
   
   </body>
