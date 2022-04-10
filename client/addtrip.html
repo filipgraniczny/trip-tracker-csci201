@@ -87,42 +87,135 @@
       </div>
 
 
+      <!--------- EVENTS ---------->
+
       <br>
       <label>EVENTS</label>
-      <br><br>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="trip-title">EVENT #1 NAME*</label>
-          <input type="text" class="form-control" id="trip-title" placeholder="Title">
-        </div>
-        <div class="form-group col-md-6 pac-card">
-          <div id="pac-container">
-            <label for="location">EVENT #1 LOCATION*</label>
-            <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+      <br>
+      <button type="button" class="btn btn-outline-secondary" id="add-event1" onclick="showEventFields(1)">ADD EVENT</button>
+
+      <!--START EVENT #1 -->
+      <br>
+      <div id="event1" style="display:none;">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="trip-title">EVENT #1 NAME*</label>
+            <input type="text" class="form-control" id="trip-title" placeholder="Title">
+          </div>
+          <div class="form-group col-md-6 pac-card">
+            <div id="pac-container">
+              <label for="location">EVENT #1 LOCATION*</label>
+              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="trip-description">EVENT #1 DESCRIPTION*</label>
-        <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
-      </div>
+        <div class="form-group">
+          <label for="trip-description">EVENT #1 DESCRIPTION*</label>
+          <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
+        </div>
 
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
-          <select id="accommodations-select" class="form-control">
-            <option selected>Choose...</option>
-            <option>HOTEL</option>
-            <option>AIRBNB</option>
-            <option>HOUSE</option>
-          </select>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
+            <select id="accommodations-select" class="form-control">
+              <option selected>Choose...</option>
+              <option>HOTEL</option>
+              <option>AIRBNB</option>
+              <option>HOUSE</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="img">PHOTOS*</label><br>
+            <input type="file" id="img2" name="img2" accept="image/*" multiple>
+          </div>
         </div>
-        <div class="form-group col-md-6">
-          <label for="img">PHOTOS*</label><br>
-          <input type="file" id="img2" name="img2" accept="image/*" multiple>
-        </div>
+        <button type="button" class="btn btn-outline-secondary" id="add-event2" onclick="showEventFields(2)">ADD EVENT</button>
+        <br><br>
       </div>
+      <!-- END EVENT #1-->
+
+      <!--START EVENT #2 -->
+      <div id="event2" style="display:none;">
+        <br>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="trip-title">EVENT #2 NAME*</label>
+            <input type="text" class="form-control" id="trip-title" placeholder="Title">
+          </div>
+          <div class="form-group col-md-6 pac-card">
+            <div id="pac-container">
+              <label for="location">EVENT #2 LOCATION*</label>
+              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="trip-description">EVENT #2 DESCRIPTION*</label>
+          <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
+            <select id="accommodations-select" class="form-control">
+              <option selected>Choose...</option>
+              <option>HOTEL</option>
+              <option>AIRBNB</option>
+              <option>HOUSE</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="img">PHOTOS*</label><br>
+            <input type="file" id="img2" name="img2" accept="image/*" multiple>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary" id="add-event3" onclick="showEventFields(3)">ADD EVENT</button>
+        <br><br>
+      </div>
+      <!-- END EVENT #2-->
+
+
+      <!--START EVENT #3 -->
+      <div id="event3" style="display:none;">
+        <br>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="trip-title">EVENT #3 NAME*</label>
+            <input type="text" class="form-control" id="trip-title" placeholder="Title">
+          </div>
+          <div class="form-group col-md-6 pac-card">
+            <div id="pac-container">
+              <label for="location">EVENT #3 LOCATION*</label>
+              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="trip-description">EVENT #3 DESCRIPTION*</label>
+          <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
+            <select id="accommodations-select" class="form-control">
+              <option selected>Choose...</option>
+              <option>HOTEL</option>
+              <option>AIRBNB</option>
+              <option>HOUSE</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="img">PHOTOS*</label><br>
+            <input type="file" id="img2" name="img2" accept="image/*" multiple>
+          </div>
+        </div>
+        <br><br>
+      </div>
+      <!-- END EVENT #3-->
       
       <button type="submit" id="create-trip-btn">CREATE TRIP</button>
     </form>
@@ -138,6 +231,20 @@
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXd77Qkx4o0sxKlQQKYQJhk_wbFk7vm9o&callback=initMap&libraries=places&v=weekly"
       async>
+    </script>
+
+    <script>
+      function showEventFields(eventNum) {
+        var eventId = "event" + eventNum;
+        document.getElementById(eventId).style.display = "block";
+
+        var buttonId = "add-event" + eventNum;
+        document.getElementById(buttonId).style.display = "none";
+        
+      }
+
+
+
     </script>
   
   </body>
