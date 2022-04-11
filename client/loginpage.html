@@ -45,11 +45,9 @@
                         <label for="login-pwd-input">PASSWORD</label>
                         <input type="password" class="form-control" id="login-pwd-input">
                       </div>
-                      <button id="btn-login" style="display: block; margin: 0 auto;">
-                        <a href="#" class="buttons">
+                      <button id="btn-login" style="display: block; margin: 0 auto;" onclick="loginUser()">
                             <img id="login-logo" src="./images/user-icon.svg" alt="logo">
                             <strong>LOG IN</strong>
-                        </a>
                     </button>
                     </form>
               </div>
@@ -129,9 +127,34 @@
           .catch(error => console.log('error', error));
       }
 
-      // function loginUser(form) {
+      function loginUser() {
+        console.log("in loginUser()");
 
-      // }
+        var email = document.getElementById("login-email-input").value;
+        var password = document.getElementById("login-pwd-input").value;
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "email": email,
+          "password": password
+        });
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("http://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/login", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      }
 
 
     </script>
