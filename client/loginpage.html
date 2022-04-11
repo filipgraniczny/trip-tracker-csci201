@@ -36,7 +36,7 @@
           <div class="row">
               <div class="col">
                 <h1 class="login-register-labels">LOGIN</h1>
-                <form id="login-form" method="POST" action="https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/login?email=&password=">
+                <form id="login-form">
                     <div class="form-group">
                         <label for="login-email-input">EMAIL ADDRESS</label>
                         <input type="email" class="form-control" id="login-email-input">
@@ -45,7 +45,7 @@
                         <label for="login-pwd-input">PASSWORD</label>
                         <input type="password" class="form-control" id="login-pwd-input">
                       </div>
-                      <button id="btn-login" style="display: block; margin: 0 auto;"">
+                      <button id="btn-login" style="display: block; margin: 0 auto;">
                         <a href="#" class="buttons">
                             <img id="login-logo" src="./images/user-icon.svg" alt="logo">
                             <strong>LOG IN</strong>
@@ -55,10 +55,10 @@
               </div>
               <div class="col">
                 <h1 class="login-register-labels">REGISTER</h1>
-                <form id="register-form" method="POST" action="https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/register?email=&password=&name=">
+                <form id="register-form">
                     <div class="form-group">
                         <label for="register-name-input">NAME</label>
-                        <input type="email" class="form-control" id="register-name-input">
+                        <input type="text" class="form-control" id="register-name-input">
                     </div>
                     <div class="form-group">
                         <label for="register-email-input">EMAIL ADDRESS</label>
@@ -66,17 +66,15 @@
                     </div>
                     <div class="form-group">
                         <label for="login-pwd-input">PASSWORD</label>
-                        <input type="password" class="form-control" id="login-pwd-input">
+                        <input type="password" class="form-control" id="register-pwd-input">
                     </div>
                     <div class="form-group">
                         <label for="register-conf-pwd-input">CONFIRM PASSWORD</label>
                         <input type="password" class="form-control" id="register-conf-pwd-input">
                     </div>
-                    <button id="btn-register" style="display: block; margin: 0 auto;">
-                      <a href="#" class="buttons">
+                    <button id="btn-register" style="display: block; margin: 0 auto;" onclick="registerUser()">
                           <img id="register-logo" src="./images/user-icon.svg" alt="logo">
                           <strong>REGISTER</strong>
-                      </a>
                   </button>
                   </form>
               </div>
@@ -89,5 +87,53 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+
+    <script>
+
+      function registerUser() {
+        console.log("in registerUser()");
+
+        var name = document.getElementById("register-name-input").value;
+        var email = document.getElementById("register-email-input").value;
+        var password = document.getElementById("register-pwd-input").value;
+        var confirmPassword = document.getElementById("register-conf-pwd-input").value;
+
+
+        if (password != confirmPassword) {
+          console.log("Passwords do not match");
+          return;
+        }
+  
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "email": email,
+          "password": password,
+          "name": name
+        });
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("http://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/register", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      }
+
+      // function loginUser(form) {
+
+      // }
+
+
+    </script>
   </body>
 </html>
