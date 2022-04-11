@@ -47,8 +47,9 @@
           <input type="date" class="form-control" id="end-date">
         </div>
         <div class="form-group col-md-4">
-          <label for="img">PHOTOS*</label><br>
-          <input type="file" id="img" name="img" accept="image/*" multiple>
+          <label>PHOTOS*</label><br>
+          <label class="img-upload" for="actual-button">UPLOAD</label>
+          <input type="file" id="actual-button" name="image-upload" accept="image/*" multiple hidden>
         </div>
       </div>
 
@@ -92,7 +93,7 @@
       <br>
       <label>EVENTS</label>
       <br>
-      <button type="button" class="btn btn-outline-secondary" id="add-event1" onclick="showEventFields(1)">ADD EVENT</button>
+      <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event1" onclick="showEventFields(1)">ADD EVENT</button>
 
       <!--START EVENT #1 -->
       <br>
@@ -130,7 +131,7 @@
             <input type="file" id="img2" name="img2" accept="image/*" multiple>
           </div>
         </div>
-        <button type="button" class="btn btn-outline-secondary" id="add-event2" onclick="showEventFields(2)">ADD EVENT</button>
+        <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event2" onclick="showEventFields(2)">ADD EVENT</button>
         <br><br>
       </div>
       <!-- END EVENT #1-->
@@ -171,7 +172,7 @@
             <input type="file" id="img2" name="img2" accept="image/*" multiple>
           </div>
         </div>
-        <button type="button" class="btn btn-outline-secondary" id="add-event3" onclick="showEventFields(3)">ADD EVENT</button>
+        <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event3" onclick="showEventFields(3)">ADD EVENT</button>
         <br><br>
       </div>
       <!-- END EVENT #2-->
