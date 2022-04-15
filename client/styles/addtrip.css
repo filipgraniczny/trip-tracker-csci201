@@ -64,6 +64,18 @@ body {
    background-color: white; 
 }
 
+.big-hr {
+    border: 3px solid #34945C;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
+}
+
+.small-hr {
+    border: 1px solid #34945C;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
+}
+
 /* CSS FOR LOCATION SEARCH WITH GOOGLE MAPS */
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
