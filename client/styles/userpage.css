@@ -348,3 +348,32 @@ p a{
   margin-top: 100px;
   margin-left: 20px;
 }
+
+#add{
+  width: 130px;
+  height: 45px;
+  border: 3px solid #3F8F6E;
+  border-radius: 50px;
+  font-size: 0.8em;
+  background-color: #3F8F6E;
+  color: white;
+  float: right;
+  margin-bottom: 20px;
+}
+
+#add i{
+  color:  white;
+  margin-right: 10px;
+  margin-top: -10px;
+  float: right;
+}
+
+#add a{
+  text-decoration: none;
+  margin-top: 0px;
+  margin-left: 10px;
+  float: left;
+  font-size: 1.2em;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
