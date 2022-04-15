@@ -229,7 +229,7 @@
       </div>
       <!-- END EVENT #3-->
       
-      <button type="submit" id="create-trip-btn">CREATE TRIP</button>
+      <button type="button" id="create-trip-btn" onclick="createTrip()">CREATE TRIP</button>
     </form>
 
     
@@ -246,6 +246,7 @@
     </script>
 
     <script>
+      // CODE FOR HIDING AND SHOWING EVENT FIELDS
       function showEventFields(eventNum) {
         var eventId = "event" + eventNum;
         document.getElementById(eventId).style.display = "block";
@@ -261,6 +262,44 @@
       }
 
 
+      // CODE TO CONNECT TO API BACKEND STUFF
+      function createTrip() {
+        var title = document.getElementById("trip-title").value;
+        var description = document.getElementById("trip-description").value;
+        var location = document.getElementById("pac-input").value;
+        var startDate = document.getElementById("start-date").value;
+        var endDate = document.getElementById("end-date").value;
+
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "title": title,
+          "description": description,
+          "author_id": 2081,
+          "location_longitude": 170.2222,
+          "location_latitude": -20.8844,
+          "timestamp_to": endDate,
+          "timestamp_from": startDate
+        });
+
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/trips/add/", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      }
+    
 
     </script>
   
