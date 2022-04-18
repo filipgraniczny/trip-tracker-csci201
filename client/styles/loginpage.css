@@ -96,3 +96,9 @@ a:hover {
   text-decoration: none;
   color: white;
 }
+
+.error {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}

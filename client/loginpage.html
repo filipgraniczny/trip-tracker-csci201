@@ -32,6 +32,14 @@
           </ul>
       </nav>
 
+      <div id="error-log-div" style="display: none;">
+        <p class="error">Error in login. Please try again.</p>
+      </div>
+
+      <div id="error-reg-div" style="display: none;">
+        <p class="error">Error in registration. Please try again.</p>
+      </div>
+
       <div class="container">
           <div class="row">
               <div class="col">
@@ -47,7 +55,7 @@
                       </div>
                       <button type="button" id="btn-login" style="display: block; margin: 0 auto;" onclick="loginUser()">
                             <img id="login-logo" src="./images/user-icon.svg" alt="logo">
-                            <strong>LOG IN</strong>
+                            <strong style="color:white;">LOG IN</strong>
                     </button>
                     </form>
               </div>
@@ -72,7 +80,7 @@
                     </div>
                     <button type="button" id="btn-register" style="display: block; margin: 0 auto;" onclick="registerUser()">
                           <img id="register-logo" src="./images/user-icon.svg" alt="logo">
-                          <strong>REGISTER</strong>
+                          <strong style="color:white;">REGISTER</strong>
                   </button>
                   </form>
               </div>
@@ -88,21 +96,31 @@
   
 
     <script>
+      let regUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/register";
+      let logUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/login";
 
       function registerUser() {
         console.log("in registerUser()");
 
+        // getting user input from form fields
         var name = document.getElementById("register-name-input").value;
         var email = document.getElementById("register-email-input").value;
         var password = document.getElementById("register-pwd-input").value;
         var confirmPassword = document.getElementById("register-conf-pwd-input").value;
 
-
+        // checking if password is valid
         if (password != confirmPassword) {
           console.log("Passwords do not match");
           return;
         }
-  
+
+        // checking if any field is empty
+        if (name === "" || email === "" || password === "") {
+          console.log("At least one field is empty.");
+          return;
+        }
+        
+        // constructing API headers
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -121,18 +139,54 @@
           redirect: 'follow'
         };
 
-        fetch("https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/register", requestOptions)
+        var resultObject = "";
+
+        // fetching the API response
+        fetch(regUrl, requestOptions)
           .then(response => response.text())
-          .then(result => console.log(result))
+          .then((result) => {
+            console.log(result);
+            resultObject = result;
+          })
           .catch(error => console.log('error', error));
+
+          console.log("printing resultObject: " + resultObject);
+
+          // checking if the registration was successful
+          if (resultObject["success"] == true) {
+            console.log ("Successful registration.");
+
+            // creating a cookie with the user ID and name
+            let id = resultObject["id"];
+            let name = resultObject["name"];
+            document.cookie = "id: " + id + "; name: " + name + "; path=/;";
+
+            // redirecting to the user page
+            location.href = "userpage.html";
+          }
+          else {
+            console.log("Unsuccessful registration.")
+      
+            // should display some kind of error message on the screen so the user retries registration
+            var errorDiv = document.getElementById("error-reg-div");
+            errorDiv.style.display = "block";
+          }
       }
 
       function loginUser() {
         console.log("in loginUser()");
 
+        // getting user input from form fields
         var email = document.getElementById("login-email-input").value;
         var password = document.getElementById("login-pwd-input").value;
 
+        // checking if any field is empty
+        if (email === "" || password === "") {
+          console.log("At least one field is empty.");
+          return;
+        }
+
+        // constructing API headers
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -150,10 +204,39 @@
           redirect: 'follow'
         };
 
-        fetch("https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/login", requestOptions)
+        var resultObject = "";
+
+        // fetching the API response
+        fetch(logUrl, requestOptions)
           .then(response => response.text())
-          .then(result => console.log(result))
+          .then((result) => {
+            console.log(result);
+            resultObject = result;
+          })
           .catch(error => console.log('error', error));
+
+          console.log("printing resultObject: " + resultObject);
+
+      // checking if the registration was successful
+          if (resultObject["success"] == true) {
+            console.log ("Successful login.");
+
+            // creating a cookie with the user ID and name
+            let id = resultObject["id"];
+            let name = resultObject["name"];
+            document.cookie = "id: " + id + "; name: " + name + "; path=/;";
+
+            // redirecting to the user page
+            location.href = "userpage.html";
+          }
+          else {
+            console.log("Unsuccessful login.")
+            
+            // should display some kind of error message on the screen so the user retries registration
+            var errorDiv = document.getElementById("error-log-div");
+            errorDiv.style.display = "block";
+          }
+
       }
 
 
