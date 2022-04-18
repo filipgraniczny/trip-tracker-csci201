@@ -113,6 +113,17 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="start-date">START DATE*</label>
+            <input type="date" class="form-control" id="start-date">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="end-date">END DATE</label>
+            <input type="date" class="form-control" id="end-date">
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="trip-description">EVENT #1 DESCRIPTION*</label>
           <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
@@ -120,12 +131,12 @@
 
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
+            <label for="accommodations-select">EVENT TYPE*</label>
             <select id="accommodations-select" class="form-control">
               <option selected>Choose...</option>
+              <option>ACTIVITY</option>
+              <option>RESTAURANT</option>
               <option>HOTEL</option>
-              <option>AIRBNB</option>
-              <option>HOUSE</option>
             </select>
           </div>
           <div class="form-group col-md-4">
@@ -157,6 +168,17 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="start-date">START DATE*</label>
+            <input type="date" class="form-control" id="start-date">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="end-date">END DATE</label>
+            <input type="date" class="form-control" id="end-date">
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="trip-description">EVENT #2 DESCRIPTION*</label>
           <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
@@ -164,12 +186,12 @@
 
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
+            <label for="accommodations-select">EVENT TYPE*</label>
             <select id="accommodations-select" class="form-control">
               <option selected>Choose...</option>
+              <option>ACTIVITY</option>
+              <option>RESTAURANT</option>
               <option>HOTEL</option>
-              <option>AIRBNB</option>
-              <option>HOUSE</option>
             </select>
           </div>
           <div class="form-group col-md-4">
@@ -202,6 +224,17 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="start-date">START DATE*</label>
+            <input type="date" class="form-control" id="start-date">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="end-date">END DATE</label>
+            <input type="date" class="form-control" id="end-date">
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="trip-description">EVENT #3 DESCRIPTION*</label>
           <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
@@ -209,12 +242,12 @@
 
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
+            <label for="accommodations-select">EVENT TYPE*</label>
             <select id="accommodations-select" class="form-control">
               <option selected>Choose...</option>
+              <option>ACTIVITY</option>
+              <option>RESTAURANT</option>
               <option>HOTEL</option>
-              <option>AIRBNB</option>
-              <option>HOUSE</option>
             </select>
           </div>
           <div class="form-group col-md-4">
@@ -246,6 +279,8 @@
     </script>
 
     <script>
+      let addUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/trips/add/";
+      
       // CODE FOR HIDING AND SHOWING EVENT FIELDS
       function showEventFields(eventNum) {
         var eventId = "event" + eventNum;
@@ -264,20 +299,29 @@
 
       // CODE TO CONNECT TO API BACKEND STUFF
       function createTrip() {
+
+        // getting user input from form fields
         var title = document.getElementById("trip-title").value;
         var description = document.getElementById("trip-description").value;
         var location = document.getElementById("pac-input").value;
         var startDate = document.getElementById("start-date").value;
         var endDate = document.getElementById("end-date").value;
 
+        console.log("location: " + location);
 
+        // getting user ID from cookies
+        let cookies = document.cookie;
+        console.log(cookies); 
+        let id = getCookie("id");
+
+        // constructing API headers
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
           "title": title,
           "description": description,
-          "author_id": 2081,
+          "author_id": id,
           "location_longitude": 170.2222,
           "location_latitude": -20.8844,
           "timestamp_to": endDate,
@@ -294,12 +338,47 @@
           redirect: 'follow'
         };
 
-        fetch("https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/trips/add/", requestOptions)
+        var resultObject = "";
+
+        fetch(addUrl, requestOptions)
           .then(response => response.text())
-          .then(result => console.log(result))
+          .then((result) => {
+            console.log(result);
+            resultObject = result;
+          })
           .catch(error => console.log('error', error));
+
+
+        console.log("printing resultObject: " + resultObject);
+
+        if (resultObject["success"] == true) {
+            console.log ("Successfully added trip.");
+
+            // redirecting to the user page
+            location.href = "userpage.html";
+        }
+        else {
+            console.log ("Trip was not added successfully.");
+        }
+
       }
     
+
+      function getCookie(cookieName) {
+        let name = cookieName + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
 
     </script>
   
