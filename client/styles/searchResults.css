@@ -168,16 +168,30 @@ form{
 /* End Search CSS*/
 
 /*Search results CSS*/
-#smallLine{
-	width: 33%;
-	margin-left: 40px;
-	margin-bottom: 20px;
-	padding: 1.25px;
-	color: green;
-}
 #searchTitle{
 	padding: 40px;
 	padding-bottom: 0px;
+	letter-spacing: 0.1em;
+}
+#smallLine{
+	width: 33%;
+	margin-left: 40px;
+	padding: 1.25px;
+	color: green;
+}
+
+#sortForm{
+	margin-top: -5px;
+	margin-bottom: 2.5em;
+	margin-left: 40px;
+	letter-spacing: 0.1em;
+}
+select{
+    height: 28px;
+    border: 1px solid grey;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 3px 3px lightgrey;
 }
 
 /* tripItem is the wrapper class for the entire trip "card" */
@@ -218,6 +232,7 @@ form{
 	margin-bottom: 25px;
 	overflow: hidden;
 	border-radius: 30px;
+	letter-spacing: 0.2em;
 }
 .name{
 	font-weight: bold;
@@ -230,7 +245,7 @@ form{
 	color: #36B069;
 }
 .tripDescription{
-	letter-spacing: 0.2em;
+	letter-spacing: 0.1em;
 }
 
 /* Plus button to load more trips */
