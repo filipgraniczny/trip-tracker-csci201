@@ -178,6 +178,7 @@ form{
 #searchTitle{
 	padding: 40px;
 	padding-bottom: 0px;
+	letter-spacing: 0.1em;
 }
 
 /* tripItem is the wrapper class for the entire trip "card" */
@@ -230,7 +231,7 @@ form{
 	color: #36B069;
 }
 .tripDescription{
-	letter-spacing: 0.2em;
+	letter-spacing: 0.1em;
 }
 
 /* Plus button to load more trips */
