@@ -219,6 +219,7 @@ form{
 	margin-bottom: 25px;
 	overflow: hidden;
 	border-radius: 30px;
+	letter-spacing: 0.2em;
 }
 .name{
 	font-weight: bold;
