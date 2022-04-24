@@ -1,0 +1,379 @@
+body{
+  font-family: 'Inter', sans-serif;
+  color: #3F8F6E;
+  margin: 0px;
+}
+
+.wrapper{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+.navbar{
+  margin: 0px;
+  width:100%;
+  height: 80px;
+  background-color: rgba(255, 255, 255,.5)
+}
+
+.navbar ul{
+  list-style: none;
+}
+
+.navbar li{
+  float: right;
+}
+
+.navbar a{
+  text-decoration: none;
+  color: #3F8F6E;
+}
+
+
+#logo{
+  width: 300px;
+  height: 100%;
+  margin-left: 10px;
+  margin-top: 5px;
+  float: left;
+  font-size: 1.5em;
+
+}
+
+#logo a > h1{
+  margin-left: 60px;
+  margin-top: 20px;
+  color: #3F8F6E;
+}
+
+
+#clickable{
+  width: 300px;
+  height: 100%;
+  float:right;
+  margin-right: 200px;
+}
+
+#clickable ul{
+  list-style: none;
+  margin: 0px;;
+  padding: 0px;
+  background: none;
+}
+
+#clickable li{
+  float: left;
+  width: 100px;
+  height: 50px;
+  margin:0px;
+  text-align: center;
+}
+
+#clickable a{
+  text-decoration: none;
+  color:  #3F8F6E;
+  font-size:1.5em;
+}
+
+#home{
+  float: left;
+  width: 100px;
+  height: 50px;
+  padding-top: 25px;
+  margin:0px;
+  text-align: center;
+}
+
+#divider{
+  padding-top: 30px;
+  font-weight: 900;
+}
+#logout{
+  width: 180px;
+  height: 55px;
+  border: 3px solid #3F8F6E;
+  border-radius: 50px;
+  font-size: 0.8em;
+  background-color: white;
+  margin-top:15px;
+}
+
+#logout i{
+  color:  #3F8F6E;
+  margin-left: 25px;
+  margin-top: 10px;
+  margin-right: 0px;
+  float: left;
+}
+
+#logout a{
+  margin-bottom: 0px;
+  margin-left: 15px;
+  float: left;
+}
+
+#highlights{
+  margin-top:5%;
+  width: 100%;
+  float:left;
+  padding: 0px;
+}
+
+.trip-container {
+  padding-bottom:25%;
+  width: 25%;
+  height: 250px;
+  border-radius: 50px;
+  margin-left: 6.25%;
+}
+
+#trip-1 {
+    background-image: url("../images/cancun.png");
+    background-size: cover;
+    background-position: center;
+    border: 0px;
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.3);
+    position: relative;
+    float: left;
+}
+
+#trip-2 {
+    background-image: url("../images/vietnam.png");
+    background-size: cover;
+    background-position: center;
+    border: 0px;
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.3);
+    position: relative;
+}
+
+#trip-3 {
+    background-image: url("../images/phillipines.png");
+    background-size: cover;
+    background-position: center;
+    border: 0px;
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.trip-title {
+    width: 80%;
+    margin-left: 5%;
+    margin-top: 60%;
+    color: white;
+    font-size: 3em;
+    text-align: left;
+    letter-spacing: 0.15em;
+}
+
+.trip-description {
+    width: 90%;
+    height: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+    color: white;
+    text-align: left;
+    letter-spacing: 0.15em;
+}
+
+.enter-arrow-img {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+}
+
+
+
+#hightlight-img {
+    background-image: url("../images/cancun.png");
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 500px;
+    border-radius: 30px 30px 30px 0px;
+}
+
+.highlight-title {
+    width: 100%;
+    margin-top: 3%;
+    font-size: 2em;
+
+}
+
+.highlight-bio {
+    width: 50%;
+    margin-top: 3%;
+    float: left;
+}
+
+.highlight-date {
+    width: 50%;
+    float: left;
+    margin-top: 3%;
+    text-align: right;
+    font-size: 0.8em;
+    color: #898989;
+}
+
+#pfp{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-image: url("../images/user.png");
+  background-size: cover;
+  float: left;
+  border: solid 3px #3F8F6E;
+
+
+}
+
+#user{
+  margin-top: 5%;
+  width: 1000px;
+}
+
+#user-description{
+  width: 750px;
+  float: left;
+  margin-left: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+#content{
+  margin-top: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+}
+
+.fa-solid fa-star{
+  width: 50px;
+}
+
+
+.post{
+  width: 800px;
+  height: auto;
+  background-color: #f0f5e9;
+  padding: 20px;
+  border-radius: 50px;
+  margin-top: 50px;
+  margin-left: 60px;
+}
+
+.pic{
+  float:left;
+  width: 400px;
+  height: 500px;
+  border-radius: 30px;
+}
+.pic:hover{
+  transition: transform .5s;
+  transform: scale(1.2);
+}
+
+
+.left{
+  float: left;
+
+}
+
+.right{
+  float: left;
+}
+
+h2{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-size: 2em;
+  color: #3F8F6E;
+
+}
+
+h3{
+  font-size: 1.2em;
+  margin-top: 15px;
+}
+h4{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-size: 1.2em;
+}
+
+#feed{
+  margin-top: 100px;
+}
+
+.title{
+  width: 100%;
+  height: 50px;
+  float: left;
+}
+
+.title h2{
+  float: left;
+  margin-left: 10px;
+}
+
+.title i{
+  float: left;
+  margin-left: 60px;
+}
+
+.post img{
+  width: 250px;
+  height: 250px;
+  margin-right: 10px;
+}
+
+p a{
+  color: #5c6db8;
+}
+
+.block{
+  width: 2px;
+  height: 1000px;
+  float: left;
+  margin-top: 100px;
+  margin-left: 920px;
+  background-color: #e3e3e3;
+}
+
+#map{
+  width: 400px;
+  height:300px;
+  float: left;
+  margin-top: 100px;
+  margin-left: 20px;
+}
+
+#add{
+  width: 130px;
+  height: 45px;
+  border: 3px solid #3F8F6E;
+  border-radius: 50px;
+  font-size: 0.8em;
+  background-color: #3F8F6E;
+  color: white;
+  float: right;
+  margin-bottom: 20px;
+}
+
+#add i{
+  color:  white;
+  margin-right: 10px;
+  margin-top: -10px;
+  float: right;
+}
+
+#add a{
+  text-decoration: none;
+  margin-top: 0px;
+  margin-left: 10px;
+  float: left;
+  font-size: 1.2em;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}

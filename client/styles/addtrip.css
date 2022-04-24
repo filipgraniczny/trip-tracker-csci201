@@ -1,0 +1,154 @@
+#addtrip-title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 150%;
+    letter-spacing: 0.15em;
+    color: #34945C;
+}
+
+#create-trip-btn {
+    width: 430px;
+    height: 61px;
+    border: 3px solid #34945C;
+    box-sizing: border-box;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 40px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: 0.15em;
+    color: #34945C;
+    float: right;
+}
+
+.add-event-btn {
+    border: 3px solid #34945C;
+    border-radius: 30px;
+    font-weight: 700;
+    color: #34945C;
+    letter-spacing: 0.15em;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.remove-event-btn {
+    border: 3px solid #34945C;
+    border-radius: 30px;
+    font-weight: 700;
+    color: #34945C;
+    letter-spacing: 0.15em;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    float: right;
+}
+
+.img-upload {
+    padding: 0.3rem;
+    cursor: pointer;
+    border: 3px solid #34945C;
+    border-radius: 30px;
+    font-weight: 700;
+    color: #34945C;
+    letter-spacing: 0.15em;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+
+body {
+    padding-top: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 1%;
+}
+
+#img {
+   background-color: white; 
+}
+
+.big-hr {
+    border: 3px solid #34945C;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
+}
+
+.small-hr {
+    border: 1px solid #34945C;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
+}
+
+/* CSS FOR LOCATION SEARCH WITH GOOGLE MAPS */
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+height: 100%;
+}
+
+#description {
+font-family: Roboto;
+font-size: 15px;
+font-weight: 300;
+}
+
+#infowindow-content .title {
+font-weight: bold;
+}
+
+#infowindow-content {
+display: none;
+}
+
+#map #infowindow-content {
+display: inline;
+}
+
+/* .pac-card {
+background-color: #fff;
+border: 0;
+border-radius: 2px;
+box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+margin: 10px;
+padding: 0 0.5em;
+font: 400 18px Roboto, Arial, sans-serif;
+overflow: hidden;
+font-family: Roboto;
+padding: 0;
+} */
+
+/* #pac-container {
+padding-bottom: 12px;
+margin-right: 12px;
+} */
+
+.pac-controls {
+display: inline-block;
+padding: 5px 11px;
+}
+
+.pac-controls label {
+font-family: Roboto;
+font-size: 13px;
+font-weight: 300;
+}
+
+/* #pac-input {
+background-color: #fff;
+font-family: Roboto;
+font-size: 15px;
+font-weight: 300;
+margin-left: 12px;
+padding: 0 11px 0 13px;
+text-overflow: ellipsis;
+width: 400px;
+} */
+
+/* #pac-input:focus {
+border-color: #4d90fe;
+} */
+
+#title {
+color: #fff;
+background-color: #4d90fe;
+font-size: 25px;
+font-weight: 500;
+padding: 6px 12px;
+}

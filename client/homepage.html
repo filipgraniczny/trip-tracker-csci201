@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="./styles/homepage.css">
 </head>
 
-<body>
+<body onload="getTrip()">
 
     <div id="nav-bar">
         <nav>
@@ -22,14 +22,11 @@
                 <a href="#"><strong>HOME</strong></a>
               </li>
               <li class="nav-item">
-                <a href="#"><strong>EXPLORE</strong></a>
-              </li>
-              <li class="nav-item">
                 |
               </li>
               <li class="nav-item">
                 <button id="btn-login">
-                    <a href="#">
+                    <a href="loginpage.html">
                         <img id="login-logo" src="./images/user-icon.svg" alt="logo">
                         <strong>LOG IN</strong>
                     </a>
@@ -44,7 +41,7 @@
             <p class="text-wrap" style="color: #91CB82;"><strong>MEMORABLE</strong></p>
         </div>
         <div id="btn-section">
-            <button id="learn-more-btn"><strong>Learn more</strong></button>
+          <a href="#explore-section"><button id="learn-more-btn"><strong>Learn more</strong></button></a>
         </div>
 
         <form>
@@ -80,33 +77,80 @@
         <div class="inspiration-section">
           <div class="highlight-container">
             <div id="hightlight-img"></div>
-            <div class="highlight-title"><strong>HA LONG</strong></div>
-            <div class="highlight-bio">by <a href="">Henry Vu</a></div>
-            <div class="highlight-date">10/11/2012</div>
+            <div class="highlight-title"><strong id="highlight-title-1">HA LONG</strong></div>
+            <div class="highlight-bio">by <a href="" id="highlight-author-1">Henry Vu</a></div>
+            <div class="highlight-date" id="highlight-date-1">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
             <div id="hightlight-img"></div>
-            <div class="highlight-title"><strong>HA LONG</strong></div>
-            <div class="highlight-bio">by <a href="">Henry Vu</a></div>
-            <div class="highlight-date">10/11/2012</div>
+            <div class="highlight-title"><strong id="highlight-title-2">HA LONG</strong></div>
+            <div class="highlight-bio">by <a href="" id="highlight-author-2">Henry Vu</a></div>
+            <div class="highlight-date" id="highlight-date-2">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
             <div id="hightlight-img"></div>
-            <div class="highlight-title"><strong>HA LONG</strong></div>
-            <div class="highlight-bio">by <a href="">Henry Vu</a></div>
-            <div class="highlight-date">10/11/2012</div>
+            <div class="highlight-title"><strong id="highlight-title-3">HA LONG</strong></div>
+            <div class="highlight-bio">by <a href="" id="highlight-author-3">Henry Vu</a></div>
+            <div class="highlight-date" id="highlight-date-3">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
             <div id="hightlight-img"></div>
-            <div class="highlight-title"><strong>HA LONG</strong></div>
-            <div class="highlight-bio">by <a href="">Henry Vu</a></div>
-            <div class="highlight-date">10/11/2012</div>
+            <div class="highlight-title"><strong id="highlight-title-4">HA LONG</strong></div>
+            <div class="highlight-bio">by <a href="" id="highlight-author-4">Henry Vu</a></div>
+            <div class="highlight-date" id="highlight-date-4">10/11/2012</div>
           </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+      // CODE TO CONNECT TO API BACKEND STUFF
+      function getTrip() {
+       var location;
+       var author;
+       var date;
+
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+
+        fetch("https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/trips/explore?limit=3&searchTerm=&sortBy=")
+        .then(response => response.json())
+        .then(data => {
+          const result = data.result;
+          console.log(result);
+          updateTrip(result);
+        })
+        .catch(console.error);
+      }
+
+      function updateTrip(result) 
+      {
+        for (i = 1; i < 5; i++) {
+          let trip = result[i-1];
+          let location = document.getElementById(`highlight-title-${i}`);
+          location.innerHTML = trip.location;
+          
+          let author = document.getElementById(`highlight-author-${i}`);
+          author.innerHTML = trip.author.name;
+
+          let date = document.getElementById(`highlight-date-${i}`);
+          var dateArray = trip.from.split("-");
+          let year = dateArray[0];
+          let month = dateArray[1];
+          let day = dateArray[2];
+          var dateFormat = month + "/" +  day + "/" + year;
+          date.innerHTML = dateFormat;
+        }
+      }
+    </script>
 </body>

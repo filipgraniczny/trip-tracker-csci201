@@ -10,12 +10,8 @@
     />
 
     <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/loginpage.css">
 
     <title>LOGIN/REGISTER</title>
 
@@ -26,87 +22,230 @@
     ></script>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <h1>LOGIN</h1>
-          <form id="login-form">
-            <div class="form-group">
-              <label for="login-email-input">EMAIL ADDRESS</label>
-              <input type="email" class="form-control" id="login-email-input" />
-            </div>
-            <div class="form-group">
-              <label for="login-pwd-input">PASSWORD</label>
-              <input
-                type="password"
-                class="form-control"
-                id="login-pwd-input"
-              />
-            </div>
-            <button type="submit" class="btn btn-outline-info">
-              <i class="fa-solid fa-user"></i> LOG IN
-            </button>
-          </form>
-        </div>
-        <div class="col">
-          <h1>REGISTER</h1>
-          <form id="register-form">
-            <div class="form-group">
-              <label for="register-name-input">NAME</label>
-              <input
-                type="email"
-                class="form-control"
-                id="register-name-input"
-              />
-            </div>
-            <div class="form-group">
-              <label for="register-email-input">EMAIL ADDRESS</label>
-              <input
-                type="email"
-                class="form-control"
-                id="register-email-input"
-              />
-            </div>
-            <div class="form-group">
-              <label for="login-pwd-input">PASSWORD</label>
-              <input
-                type="password"
-                class="form-control"
-                id="login-pwd-input"
-              />
-            </div>
-            <div class="form-group">
-              <label for="register-conf-pwd-input">CONFIRM PASSWORD</label>
-              <input
-                type="password"
-                class="form-control"
-                id="register-conf-pwd-input"
-              />
-            </div>
-            <button type="submit" class="btn btn-outline-info">
-              <i class="fa-solid fa-user-plus"></i> REGISTER
-            </button>
-          </form>
-        </div>
+
+    <div id="nav-bar">
+      <nav>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a id="logo" href="homepage.html"><strong>T | L</strong></a>
+            </li>
+            <li class="nav-item">
+              <a href="homepage.html"><strong>HOME</strong></a>
+            </li>
+            <li class="nav-item">
+              <a href="explorepage.html"><strong>EXPLORE</strong></a>
+            </li>
+          </ul>
+      </nav>
+
+      <div id="error-log-div" style="display: none;">
+        <p class="error">Error in login. Please try again.</p>
+      </div>
+
+      <div id="error-reg-div" style="display: none;">
+        <p class="error">Error in registration. Please try again.</p>
+      </div>
+
+      <div class="container">
+          <div class="row">
+              <div class="col">
+                <h1 class="login-register-labels">LOGIN</h1>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email-input">EMAIL ADDRESS</label>
+                        <input type="email" class="form-control" id="login-email-input">
+                      </div>
+                      <div class="form-group">
+                        <label for="login-pwd-input">PASSWORD</label>
+                        <input type="password" class="form-control" id="login-pwd-input">
+                      </div>
+                      <button type="button" id="btn-login" style="display: block; margin: 0 auto;" onclick="loginUser()">
+                            <img id="login-logo" src="./images/user-icon.svg" alt="logo">
+                            <strong style="color:white;">LOG IN</strong>
+                    </button>
+                    </form>
+              </div>
+              <div class="col">
+                <h1 class="login-register-labels">REGISTER</h1>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name-input">NAME</label>
+                        <input type="text" class="form-control" id="register-name-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email-input">EMAIL ADDRESS</label>
+                        <input type="email" class="form-control" id="register-email-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-pwd-input">PASSWORD</label>
+                        <input type="password" class="form-control" id="register-pwd-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-conf-pwd-input">CONFIRM PASSWORD</label>
+                        <input type="password" class="form-control" id="register-conf-pwd-input">
+                    </div>
+                    <button type="button" id="btn-register" style="display: block; margin: 0 auto;" onclick="registerUser()">
+                          <img id="register-logo" src="./images/user-icon.svg" alt="logo">
+                          <strong style="color:white;">REGISTER</strong>
+                  </button>
+                  </form>
+              </div>
+          </div>
       </div>
     </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+
+    <script>
+      let regUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/register";
+      let logUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/login";
+
+      function registerUser() {
+        console.log("in registerUser()");
+
+        // getting user input from form fields
+        var name = document.getElementById("register-name-input").value;
+        var email = document.getElementById("register-email-input").value;
+        var password = document.getElementById("register-pwd-input").value;
+        var confirmPassword = document.getElementById("register-conf-pwd-input").value;
+
+        // checking if password is valid
+        if (password != confirmPassword) {
+          console.log("Passwords do not match");
+          return;
+        }
+
+        // checking if any field is empty
+        if (name === "" || email === "" || password === "") {
+          console.log("At least one field is empty.");
+          return;
+        }
+        
+        // constructing API headers
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "email": email,
+          "password": password,
+          "name": name
+        });
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        var resultObject = "";
+
+        // fetching the API response
+        fetch(regUrl, requestOptions)
+          .then(response => response.text())
+          .then((result) => {
+            console.log(result);
+            resultObject = result;
+          })
+          .catch(error => console.log('error', error));
+
+          console.log("printing resultObject: " + resultObject);
+
+          // checking if the registration was successful
+          if (resultObject["success"] == true) {
+            console.log ("Successful registration.");
+
+            // creating a cookie with the user ID and name
+            let id = resultObject["id"];
+            let name = resultObject["name"];
+            document.cookie = "id: " + id + "; name: " + name + "; path=/;";
+
+            // redirecting to the user page
+            location.href = "userpage.html";
+          }
+          else {
+            console.log("Unsuccessful registration.")
+      
+            // should display some kind of error message on the screen so the user retries registration
+            var errorDiv = document.getElementById("error-reg-div");
+            errorDiv.style.display = "block";
+          }
+      }
+
+      function loginUser() {
+        console.log("in loginUser()");
+
+        // getting user input from form fields
+        var email = document.getElementById("login-email-input").value;
+        var password = document.getElementById("login-pwd-input").value;
+
+        // checking if any field is empty
+        if (email === "" || password === "") {
+          console.log("At least one field is empty.");
+          return;
+        }
+
+        // constructing API headers
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "email": email,
+          "password": password
+        });
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        var resultObject = "";
+
+        // fetching the API response
+        fetch(logUrl, requestOptions)
+          .then(response => response.text())
+          .then((result) => {
+            console.log(result);
+            resultObject = result;
+          })
+          .catch(error => console.log('error', error));
+
+          console.log("printing resultObject: " + resultObject);
+
+      // checking if the registration was successful
+          if (resultObject["success"] == true) {
+            console.log ("Successful login.");
+
+            // creating a cookie with the user ID and name
+            let id = resultObject["id"];
+            let name = resultObject["name"];
+            document.cookie = "id: " + id + "; name: " + name + "; path=/;";
+
+            // redirecting to the user page
+            location.href = "userpage.html";
+          }
+          else {
+            console.log("Unsuccessful login.")
+            
+            // should display some kind of error message on the screen so the user retries registration
+            var errorDiv = document.getElementById("error-log-div");
+            errorDiv.style.display = "block";
+          }
+
+      }
+
+
+    </script>
   </body>
 </html>
