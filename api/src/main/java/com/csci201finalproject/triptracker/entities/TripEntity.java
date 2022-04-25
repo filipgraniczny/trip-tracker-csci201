@@ -2,7 +2,6 @@ package com.csci201finalproject.triptracker.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "trip", schema = "heroku_efbc5c1a3000eab")
@@ -29,9 +28,6 @@ public class TripEntity {
     @Basic
     @Column(name = "author_id")
     private Integer authorId;
-    @OneToMany
-    private List<EventEntity> events;
-
 
     public int getId() {
         return id;

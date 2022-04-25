@@ -2,7 +2,6 @@ package com.csci201finalproject.triptracker.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Table(name = "event", schema = "heroku_efbc5c1a3000eab")
@@ -32,9 +31,6 @@ public class EventEntity {
     @Basic
     @Column(name = "trip_id")
     private Integer tripId;
-    @ManyToOne
-    @JoinColumn(name="trip_id")
-    private TripEntity trip;
 
     public int getId() {
         return id;
@@ -104,20 +100,31 @@ public class EventEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         EventEntity that = (EventEntity) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(description, that.description) && Objects.equals(location, that.location) && Objects.equals(fromTime, that.fromTime) && Objects.equals(toTime, that.toTime) && Objects.equals(tripId, that.tripId) && Objects.equals(trip, that.trip);
+
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (category != null ? !category.equals(that.category) : that.category != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (location != null ? !location.equals(that.location) : that.location != null) return false;
+        if (fromTime != null ? !fromTime.equals(that.fromTime) : that.fromTime != null) return false;
+        if (toTime != null ? !toTime.equals(that.toTime) : that.toTime != null) return false;
+        if (tripId != null ? !tripId.equals(that.tripId) : that.tripId != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, description, location, fromTime, toTime, tripId, trip);
-    }
-
-    public TripEntity getTrip() {
-        return trip;
-    }
-
-    public void setTrip(TripEntity trip) {
-        this.trip = trip;
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (fromTime != null ? fromTime.hashCode() : 0);
+        result = 31 * result + (toTime != null ? toTime.hashCode() : 0);
+        result = 31 * result + (tripId != null ? tripId.hashCode() : 0);
+        return result;
     }
 }
