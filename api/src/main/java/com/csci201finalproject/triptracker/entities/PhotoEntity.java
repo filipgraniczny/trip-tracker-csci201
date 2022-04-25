@@ -1,5 +1,6 @@
 package com.csci201finalproject.triptracker.entities;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -9,18 +10,38 @@ public class PhotoEntity {
     @Id
     @Column(name = "id")
     private int id;
-    @Basic
-    @Column(name = "trip_id")
-    private Integer tripId;
-    @Basic
-    @Column(name = "event_id")
-    private Integer eventId;
+
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
+    private TripEntity trip;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private EventEntity event;
+
     @Basic
     @Column(name = "caption")
     private String caption;
+
     @Basic
     @Column(name = "object_key_aws")
     private String objectKeyAws;
+
+    public EventEntity getEvent() {
+        return event;
+    }
+
+    public void setEvent(EventEntity event) {
+        this.event = event;
+    }
+
+    public TripEntity getTrip() {
+        return trip;
+    }
+
+    public void setTrip(TripEntity trip) {
+        this.trip = trip;
+    }
 
     public int getId() {
         return id;
@@ -28,22 +49,6 @@ public class PhotoEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Integer getTripId() {
-        return tripId;
-    }
-
-    public void setTripId(Integer tripId) {
-        this.tripId = tripId;
-    }
-
-    public Integer getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Integer eventId) {
-        this.eventId = eventId;
     }
 
     public String getCaption() {
@@ -70,8 +75,6 @@ public class PhotoEntity {
         PhotoEntity that = (PhotoEntity) o;
 
         if (id != that.id) return false;
-        if (tripId != null ? !tripId.equals(that.tripId) : that.tripId != null) return false;
-        if (eventId != null ? !eventId.equals(that.eventId) : that.eventId != null) return false;
         if (caption != null ? !caption.equals(that.caption) : that.caption != null) return false;
         if (objectKeyAws != null ? !objectKeyAws.equals(that.objectKeyAws) : that.objectKeyAws != null) return false;
 
@@ -81,8 +84,6 @@ public class PhotoEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (tripId != null ? tripId.hashCode() : 0);
-        result = 31 * result + (eventId != null ? eventId.hashCode() : 0);
         result = 31 * result + (caption != null ? caption.hashCode() : 0);
         result = 31 * result + (objectKeyAws != null ? objectKeyAws.hashCode() : 0);
         return result;
