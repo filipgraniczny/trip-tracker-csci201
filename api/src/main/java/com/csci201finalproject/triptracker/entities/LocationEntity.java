@@ -1,6 +1,9 @@
 package com.csci201finalproject.triptracker.entities;
 
+import jdk.jfr.Event;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "location", schema = "heroku_efbc5c1a3000eab")
@@ -18,6 +21,12 @@ public class LocationEntity {
     @Basic
     @Column(name = "latitude")
     private double latitude;
+
+    @OneToMany(mappedBy = "location")
+    private List<EventEntity> events;
+
+    @OneToMany(mappedBy = "location")
+    private List<TripEntity> trips;
 
     public int getId() {
         return id;
