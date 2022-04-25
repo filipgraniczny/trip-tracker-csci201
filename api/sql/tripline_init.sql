@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS tripline_data;
-CREATE DATABASE tripline_data;
-USE tripline_data;
+USE heroku_efbc5c1a3000eab;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Trip;
 DROP TABLE IF EXISTS Event;
@@ -24,7 +22,6 @@ CREATE TABLE Trip (
     from_time timestamp NOT NULL,
     to_time timestamp,
     author_id INT
-    
 );
 
 CREATE TABLE Event (
@@ -59,5 +56,3 @@ ALTER TABLE User ADD FOREIGN KEY (pfp_id) REFERENCES Photo(id);
 ALTER TABLE Trip ADD FOREIGN KEY (author_id) REFERENCES User(id);
 ALTER TABLE Trip ADD FOREIGN KEY (location_id) REFERENCES Location(id);
 ALTER TABLE Event ADD FOREIGN KEY (trip_id) REFERENCES Trip(id);
-
-
