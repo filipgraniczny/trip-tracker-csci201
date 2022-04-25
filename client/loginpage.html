@@ -99,6 +99,13 @@
       let regUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/register";
       let logUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/login";
 
+      function validateEmail(email) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+          return true;
+        }
+        return false;
+      }
+
       function registerUser() {
         console.log("in registerUser()");
 
@@ -119,7 +126,13 @@
           console.log("At least one field is empty.");
           return;
         }
-        
+
+        // checking if the email is valid using regex
+        if (validateEmail(email) == false) {
+          console.log("Email address is invalid.");
+          return;
+        }
+
         // constructing API headers
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -183,6 +196,12 @@
         // checking if any field is empty
         if (email === "" || password === "") {
           console.log("At least one field is empty.");
+          return;
+        }
+        
+        // checking if the email is valid using regex
+        if (validateEmail(email) == false) {
+          console.log("Email address is invalid.");
           return;
         }
 
