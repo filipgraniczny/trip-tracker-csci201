@@ -1,11 +1,9 @@
 package com.csci201finalproject.triptracker.repositories;
 
-import java.util.List;
-
-import com.csci201finalproject.triptracker.entities.User;
+import com.csci201finalproject.triptracker.entities.UserEntity;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
-    User findByEmail(String email);
+public interface UserRepository extends CrudRepository<UserEntity, Integer> {
+    UserEntity findByEmail(String email);
 }

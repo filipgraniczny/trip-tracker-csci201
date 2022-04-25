@@ -1,7 +1,9 @@
 package com.csci201finalproject.triptracker.services;
 
+import java.util.Objects;
+
 import com.csci201finalproject.triptracker.dtos.auth.RegisterDTO;
-import com.csci201finalproject.triptracker.entities.User;
+import com.csci201finalproject.triptracker.entities.UserEntity;
 import com.csci201finalproject.triptracker.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,8 @@ public class UserService {
      * @param userData - `RegisterDTO` instance; has email, password, and name
      * @return user entity
      */
-    public User createUser(RegisterDTO userData) {
-        User user = new User();
+    public UserEntity createUser(RegisterDTO userData) {
+        UserEntity user = new UserEntity();
         user.setEmail(userData.getEmail());
         user.setName(userData.getName());
         user.setPassword(userData.getPassword());
@@ -37,9 +39,9 @@ public class UserService {
      * @return null if email or password is invalid else returns the obfuscated user
      *         entity
      */
-    public User verifyUserByEmailAndPassword(String email, String password) {
-        User user = userRepository.findByEmail(email);
-        if (user.getPassword().equals(password)) {
+    public UserEntity verifyUserByEmailAndPassword(String email, String password) {
+        UserEntity user = userRepository.findByEmail(email);
+        if (!Objects.isNull(user) && user.getPassword().equals(password)) {
             user.setPassword(null); // obscure this credential field
             return user;
         }
