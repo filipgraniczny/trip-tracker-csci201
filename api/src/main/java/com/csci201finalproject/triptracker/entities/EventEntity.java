@@ -20,8 +20,8 @@ public class EventEntity {
     @Column(name = "description")
     private String description;
     @Basic
-    @Column(name = "location")
-    private String location;
+    @Column(name = "location_id")
+    private Integer locationId;
     @Basic
     @Column(name = "from_time")
     private Timestamp fromTime;
@@ -64,12 +64,12 @@ public class EventEntity {
         this.description = description;
     }
 
-    public String getLocation() {
-        return location;
+    public Integer getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
     }
 
     public Timestamp getFromTime() {
@@ -107,7 +107,7 @@ public class EventEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (category != null ? !category.equals(that.category) : that.category != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (location != null ? !location.equals(that.location) : that.location != null) return false;
+        if (locationId != null ? !locationId.equals(that.locationId) : that.locationId != null) return false;
         if (fromTime != null ? !fromTime.equals(that.fromTime) : that.fromTime != null) return false;
         if (toTime != null ? !toTime.equals(that.toTime) : that.toTime != null) return false;
         if (tripId != null ? !tripId.equals(that.tripId) : that.tripId != null) return false;
@@ -121,7 +121,7 @@ public class EventEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (locationId != null ? locationId.hashCode() : 0);
         result = 31 * result + (fromTime != null ? fromTime.hashCode() : 0);
         result = 31 * result + (toTime != null ? toTime.hashCode() : 0);
         result = 31 * result + (tripId != null ? tripId.hashCode() : 0);
