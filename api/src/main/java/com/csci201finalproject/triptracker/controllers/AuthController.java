@@ -1,6 +1,5 @@
 package com.csci201finalproject.triptracker.controllers;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Objects;
 
 import com.csci201finalproject.triptracker.dtos.auth.LoginDTO;

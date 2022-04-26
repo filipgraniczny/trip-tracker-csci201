@@ -1,6 +1,8 @@
 package com.csci201finalproject.triptracker.services;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 import com.csci201finalproject.triptracker.dtos.auth.RegisterDTO;
 import com.csci201finalproject.triptracker.entities.UserEntity;
@@ -46,5 +48,17 @@ public class UserService {
             return user;
         }
         return null;
+    }
+
+    public UserEntity findUserById(Integer id) {
+        Optional<UserEntity> user = userRepository.findById(id);
+        if (user.isEmpty())
+            return null;
+        try {
+            user.get().setPassword(null);
+            return user.get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 }
