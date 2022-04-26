@@ -2,6 +2,7 @@ package com.csci201finalproject.triptracker.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "event", schema = "heroku_efbc5c1a3000eab")
@@ -38,6 +39,9 @@ public class EventEntity {
     @ManyToOne
     @JoinColumn(name = "trip_id")
     private TripEntity trip;
+
+    @OneToMany(mappedBy = "event")
+    private List<PhotoEntity> photos;
 
     public LocationEntity getLocation() {
         return location;

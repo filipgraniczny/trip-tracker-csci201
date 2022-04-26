@@ -36,6 +36,9 @@ public class TripEntity {
     @OneToMany(mappedBy = "trip")
     private List<EventEntity> events;
 
+    @OneToMany(mappedBy = "trip")
+    private List<PhotoEntity> photos;
+
     public UserEntity getAuthor() {
         return author;
     }
