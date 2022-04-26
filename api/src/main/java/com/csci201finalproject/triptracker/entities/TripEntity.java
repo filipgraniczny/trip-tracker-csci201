@@ -11,9 +11,11 @@ public class TripEntity {
     @Id
     @Column(name = "id")
     private int id;
+
     @Basic
     @Column(name = "title")
     private String title;
+
     @Basic
     @Column(name = "description")
     private String description;
@@ -25,6 +27,7 @@ public class TripEntity {
     @Basic
     @Column(name = "from_time")
     private Timestamp fromTime;
+
     @Basic
     @Column(name = "to_time")
     private Timestamp toTime;

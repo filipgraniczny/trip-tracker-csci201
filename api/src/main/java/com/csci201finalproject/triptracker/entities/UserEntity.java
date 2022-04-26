@@ -9,15 +9,19 @@ public class UserEntity {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @Basic
     @Column(name = "name", nullable = false)
     private String name;
+
     @Basic
     @Column(name = "email", unique = true, nullable = false)
     private String email;
+
     @Basic
     @Column(name = "password", nullable = false)
     private String password;
+
     @Basic
     @Column(name = "pfp_id")
     private Integer pfpId;
