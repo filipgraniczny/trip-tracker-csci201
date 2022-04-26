@@ -43,22 +43,6 @@ public class EventEntity {
     @OneToMany(mappedBy = "event")
     private List<PhotoEntity> photos;
 
-    public LocationEntity getLocation() {
-        return location;
-    }
-
-    public void setLocation(LocationEntity location) {
-        this.location = location;
-    }
-
-    public TripEntity getTrip() {
-        return trip;
-    }
-
-    public void setTrip(TripEntity trip) {
-        this.trip = trip;
-    }
-
     public int getId() {
         return id;
     }
@@ -91,6 +75,14 @@ public class EventEntity {
         this.description = description;
     }
 
+    public LocationEntity getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationEntity location) {
+        this.location = location;
+    }
+
     public Timestamp getFromTime() {
         return fromTime;
     }
@@ -107,6 +99,21 @@ public class EventEntity {
         this.toTime = toTime;
     }
 
+    public TripEntity getTrip() {
+        return trip;
+    }
+
+    public void setTrip(TripEntity trip) {
+        this.trip = trip;
+    }
+
+    public List<PhotoEntity> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<PhotoEntity> photos) {
+        this.photos = photos;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -119,10 +126,11 @@ public class EventEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (category != null ? !category.equals(that.category) : that.category != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (location != null ? !location.equals(that.location) : that.location != null) return false;
         if (fromTime != null ? !fromTime.equals(that.fromTime) : that.fromTime != null) return false;
         if (toTime != null ? !toTime.equals(that.toTime) : that.toTime != null) return false;
-
-        return true;
+        if (trip != null ? !trip.equals(that.trip) : that.trip != null) return false;
+        return photos != null ? photos.equals(that.photos) : that.photos == null;
     }
 
     @Override
@@ -131,8 +139,11 @@ public class EventEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (fromTime != null ? fromTime.hashCode() : 0);
         result = 31 * result + (toTime != null ? toTime.hashCode() : 0);
+        result = 31 * result + (trip != null ? trip.hashCode() : 0);
+        result = 31 * result + (photos != null ? photos.hashCode() : 0);
         return result;
     }
 }
