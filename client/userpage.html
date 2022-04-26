@@ -26,9 +26,9 @@
           <li id="home"><a href="homepage.html">HOME</a></li>
           <li id="divider"><strong>|</strong></li>
           <li >
-            <button id="logout">
+            <button id="logout" onclick="logOut()">
               <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
-              <a href="">LOGOUT</a>
+              <a>LOGOUT</a>
             </button>
           </li>
         </ul>
@@ -121,10 +121,13 @@
          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d26359294.213879205!2d-113.71754000532057!3d36.24708982631333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1649550562301!5m2!1sen!2sus" id="map" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
-
-
-
-
   </body>
+
+  <script>
+    function logOut() {
+      document.cookie = "id: ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location.href='homepage.html';
+    }
+  </script>
 </html>
 
