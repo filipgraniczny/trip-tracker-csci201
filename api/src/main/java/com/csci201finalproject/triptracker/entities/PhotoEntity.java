@@ -27,12 +27,12 @@ public class PhotoEntity {
     @Column(name = "object_key_aws")
     private String objectKeyAws;
 
-    public EventEntity getEvent() {
-        return event;
+    public int getId() {
+        return id;
     }
 
-    public void setEvent(EventEntity event) {
-        this.event = event;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public TripEntity getTrip() {
@@ -43,12 +43,12 @@ public class PhotoEntity {
         this.trip = trip;
     }
 
-    public int getId() {
-        return id;
+    public EventEntity getEvent() {
+        return event;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEvent(EventEntity event) {
+        this.event = event;
     }
 
     public String getCaption() {
@@ -75,15 +75,17 @@ public class PhotoEntity {
         PhotoEntity that = (PhotoEntity) o;
 
         if (id != that.id) return false;
+        if (trip != null ? !trip.equals(that.trip) : that.trip != null) return false;
+        if (event != null ? !event.equals(that.event) : that.event != null) return false;
         if (caption != null ? !caption.equals(that.caption) : that.caption != null) return false;
-        if (objectKeyAws != null ? !objectKeyAws.equals(that.objectKeyAws) : that.objectKeyAws != null) return false;
-
-        return true;
+        return objectKeyAws != null ? objectKeyAws.equals(that.objectKeyAws) : that.objectKeyAws == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
+        result = 31 * result + (trip != null ? trip.hashCode() : 0);
+        result = 31 * result + (event != null ? event.hashCode() : 0);
         result = 31 * result + (caption != null ? caption.hashCode() : 0);
         result = 31 * result + (objectKeyAws != null ? objectKeyAws.hashCode() : 0);
         return result;

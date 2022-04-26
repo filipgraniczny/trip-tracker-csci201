@@ -12,12 +12,15 @@ public class LocationEntity {
     @Id
     @Column(name = "id")
     private int id;
+
     @Basic
     @Column(name = "name")
     private String name;
+
     @Basic
     @Column(name = "longitude")
     private double longitude;
+
     @Basic
     @Column(name = "latitude")
     private double latitude;

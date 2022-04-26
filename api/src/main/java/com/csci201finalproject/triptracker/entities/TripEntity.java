@@ -11,9 +11,11 @@ public class TripEntity {
     @Id
     @Column(name = "id")
     private int id;
+
     @Basic
     @Column(name = "title")
     private String title;
+
     @Basic
     @Column(name = "description")
     private String description;
@@ -25,6 +27,7 @@ public class TripEntity {
     @Basic
     @Column(name = "from_time")
     private Timestamp fromTime;
+
     @Basic
     @Column(name = "to_time")
     private Timestamp toTime;
@@ -36,21 +39,8 @@ public class TripEntity {
     @OneToMany(mappedBy = "trip")
     private List<EventEntity> events;
 
-    public UserEntity getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(UserEntity author) {
-        this.author = author;
-    }
-
-    public LocationEntity getLocation() {
-        return location;
-    }
-
-    public void setLocation(LocationEntity location) {
-        this.location = location;
-    }
+    @OneToMany(mappedBy = "trip")
+    private List<PhotoEntity> photos;
 
     public int getId() {
         return id;
@@ -76,6 +66,13 @@ public class TripEntity {
         this.description = description;
     }
 
+    public LocationEntity getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationEntity location) {
+        this.location = location;
+    }
 
     public Timestamp getFromTime() {
         return fromTime;
@@ -93,7 +90,29 @@ public class TripEntity {
         this.toTime = toTime;
     }
 
+    public UserEntity getAuthor() {
+        return author;
+    }
 
+    public void setAuthor(UserEntity author) {
+        this.author = author;
+    }
+
+    public List<EventEntity> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<EventEntity> events) {
+        this.events = events;
+    }
+
+    public List<PhotoEntity> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<PhotoEntity> photos) {
+        this.photos = photos;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -105,10 +124,12 @@ public class TripEntity {
         if (id != that.id) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (location != null ? !location.equals(that.location) : that.location != null) return false;
         if (fromTime != null ? !fromTime.equals(that.fromTime) : that.fromTime != null) return false;
         if (toTime != null ? !toTime.equals(that.toTime) : that.toTime != null) return false;
-
-        return true;
+        if (author != null ? !author.equals(that.author) : that.author != null) return false;
+        if (events != null ? !events.equals(that.events) : that.events != null) return false;
+        return photos != null ? photos.equals(that.photos) : that.photos == null;
     }
 
     @Override
@@ -116,8 +137,12 @@ public class TripEntity {
         int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (fromTime != null ? fromTime.hashCode() : 0);
         result = 31 * result + (toTime != null ? toTime.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (events != null ? events.hashCode() : 0);
+        result = 31 * result + (photos != null ? photos.hashCode() : 0);
         return result;
     }
 }
