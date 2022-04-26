@@ -13,7 +13,7 @@
 <body onload="getTrip()">
 
     <div id="nav-bar">
-        <nav>
+        <nav id="nav-bar-fixed">
             <ul class="nav-list">
               <li class="nav-item">
                 <a id="logo" href="#"><strong>T | L</strong></a>
@@ -25,11 +25,9 @@
                 |
               </li>
               <li class="nav-item">
-                <button id="btn-login">
-                    <a href="loginpage.html">
+                <button id="btn-login" onclick="checkLogIn()">
                         <img id="login-logo" src="./images/user-icon.svg" alt="logo">
-                        <strong>LOG IN</strong>
-                    </a>
+                        <strong id="login-btn-change">LOG IN</strong>
                 </button>
               </li>
             </ul>
@@ -44,7 +42,7 @@
           <a href="#explore-section"><button id="learn-more-btn"><strong>Learn more</strong></button></a>
         </div>
 
-        <form>
+        <form action="searchResults.html">
             <div id="search-bar">
                 <div id="search-logo"><img id="search-img" src="./images/seach-logo.svg" alt="search logo"></div>
                 <div id="search-input"><input type="text" id="input-field" placeholder="S e a r c h   a   t r i p . . ."></div>
@@ -76,28 +74,28 @@
         <div class="explore-title"><strong>Hightlight trips</strong></div>
         <div class="inspiration-section">
           <div class="highlight-container">
-            <div id="hightlight-img"></div>
+            <button id="hightlight-img" onclick="window.location.href='details.html';"></button>
             <div class="highlight-title"><strong id="highlight-title-1">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-1">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-1">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
-            <div id="hightlight-img"></div>
+            <button id="hightlight-img" onclick="window.location.href='details.html';"></button>
             <div class="highlight-title"><strong id="highlight-title-2">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-2">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-2">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
-            <div id="hightlight-img"></div>
+            <button id="hightlight-img" onclick="window.location.href='details.html';"></button>
             <div class="highlight-title"><strong id="highlight-title-3">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-3">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-3">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
-            <div id="hightlight-img"></div>
+            <button id="hightlight-img" onclick="window.location.href='details.html';"></button>
             <div class="highlight-title"><strong id="highlight-title-4">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-4">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-4">10/11/2012</div>
@@ -109,10 +107,12 @@
     <script>
       // CODE TO CONNECT TO API BACKEND STUFF
       function getTrip() {
-       var location;
-       var author;
-       var date;
+        // setCookie(1, "henryvu");
+        checkCookie();
 
+        var location;
+        var author;
+        var date;
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -127,7 +127,6 @@
         .then(response => response.json())
         .then(data => {
           const result = data.result;
-          console.log(result);
           updateTrip(result);
         })
         .catch(console.error);
@@ -152,5 +151,44 @@
           date.innerHTML = dateFormat;
         }
       }
+
+      function setCookie(id, name) {
+        document.cookie = "id: " + id + "; name: " + name + "; path=/";
+      }
+
+      function getCookie(id) {
+        let name = "id: " + id;
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        console.log(ca);
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(id) == 0) {
+            return id;
+          }
+        }
+        return "";
+      }
+
+      function checkCookie() {
+        let id = getCookie("id: ");
+        if (id != "") {
+          let loginBtn = document.getElementById("login-btn-change");
+          loginBtn.innerHTML = "ACCOUNT";
+        }
+      }
+
+      function checkLogIn() {
+        let id = getCookie("id: ");
+        if (id != "") {
+          window.location.href='userpage.html';
+        }
+        else {
+          window.location.href='loginpage.html';
+        }
+      } 
     </script>
 </body>
