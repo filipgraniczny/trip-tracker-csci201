@@ -1,5 +1,6 @@
 package com.csci201finalproject.triptracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jdk.jfr.Event;
 
 import javax.persistence.*;
@@ -25,9 +26,11 @@ public class LocationEntity {
     @Column(name = "latitude")
     private double latitude;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "location")
     private List<EventEntity> events;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "location")
     private List<TripEntity> trips;
 

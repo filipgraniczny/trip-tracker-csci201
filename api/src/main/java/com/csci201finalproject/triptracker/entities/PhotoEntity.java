@@ -1,6 +1,8 @@
 package com.csci201finalproject.triptracker.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,10 +13,12 @@ public class PhotoEntity {
     @Column(name = "id")
     private int id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "trip_id")
     private TripEntity trip;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "event_id")
     private EventEntity event;
