@@ -1,5 +1,7 @@
 package com.csci201finalproject.triptracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -36,6 +38,7 @@ public class EventEntity {
     @Column(name = "to_time")
     private Timestamp toTime;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "trip_id")
     private TripEntity trip;
