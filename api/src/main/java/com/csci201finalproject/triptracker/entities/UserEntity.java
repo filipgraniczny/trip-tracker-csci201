@@ -10,24 +10,21 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Basic
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Basic
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Basic
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Basic
+    @OneToOne
     @Column(name = "pfp_id")
-    private Integer pfpId;
+    private PhotoEntity profilePhotoEntity;
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -35,7 +32,7 @@ public class UserEntity {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -43,7 +40,7 @@ public class UserEntity {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -51,42 +48,18 @@ public class UserEntity {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public Integer getPfpId() {
-        return pfpId;
+    public PhotoEntity getProfilePhotoEntity() {
+        return this.profilePhotoEntity;
     }
 
-    public void setPfpId(Integer pfpId) {
-        this.pfpId = pfpId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserEntity that = (UserEntity) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        return pfpId != null ? pfpId.equals(that.pfpId) : that.pfpId == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (pfpId != null ? pfpId.hashCode() : 0);
-        return result;
+    public void setProfilePhotoEntity(PhotoEntity profilePhotoEntity) {
+        this.profilePhotoEntity = profilePhotoEntity;
     }
 }
