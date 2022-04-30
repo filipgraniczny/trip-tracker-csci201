@@ -102,8 +102,8 @@
   
 
     <script>
-      let regUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/register";
-      let logUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/auth/login";
+      let regUrl = "https://tripline-csci201.herokuapp.com/auth/register";
+      let logUrl = "https://tripline-csci201.herokuapp.com/auth/login";
 
       function validateEmail(email) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -178,7 +178,7 @@
             // creating a cookie with the user ID and name
             let id = resultObject["id"];
             let name = resultObject["name"];
-            document.cookie = "id: " + id + "; name: " + name + "; path=/;";
+            document.cookie = "userID=" + id + "; path=/;";
 
             // redirecting to the user page
             location.href = "userpage.html";
@@ -249,7 +249,7 @@
             // creating a cookie with the user ID and name
             let id = resultObject["id"];
             let name = resultObject["name"];
-            document.cookie = "id: " + id + "; name: " + name + "; path=/;";
+            document.cookie = "userID=" + id + "; path=/;";
 
             // redirecting to the user page
             location.href = "userpage.html";
