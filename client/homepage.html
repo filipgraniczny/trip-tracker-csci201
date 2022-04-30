@@ -42,12 +42,13 @@
           <a href="#explore-section"><button id="learn-more-btn"><strong>Learn more</strong></button></a>
         </div>
 
-        <form action="searchResults.html">
+        <form action="searchResults.html" id="search-container">
             <div id="search-bar">
                 <div id="search-logo"><img id="search-img" src="./images/seach-logo.svg" alt="search logo"></div>
                 <div id="search-input"><input type="text" id="input-field" placeholder="S e a r c h   a   t r i p . . ."></div>
                 <button id="submit-btn" type="submit" value="Submit"><img  id="submit-img" src="./images/right-arrow.svg" alt="right arrow"></button>
             </div>
+            <div id="spacer"></div>
         </form>
     </div>
 
@@ -106,8 +107,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
       // CODE TO CONNECT TO API BACKEND STUFF
+      let getTripURL = 'https://tripline-csci201.herokuapp.com/trips/explore?limit=4&searchTerm=&sortBy=&ascending';
       function getTrip() {
-        // setCookie(1, "henryvu");
+        setCookie(1);
         checkCookie();
 
         var location;
@@ -123,7 +125,7 @@
           redirect: 'follow'
         };
 
-        fetch("https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/trips/explore?limit=3&searchTerm=&sortBy=")
+        fetch(getTripURL)
         .then(response => response.json())
         .then(data => {
           const result = data.result;
@@ -152,12 +154,12 @@
         }
       }
 
-      function setCookie(id, name) {
-        document.cookie = "id: " + id + "; name: " + name + "; path=/";
+      function setCookie(id) {
+        document.cookie = "userID=" + id + "; path=/";
       }
 
       function getCookie(id) {
-        let name = "id: " + id;
+        let name = "userID: " + id;
         let decodedCookie = decodeURIComponent(document.cookie);
         let ca = decodedCookie.split(';');
         console.log(ca);
@@ -174,7 +176,7 @@
       }
 
       function checkCookie() {
-        let id = getCookie("id: ");
+        let id = getCookie("userID=");
         if (id != "") {
           let loginBtn = document.getElementById("login-btn-change");
           loginBtn.innerHTML = "ACCOUNT";
@@ -182,7 +184,7 @@
       }
 
       function checkLogIn() {
-        let id = getCookie("id: ");
+        let id = getCookie("userID=");
         if (id != "") {
           window.location.href='userpage.html';
         }
