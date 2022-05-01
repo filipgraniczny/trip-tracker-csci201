@@ -187,8 +187,10 @@
             console.log("Unsuccessful registration.")
       
             // should display some kind of error message on the screen so the user retries registration
-            var errorDiv = document.getElementById("error-reg-div");
-            errorDiv.style.display = "block";
+            var regError = document.getElementById("error-reg-div");
+            var logError = document.getElementById("error-log-div");
+            regError.style.display = "block";
+            logError.style.display = "none";
           }
       }
 
@@ -258,8 +260,10 @@
             console.log("Unsuccessful login.")
             
             // should display some kind of error message on the screen so the user retries registration
-            var errorDiv = document.getElementById("error-log-div");
-            errorDiv.style.display = "block";
+            var regError = document.getElementById("error-reg-div");
+            var logError = document.getElementById("error-log-div");
+            regError.style.display = "none";
+            logError.style.display = "block";
           }
 
       }
