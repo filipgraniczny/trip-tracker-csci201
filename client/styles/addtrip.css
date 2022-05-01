@@ -122,7 +122,14 @@ input.larger {
 }
 
 
+.error {
+  color: red;
+}
+
 /* END MAIN FORMATTING */
+
+
+
 
 /* CSS FOR LOCATION SEARCH WITH GOOGLE MAPS */
 /* Always set the map height explicitly to define the size of the div

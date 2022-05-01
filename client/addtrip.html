@@ -291,6 +291,11 @@
       </div>
       <!-- END EVENT #3-->
       
+
+      <div id="error-add-div" style="display: none;">
+        <p class="error">Trip could not be added successfully. Please try again.</p>
+      </div>
+
       <button type="button" id="create-trip-btn" onclick="createTrip()">CREATE TRIP</button>
     </form>
 
@@ -346,6 +351,14 @@
         var startDate = document.getElementById("start-date").value;
         var endDate = document.getElementById("end-date").value;
         var accommodations = document.getElementById("accommodations-select").options[select.selectedIndex].value;
+        var pinned = document.querySelector('#pinned-check');
+        
+        if (pinned.checked) {
+          pinned = true;
+        }
+        else {
+          pinned = false;
+        }
 
         console.log("location: " + location);
 
@@ -371,7 +384,8 @@
           "location_longitude": 170.2222,
           "location_latitude": -20.8844,
           "timestamp_to": endDate,
-          "timestamp_from": startDate
+          "timestamp_from": startDate, 
+          "pin": pinned
         });
 
 
@@ -384,31 +398,36 @@
           redirect: 'follow'
         };
 
-        var resultObject = "";
 
+        // fetching the API response
         fetch(addUrl, requestOptions)
-          .then(response => response.text())
-          .then((result) => {
-            console.log(result);
-            resultObject = result;
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            let resultObject = data;
+            console.log('User:' + resultObject.id);
+
+            // checking if the registration was successful
+            if (resultObject.success) {
+              console.log ("Successfully added trip.");
+
+              // redirecting to the user page
+              location.href = "userpage.html";
+            }
+            else {
+              console.log("Trip was not added successfully.")
+              
+              // should display some kind of error message on the screen so the user retries adding a trip
+              var errorDiv = document.getElementById("error-add-div");
+              errorDiv.style.display = "block";
+            }
           })
           .catch(error => console.log('error', error));
-
-
-        console.log("printing resultObject: " + resultObject);
-
-        if (resultObject["success"] == true) {
-            console.log ("Successfully added trip.");
-
-            // redirecting to the user page
-            location.href = "userpage.html";
-        }
-        else {
-            console.log ("Trip was not added successfully.");
-        }
-
       }
     
+
+
+
 
       // function that returns a string with the value of the cookie
       function getCookie(cookieName) {
@@ -430,6 +449,11 @@
     </script>
 
     
+
+
+
+
+
     <script>
       // Javascript for the photo upload stuff
       // source: https://speckyboy.com/custom-file-upload-fields/
