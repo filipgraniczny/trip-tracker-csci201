@@ -82,6 +82,46 @@ input.larger {
     height: 30px;
 }
 
+/* formatting for x button */
+
+.crosssign {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  position: relative;
+  transform: rotate(45deg);
+}
+
+.crosssign_circle {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-color: #34945C;
+  border-radius: 11px;
+  left: 0;
+  top: 0;
+}
+
+.crosssign_stem,
+.crosssign_stem2 {
+  position: absolute;
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.crosssign_stem {
+  width: 3px;
+  height: 9px;
+}
+
+.crosssign_stem2 {
+  width: 9px;
+  height: 3px;
+}
+
+
 /* END MAIN FORMATTING */
 
 /* CSS FOR LOCATION SEARCH WITH GOOGLE MAPS */
