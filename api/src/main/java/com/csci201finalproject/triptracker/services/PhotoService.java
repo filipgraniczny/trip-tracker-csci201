@@ -1,9 +1,12 @@
 package com.csci201finalproject.triptracker.services;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.SdkClientException;
@@ -54,5 +57,25 @@ public class PhotoService {
             throws AwsServiceException, SdkClientException, S3Exception {
         PutObjectRequest putObjectRequest = PutObjectRequest.builder().bucket(bucket).key(key).build();
         s3.putObject(putObjectRequest, RequestBody.fromFile(file));
+    }
+
+    /**
+     * Uploads the MultipartFile to S3 bucket; useful for dealing with form-data
+     * requests
+     * 
+     * @param bucket
+     * @param key
+     * @param multipartFile
+     * @throws S3Exception
+     * @throws AwsServiceException
+     * @throws SdkClientException
+     * @throws IOException
+     */
+    public void uploadObjectFromMultipart(String bucket, String key, MultipartFile multipartFile)
+            throws S3Exception, AwsServiceException, SdkClientException, IOException {
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder().bucket(bucket).key(key)
+                .contentType(multipartFile.getContentType()).build();
+        s3.putObject(putObjectRequest,
+                RequestBody.fromInputStream(multipartFile.getInputStream(), multipartFile.getSize()));
     }
 }

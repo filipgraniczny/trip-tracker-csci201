@@ -2,10 +2,12 @@ package com.csci201finalproject.triptracker.services;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,6 +21,7 @@ import com.csci201finalproject.triptracker.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service()
 public class UserService {
@@ -61,7 +64,6 @@ public class UserService {
     public UserEntity verifyUserByEmailAndPassword(String email, String password) {
         UserEntity user = userRepository.findByEmail(email);
         if (!Objects.isNull(user) && user.getPassword().equals(password)) {
-            user.setPassword(null); // obscure this credential field
             return user;
         }
         return null;
@@ -78,7 +80,6 @@ public class UserService {
         if (user.isEmpty())
             return null;
         try {
-            user.get().setPassword(null);
             return user.get();
         } catch (NoSuchElementException e) {
             return null;
@@ -95,23 +96,24 @@ public class UserService {
      * <code>pfp_[USER ID]_[RANDOM UUID]</code>
      * 
      * @param userEntity - the user Entity
-     * @param photoFile  - a File object of the photo
-     * @return the presigned URL as a URL object of the new image
+     * @param multipart  - a MultipartFile object of the original file
+     * @return [the presigned URL as a URL object of the new image, the
+     *         created PhotoEntity]
      * @throws IllegalArgumentException if user is null or does not exist in
      *                                  database or if File is not an acceptable
      *                                  image format
      * @throws IOException              if any unexpected errors occur
      */
-    public URL updateProfileImageUser(UserEntity userEntity, File photoFile)
+    public List<Object> updateProfileImageUser(UserEntity userEntity, MultipartFile multipart)
             throws IllegalArgumentException, IOException {
-        if (findUserById(userEntity.getId()) == null) {
+        UserEntity foundUserEntity = findUserById(userEntity.getId());
+        if (userEntity == null || foundUserEntity == null) {
             throw new IllegalArgumentException("Invalid UserEntity passed in; UserEntity must exist in database");
         }
 
         // get mime type and check if it's a PNG or JPG and reject upload if not
         try {
-            Path filepath = photoFile.toPath();
-            String mime = Files.probeContentType(filepath);
+            String mime = multipart.getContentType();
             if (!utilService.isValidProfileMimeType(mime)) {
                 String errorMsg = String.format("Invalid file mime of %s; must be one of %s", mime,
                         utilService.validUserProfileMimeTypes);
@@ -123,21 +125,23 @@ public class UserService {
                     "Error: filepath of photoFile could not be reconstructed; " + invalidPathException.getStackTrace());
         }
 
-        // perform uploading to S3
-        String objectAwsKey = String.format("pfp_%s_%s", userEntity.getId(), UUID.randomUUID().toString());
-        photoService.uploadObject(configService.getS3BucketName(), objectAwsKey, photoFile);
-
+        // standard AWS filename for profile photo on S3
+        String objectAwsKey = String.format("pfp_%s_%s.%s", foundUserEntity.getId(), UUID.randomUUID().toString(),
+                multipart.getContentType().split("/")[1]);
         // create photo db record based on AWS key
         PhotoEntity photoEntity = new PhotoEntity();
         photoEntity.setObjectKeyAws(objectAwsKey);
         photoRepository.save(photoEntity);
 
         // save photo entity to user record
-        userEntity.setProfilePhotoEntity(photoEntity);
-        userRepository.save(userEntity);
+        foundUserEntity.setProfilePhotoEntity(photoEntity);
+        userRepository.save(foundUserEntity);
+
+        // perform uploading to S3
+        photoService.uploadObjectFromMultipart(configService.getS3BucketName(), objectAwsKey, multipart);
 
         // return url
         URL objectUrl = photoService.getObjectURLFromKey(configService.getS3BucketName(), objectAwsKey);
-        return objectUrl;
+        return List.of(objectUrl, photoEntity);
     }
 }
