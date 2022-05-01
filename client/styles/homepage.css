@@ -171,10 +171,12 @@ html {
     background-color: #91CB82;
     border-radius: 50%;
     border: 1px;
+    transition: all 0.5s;
 }
 
 #submit-btn:hover {
-    padding-left: 25px;
+    background-color: #346f25;
+    transition: all 0.5s;
 }
 
 #submit-img {

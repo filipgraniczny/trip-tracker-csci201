@@ -32,9 +32,6 @@
             <li class="nav-item">
               <a href="homepage.html"><strong>HOME</strong></a>
             </li>
-            <li class="nav-item">
-              <a href="explorepage.html"><strong>EXPLORE</strong></a>
-            </li>
           </ul>
       </nav>
 
@@ -158,38 +155,34 @@
           redirect: 'follow'
         };
 
-        var resultObject = "";
-
         // fetching the API response
         fetch(regUrl, requestOptions)
-          .then(response => response.text())
-          .then((result) => {
-            console.log(result);
-            resultObject = result;
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            let resultObject = data;
+            console.log('Status: ' + resultObject.id);
+
+            // checking if the registration was successful
+            if (resultObject.id) {
+              console.log ("Successful Register.");
+
+              // creating a cookie with the user ID and name
+              let id = resultObject.id;
+              document.cookie = "userID=" + id + "; path=/;";
+
+              // // redirecting to the user page
+              location.href = "userpage.html";
+            }
+            else {
+              console.log("Unsuccessful register.")
+              
+              // should display some kind of error message on the screen so the user retries registration
+              var errorDiv = document.getElementById("error-reg-div");
+              errorDiv.style.display = "block";
+            }
           })
           .catch(error => console.log('error', error));
-
-          console.log("printing resultObject: " + resultObject);
-
-          // checking if the registration was successful
-          if (resultObject["success"] == true) {
-            console.log ("Successful registration.");
-
-            // creating a cookie with the user ID and name
-            let id = resultObject["id"];
-            let name = resultObject["name"];
-            document.cookie = "userID=" + id + "; path=/;";
-
-            // redirecting to the user page
-            location.href = "userpage.html";
-          }
-          else {
-            console.log("Unsuccessful registration.")
-      
-            // should display some kind of error message on the screen so the user retries registration
-            var errorDiv = document.getElementById("error-reg-div");
-            errorDiv.style.display = "block";
-          }
       }
 
       function loginUser() {
@@ -229,39 +222,34 @@
           redirect: 'follow'
         };
 
-        var resultObject = "";
-
         // fetching the API response
         fetch(logUrl, requestOptions)
-          .then(response => response.text())
-          .then((result) => {
-            console.log(result);
-            resultObject = result;
-          })
-          .catch(error => console.log('error', error));
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            let resultObject = data;
+            console.log('User:' + resultObject.id);
 
-          console.log("printing resultObject: " + resultObject);
-
-      // checking if the registration was successful
-          if (resultObject["success"] == true) {
+            // checking if the registration was successful
+            if (resultObject.id) {
             console.log ("Successful login.");
 
             // creating a cookie with the user ID and name
-            let id = resultObject["id"];
-            let name = resultObject["name"];
+            let id = resultObject.id;
             document.cookie = "userID=" + id + "; path=/;";
 
-            // redirecting to the user page
+            // // redirecting to the user page
             location.href = "userpage.html";
-          }
-          else {
-            console.log("Unsuccessful login.")
-            
-            // should display some kind of error message on the screen so the user retries registration
-            var errorDiv = document.getElementById("error-log-div");
-            errorDiv.style.display = "block";
-          }
-
+            }
+            else {
+              console.log("Unsuccessful login.")
+              
+              // should display some kind of error message on the screen so the user retries registration
+              var errorDiv = document.getElementById("error-log-div");
+              errorDiv.style.display = "block";
+            }
+          })
+          .catch(error => console.log('error', error));
       }
 
 

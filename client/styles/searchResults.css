@@ -39,7 +39,7 @@ body{
 }
 
 .nav-item a:hover {
-	color: var(--clr-primary-dark);
+	color: #91CB82;
 }
 
 .nav-item:first-child {
@@ -54,15 +54,14 @@ body{
     border-radius: 50px;
     background-color: rgba(0,0,0,0.0);
     font-size: 0.8em;
+    color: white;
+    transition: all 0.5s;
 }
 
-#btn-register {
-    width: 180px;
-    height: 55px;
-    border: 3px solid white;
-    border-radius: 50px;
-    background-color: rgba(0,0,0,0.0);
-    font-size: 0.8em;
+#btn-login:hover {
+  color: #91CB82;
+  border: 3px solid #91CB82;
+  transition: all 0.5s;
 }
 
 #logo {
