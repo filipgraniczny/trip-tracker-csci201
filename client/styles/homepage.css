@@ -8,6 +8,7 @@ html {
     background-position: center;
     background-size: cover;
     height: 100vh;
+    position: relative;
 }
 
 .nav-list {
@@ -119,6 +120,15 @@ html {
       margin-right: 1rem;
   }
 
+  #search-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+  }
+
   #search-bar {
       display: flex;
       flex-direction: row;
@@ -126,12 +136,15 @@ html {
       align-items: center;
       width: 30%;
       height: 80px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 10%;
       background-color: white;
       padding: 10px 15px 15px 10px;
       border-radius: 50px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  #spacer {
+      height: 10vh;
   }
 
 #search-logo {
@@ -158,10 +171,12 @@ html {
     background-color: #91CB82;
     border-radius: 50%;
     border: 1px;
+    transition: all 0.5s;
 }
 
 #submit-btn:hover {
-    padding-left: 25px;
+    background-color: #346f25;
+    transition: all 0.5s;
 }
 
 #submit-img {

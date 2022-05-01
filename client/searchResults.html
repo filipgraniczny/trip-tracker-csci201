@@ -9,30 +9,30 @@
 	<link rel="stylesheet" href="./styles/searchResults.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
 </head>
-<body>
+
+<body onload="checkCookie()">
 	<!-- Navbar code courtesy of Henry :) -->
     <div id="nav-bar">
         <nav>
             <ul class="nav-list">
 				<li class="nav-item">
-					<a id="logo" href="homepage.html"><strong>T | L</strong></a>
+				  <a id="logo" href="homepage.html"><strong>T | L</strong></a>
 				</li>
 				<li class="nav-item">
-					<a href="homepage.html"><strong>HOME</strong></a>
+				  <a href="homepage.html"><strong>HOME</strong></a>
 				</li>
 				<li class="nav-item">
-				|
+				  |
 				</li>
 				<li class="nav-item">
-					<button id="btn-login">
-					    <a href="loginpage.html">
-					        <img id="login-logo" src="./images/user-icon.svg" alt="logo">
-					        <strong>LOG IN</strong>
-					    </a>
-					</button>
+				  <button id="btn-login" onclick="checkLogIn()">
+						<img id="login-logo" src="./images/user-icon.svg" alt="logo">
+						<strong id="login-btn-change">LOG IN</strong>
+				  </button>
 				</li>
-            </ul>
+			  </ul>
         </nav>
+		
 	    <!-- Search Bar-->
 	    <form>
 	        <div id="search-bar">
@@ -99,4 +99,42 @@
 		<button class="moreButton"><i class="fa fa-plus"></i></button>
 	</div>
 </body>
+
+<script>
+	function getCookie(id) {
+		let name = "userID: " + id;
+		let decodedCookie = decodeURIComponent(document.cookie);
+		let ca = decodedCookie.split(';');
+		console.log(ca);
+		for(let i = 0; i <ca.length; i++) {
+			let c = ca[i];
+			while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+			}
+			if (c.indexOf(id) == 0) {
+			return id;
+			}
+		}
+		return "";
+	}
+
+	function checkCookie() {
+		let id = getCookie("userID=");
+		if (id != "") {
+			let loginBtn = document.getElementById("login-btn-change");
+			loginBtn.innerHTML = "ACCOUNT";
+		}
+	}
+
+	function checkLogIn() {
+		let id = getCookie("userID=");
+		if (id != "") {
+			window.location.href='userpage.html';
+		}
+		else {
+			window.location.href='loginpage.html';
+		}
+	}
+</script>
+
 </html>
