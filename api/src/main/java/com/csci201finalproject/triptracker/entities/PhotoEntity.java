@@ -55,7 +55,7 @@ public class PhotoEntity {
     }
 
     public int getId() {
-        return id;
+        return id == null ? -1 : id;
     }
 
     public void setId(int id) {

@@ -19,6 +19,7 @@ import com.csci201finalproject.triptracker.entities.UserEntity;
 import com.csci201finalproject.triptracker.repositories.PhotoRepository;
 import com.csci201finalproject.triptracker.repositories.UserRepository;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,6 +108,9 @@ public class UserService {
     public List<Object> updateProfileImageUser(UserEntity userEntity, MultipartFile multipart)
             throws IllegalArgumentException, IOException {
 
+        if (Objects.isNull(userEntity.getId())) {
+            throw new IllegalArgumentException("Invalid UserEntity passed in; ID = null");
+        }
         UserEntity foundUserEntity = findUserById(userEntity.getId());
         if (userEntity == null || foundUserEntity == null) {
             throw new IllegalArgumentException("Invalid UserEntity passed in; UserEntity must exist in database");
