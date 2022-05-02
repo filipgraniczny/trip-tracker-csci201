@@ -30,6 +30,7 @@ public class UserEntity {
     @JoinColumn(name = "pfp_id", nullable = true)
     private PhotoEntity profilePhotoEntity;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author", orphanRemoval = true)
     private List<TripEntity> trip;
 
