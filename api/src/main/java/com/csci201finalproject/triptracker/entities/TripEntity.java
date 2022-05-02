@@ -36,10 +36,10 @@ public class TripEntity {
     @JoinColumn(name = "author_id")
     private UserEntity author;
 
-    @OneToMany(mappedBy = "trip")
+    @OneToMany(mappedBy = "trip", orphanRemoval = true)
     private List<EventEntity> events;
 
-    @OneToMany(mappedBy = "trip")
+    @OneToMany(mappedBy = "trip", orphanRemoval = true)
     private List<PhotoEntity> photos;
 
     public int getId() {
