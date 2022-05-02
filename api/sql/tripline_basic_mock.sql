@@ -1,4 +1,12 @@
 use `heroku_efbc5c1a3000eab`;
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE User;
+TRUNCATE TABLE Trip;
+TRUNCATE TABLE Event;
+TRUNCATE TABLE Location;
+TRUNCATE TABLE Photo;
+SET FOREIGN_KEY_CHECKS = 1;
+
 insert into location (id, name, longitude, latitude) values (1, "Pizza Hut", 36.31, -95.61);
 insert into location (id, name, longitude, latitude) values (2, "Fils house", 42.19, -87.94);
 insert into location (id, name, longitude, latitude) values (3, "Chicago", 41.88, -87.62);
