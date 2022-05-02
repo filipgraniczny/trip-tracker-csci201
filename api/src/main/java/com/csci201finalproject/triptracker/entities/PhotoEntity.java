@@ -1,6 +1,7 @@
 package com.csci201finalproject.triptracker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
 
@@ -29,7 +30,7 @@ public class PhotoEntity {
     @Basic
     @Column(name = "object_key_aws")
     private String objectKeyAws;
-
+  
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private UserEntity userEntity;
@@ -53,7 +54,7 @@ public class PhotoEntity {
         this.presignedUrl = presignedUrl;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -122,4 +123,5 @@ public class PhotoEntity {
         result = 31 * result + (objectKeyAws != null ? objectKeyAws.hashCode() : 0);
         return result;
     }
+
 }
