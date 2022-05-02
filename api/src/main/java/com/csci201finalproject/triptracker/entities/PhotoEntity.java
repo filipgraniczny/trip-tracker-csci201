@@ -30,6 +30,7 @@ public class PhotoEntity {
     @Column(name = "object_key_aws")
     private String objectKeyAws;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private UserEntity userEntity;
 

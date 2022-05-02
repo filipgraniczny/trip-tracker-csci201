@@ -28,7 +28,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PhotoService photoService;
+    private S3Service s3Service;
     @Autowired
     private ConfigService configService;
     @Autowired
@@ -106,10 +106,14 @@ public class UserService {
      */
     public List<Object> updateProfileImageUser(UserEntity userEntity, MultipartFile multipart)
             throws IllegalArgumentException, IOException {
+
         UserEntity foundUserEntity = findUserById(userEntity.getId());
         if (userEntity == null || foundUserEntity == null) {
             throw new IllegalArgumentException("Invalid UserEntity passed in; UserEntity must exist in database");
         }
+        // standard AWS filename for profile photo on S3
+        String objectAwsKey = String.format("pfp_%s_%s.%s", foundUserEntity.getId(), UUID.randomUUID().toString(),
+                multipart.getContentType().split("/")[1]);
 
         // get mime type and check if it's a PNG or JPG and reject upload if not
         try {
@@ -125,23 +129,31 @@ public class UserService {
                     "Error: filepath of photoFile could not be reconstructed; " + invalidPathException.getStackTrace());
         }
 
-        // standard AWS filename for profile photo on S3
-        String objectAwsKey = String.format("pfp_%s_%s.%s", foundUserEntity.getId(), UUID.randomUUID().toString(),
-                multipart.getContentType().split("/")[1]);
-        // create photo db record based on AWS key
-        PhotoEntity photoEntity = new PhotoEntity();
+        // if user has profile picture then edit to db + delete S3
+        PhotoEntity photoEntity = null;
+        photoEntity = foundUserEntity.getProfilePhotoEntity();
+        if (photoEntity != null) { // TODO: make this perform in parallel?
+            // delete from s3 to free up space
+            s3Service.deleteObject(configService.getS3BucketName(), photoEntity.getObjectKeyAws());
+        } else {
+            photoEntity = new PhotoEntity();
+        }
+
+        // perform uploading to S3
+        s3Service.uploadObjectFromMultipart(configService.getS3BucketName(), objectAwsKey, multipart);
+
+        // set new object key aws + save new name + presigned URL to record
         photoEntity.setObjectKeyAws(objectAwsKey);
+        URL presignedUrl = s3Service.getObjectURLFromKey(configService.getS3BucketName(), objectAwsKey);
+        photoEntity.setPresignedUrl(presignedUrl.toString());
         photoRepository.save(photoEntity);
 
         // save photo entity to user record
         foundUserEntity.setProfilePhotoEntity(photoEntity);
         userRepository.save(foundUserEntity);
 
-        // perform uploading to S3
-        photoService.uploadObjectFromMultipart(configService.getS3BucketName(), objectAwsKey, multipart);
-
         // return url
-        URL objectUrl = photoService.getObjectURLFromKey(configService.getS3BucketName(), objectAwsKey);
+        URL objectUrl = s3Service.getObjectURLFromKey(configService.getS3BucketName(), objectAwsKey);
         return List.of(objectUrl, photoEntity);
     }
 }

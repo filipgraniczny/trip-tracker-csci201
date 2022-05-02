@@ -5,22 +5,37 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.core.exception.SdkException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
 @Service
-public class PhotoService {
-    private static final S3Client s3 = S3Client.builder().region(Region.US_WEST_1).build();
+public class S3Service {
+    private S3Client s3;
+
+    @Autowired
+    public S3Service(ConfigService configService) {
+        AwsBasicCredentials credentials = configService.getAwsBasicCredentials();
+        this.s3 = S3Client.builder().region(Region.US_WEST_1)
+                .credentialsProvider(StaticCredentialsProvider.create(credentials)).build();
+
+    }
 
     /**
      * Get the default S3 client to use
@@ -77,5 +92,10 @@ public class PhotoService {
                 .contentType(multipartFile.getContentType()).build();
         s3.putObject(putObjectRequest,
                 RequestBody.fromInputStream(multipartFile.getInputStream(), multipartFile.getSize()));
+    }
+
+    public void deleteObject(String bucket, String key) throws S3Exception, AwsServiceException, SdkClientException {
+        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder().bucket(bucket).key(key).build();
+        s3.deleteObject(deleteObjectRequest);
     }
 }

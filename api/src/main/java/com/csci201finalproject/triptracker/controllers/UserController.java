@@ -47,13 +47,8 @@ public class UserController {
         try {
             UserEntity user = userService.findUserById(id);
             List<Object> resultList = userService.updateProfileImageUser(user, multipart);
-            URL presignedUrl = (URL) resultList.get(0);
             PhotoEntity photoEntity = (PhotoEntity) resultList.get(1);
-
-            HashMap<String, Object> responseMap = new HashMap<>();
-            responseMap.put("url", presignedUrl.toString());
-            responseMap.put("entity", photoEntity);
-            return ResponseEntity.ok().body(responseMap);
+            return ResponseEntity.ok().body(photoEntity);
         } catch (IllegalArgumentException | IOException exception) {
             ErrorResponseClass error = new ErrorResponseClass(false, "INVALID_ARGUMENT", exception.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
