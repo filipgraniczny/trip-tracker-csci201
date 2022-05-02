@@ -36,11 +36,11 @@
       </nav>
 
       <div id="error-log-div" style="display: none;">
-        <p class="error">Error in login. Please try again.</p>
+        <p class="error" id="log-error-p">Error in login. Please try again.</p>
       </div>
 
       <div id="error-reg-div" style="display: none;">
-        <p class="error">Error in registration. Please try again.</p>
+        <p class="error" id="reg-error-p">Error in registration. Please try again.</p>
       </div>
 
       <div class="container">
@@ -120,19 +120,37 @@
 
         // checking if password is valid
         if (password != confirmPassword) {
-          console.log("Passwords do not match");
+          console.log("Passwords do not match.");
+
+          // displaying appropriate error message
+          document.getElementById("reg-error-p").innerHTML = "Passwords do not match.";
+          document.getElementById("error-log-div").style.display = "none";
+          document.getElementById("error-reg-div").style.display = "block";
+
           return;
         }
 
         // checking if any field is empty
         if (name === "" || email === "" || password === "") {
-          console.log("At least one field is empty.");
+          console.log("At least one register field is empty.");
+
+          // displaying appropriate error message
+          document.getElementById("reg-error-p").innerHTML = "At least one register field is empty.";
+          document.getElementById("error-log-div").style.display = "none";
+          document.getElementById("error-reg-div").style.display = "block";
+
           return;
         }
 
         // checking if the email is valid using regex
         if (validateEmail(email) == false) {
           console.log("Email address is invalid.");
+
+          // displaying appropriate error message
+          document.getElementById("reg-error-p").innerHTML = "Email address is invalid.";
+          document.getElementById("error-log-div").style.display = "none";
+          document.getElementById("error-reg-div").style.display = "block";
+
           return;
         }
 
@@ -165,7 +183,7 @@
 
             // checking if the registration was successful
             if (resultObject.id) {
-              console.log ("Successful Register.");
+              console.log ("Successful registration.");
 
               // creating a cookie with the user ID and name
               let id = resultObject.id;
@@ -175,11 +193,12 @@
               location.href = "userpage.html";
             }
             else {
-              console.log("Unsuccessful register.")
+              console.log("Unsuccessful registration.")
               
               // should display some kind of error message on the screen so the user retries registration
-              var errorDiv = document.getElementById("error-reg-div");
-              errorDiv.style.display = "block";
+              document.getElementById("reg-error-p").innerHTML = "Registration unsuccessful. Please try again.";
+              document.getElementById("error-log-div").style.display = "none";
+              document.getElementById("error-reg-div").style.display = "block";
             }
           })
           .catch(error => console.log('error', error));
@@ -194,13 +213,25 @@
 
         // checking if any field is empty
         if (email === "" || password === "") {
-          console.log("At least one field is empty.");
+          console.log("At least one login field is empty.");
+
+          // displaying appropriate error message
+          document.getElementById("log-error-p").innerHTML = "At least one login field is empty.";
+          document.getElementById("error-log-div").style.display = "block";
+          document.getElementById("error-reg-div").style.display = "none";
+        
           return;
         }
         
         // checking if the email is valid using regex
         if (validateEmail(email) == false) {
           console.log("Email address is invalid.");
+
+          // displaying appropriate error message
+          document.getElementById("log-error-p").innerHTML = "Email address is invalid.";
+          document.getElementById("error-log-div").style.display = "block";
+          document.getElementById("error-reg-div").style.display = "none";
+
           return;
         }
 
@@ -245,8 +276,10 @@
               console.log("Unsuccessful login.")
               
               // should display some kind of error message on the screen so the user retries registration
-              var errorDiv = document.getElementById("error-log-div");
-              errorDiv.style.display = "block";
+              // displaying appropriate error message
+              document.getElementById("log-error-p").innerHTML = "Unsuccessful login. Please try again.";
+              document.getElementById("error-log-div").style.display = "block";
+              document.getElementById("error-reg-div").style.display = "none";
             }
           })
           .catch(error => console.log('error', error));
