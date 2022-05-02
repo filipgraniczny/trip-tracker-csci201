@@ -43,7 +43,7 @@ public class EventEntity {
     @JoinColumn(name = "trip_id")
     private TripEntity trip;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", orphanRemoval = true)
     private List<PhotoEntity> photos;
 
     public int getId() {
