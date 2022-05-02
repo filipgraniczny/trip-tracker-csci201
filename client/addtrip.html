@@ -47,7 +47,7 @@
         </div>
         <div class="form-group col-md-6 pac-card">
           <div id="pac-container">
-            <label for="location">LOCATION*</label>
+            <label for="pac-input">LOCATION*</label>
             <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
           </div>
         </div>
@@ -115,19 +115,19 @@
 
       <br>
       <h5><strong>EVENTS</strong></h5>
-      <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event1" onclick="showEventFields(1)">+ ADD EVENT</button>
+      <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event1">+ ADD EVENT</button>
 
       <!--START EVENT #1 -->
       <div id="event1" style="display:none;">
         <hr class="small-hr">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="trip-title">EVENT #1 NAME*</label>
-            <input type="text" class="form-control" id="trip-title" placeholder="Title">
+            <label for="title-e1">EVENT #1 TITLE*</label>
+            <input type="text" class="form-control" id="title-e1" placeholder="Title">
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="location">EVENT #1 LOCATION*</label>
+              <label for="pac-input">EVENT #1 LOCATION*</label>
               <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
@@ -135,24 +135,24 @@
 
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="start-date">START DATE*</label>
-            <input type="date" class="form-control" id="start-date">
+            <label for="start-date-e1">START DATE*</label>
+            <input type="date" class="form-control" id="start-date-e1">
           </div>
           <div class="form-group col-md-6">
-            <label for="end-date">END DATE</label>
-            <input type="date" class="form-control" id="end-date">
+            <label for="end-date-e1">END DATE</label>
+            <input type="date" class="form-control" id="end-date-e1">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="trip-description">EVENT #1 DESCRIPTION*</label>
-          <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
+          <label for="description-e1">EVENT #1 DESCRIPTION*</label>
+          <textarea class="form-control" id="description-e1" placeholder="Description"></textarea>
         </div>
 
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="accommodations-select">EVENT TYPE*</label>
-            <select id="accommodations-select" class="form-control">
+            <label for="type-select-e1">EVENT TYPE*</label>
+            <select id="type-select-e1" class="form-control">
               <option selected>Choose...</option>
               <option>ACTIVITY</option>
               <option>RESTAURANT</option>
@@ -160,23 +160,22 @@
             </select>
           </div>
           <div class="form-group col-md-4">
+
             <!-- FILE UPLOAD STUFF START -->
             <label>PHOTOS*</label><br>
-            <div class="images" id="event1-img">
+            <div class="images" id="img-e1">
               <div class="pic">
                 add
               </div>
             </div>
           <!-- FILE UPLOAD STUFF END-->
 
-            <!-- <label for="img">PHOTOS*</label><br>
-            <input type="file" id="img2" name="img2" accept="image/*" multiple> -->
           </div>
           <div class="form-group col-md-4">
-            <button class="remove-event-btn" id="remove-event1" onclick="hideEventFields(1)">REMOVE</button>
+            <button class="remove-event-btn" id="remove-event1">REMOVE</button>
           </div>
         </div>
-        <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event2" onclick="showEventFields(2)">+ ADD EVENT</button>
+        <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event2">+ ADD EVENT</button>
         <br><br>
       </div>
       <!-- END EVENT #1-->
@@ -186,12 +185,12 @@
         <hr class="small-hr">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="trip-title">EVENT #2 NAME*</label>
-            <input type="text" class="form-control" id="trip-title" placeholder="Title">
+            <label for="title-e2">EVENT #2 TITLE*</label>
+            <input type="text" class="form-control" id="title-e2" placeholder="Title">
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="location">EVENT #2 LOCATION*</label>
+              <label for="pac-input">EVENT #2 LOCATION*</label>
               <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
@@ -199,24 +198,24 @@
 
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="start-date">START DATE*</label>
-            <input type="date" class="form-control" id="start-date">
+            <label for="start-date-e2">START DATE*</label>
+            <input type="date" class="form-control" id="start-date-e2">
           </div>
           <div class="form-group col-md-6">
-            <label for="end-date">END DATE</label>
-            <input type="date" class="form-control" id="end-date">
+            <label for="end-date-e2">END DATE</label>
+            <input type="date" class="form-control" id="end-date-e2">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="trip-description">EVENT #2 DESCRIPTION*</label>
-          <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
+          <label for="description-e2">EVENT #2 DESCRIPTION*</label>
+          <textarea class="form-control" id="description-e2" placeholder="Description"></textarea>
         </div>
 
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="accommodations-select">EVENT TYPE*</label>
-            <select id="accommodations-select" class="form-control">
+            <label for="type-select-e2">EVENT TYPE*</label>
+            <select id="type-select-e2" class="form-control">
               <option selected>Choose...</option>
               <option>ACTIVITY</option>
               <option>RESTAURANT</option>
@@ -224,14 +223,22 @@
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label for="img">PHOTOS*</label><br>
-            <input type="file" id="img2" name="img2" accept="image/*" multiple>
+            
+            <!-- FILE UPLOAD STUFF START -->
+            <label>PHOTOS*</label><br>
+            <div class="images" id="img-e2">
+              <div class="pic">
+                add
+              </div>
+            </div>
+          <!-- FILE UPLOAD STUFF END-->
+
           </div>
           <div class="form-group col-md-4">
-            <button class="remove-event-btn" id="remove-event2" onclick="hideEventFields(2)">REMOVE</button>
+            <button class="remove-event-btn" id="remove-event2">REMOVE</button>
           </div>
         </div>
-        <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event3" onclick="showEventFields(3)">+ ADD EVENT</button>
+        <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event3">+ ADD EVENT</button>
         <br><br>
       </div>
       <!-- END EVENT #2-->
@@ -242,12 +249,12 @@
         <hr class="small-hr">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="trip-title">EVENT #3 NAME*</label>
-            <input type="text" class="form-control" id="trip-title" placeholder="Title">
+            <label for="title-e3">EVENT #3 TITLE*</label>
+            <input type="text" class="form-control" id="title-e3" placeholder="Title">
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="location">EVENT #3 LOCATION*</label>
+              <label for="pac-input">EVENT #3 LOCATION*</label>
               <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
@@ -255,24 +262,24 @@
 
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="start-date">START DATE*</label>
-            <input type="date" class="form-control" id="start-date">
+            <label for="start-date-e3">START DATE*</label>
+            <input type="date" class="form-control" id="start-date-e3">
           </div>
           <div class="form-group col-md-6">
-            <label for="end-date">END DATE</label>
-            <input type="date" class="form-control" id="end-date">
+            <label for="end-date-e3">END DATE</label>
+            <input type="date" class="form-control" id="end-date-e3">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="trip-description">EVENT #3 DESCRIPTION*</label>
-          <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
+          <label for="description-e3">EVENT #3 DESCRIPTION*</label>
+          <textarea class="form-control" id="description-e3" placeholder="Description"></textarea>
         </div>
 
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="accommodations-select">EVENT TYPE*</label>
-            <select id="accommodations-select" class="form-control">
+            <label for="type-select-e3">EVENT TYPE*</label>
+            <select id="type-select-e3" class="form-control">
               <option selected>Choose...</option>
               <option>ACTIVITY</option>
               <option>RESTAURANT</option>
@@ -280,21 +287,30 @@
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label for="img">PHOTOS*</label><br>
-            <input type="file" id="img2" name="img2" accept="image/*" multiple>
+            
+            <!-- FILE UPLOAD STUFF START -->
+            <label>PHOTOS*</label><br>
+            <div class="images" id="img-e2">
+              <div class="pic">
+                add
+              </div>
+            </div>
+          <!-- FILE UPLOAD STUFF END-->
+
           </div>
           <div class="form-group col-md-4">
-            <button class="remove-event-btn" id="remove-event3" onclick="hideEventFields(3)">REMOVE</button>
+            <button class="remove-event-btn" id="remove-event3">REMOVE</button>
           </div>
         </div>
         <br><br>
       </div>
       <!-- END EVENT #3-->
-      
 
-      <div id="error-add-div" style="display: none;">
-        <p class="error">Trip could not be added successfully. Please try again.</p>
+      
+      <div id="error-add-div" style="display: none; float: right;">
+        <p class="error" id="error-msg-p">Trip could not be added successfully. Please try again.</p>
       </div>
+      <br>
 
       <button type="button" id="create-trip-btn" onclick="createTrip()">CREATE TRIP</button>
     </form>
@@ -313,7 +329,7 @@
     </script>
 
     <script>
-      let addUrl = "https://7d164171-ddc5-4e24-ab82-c266ce6f7fe9.mock.pstmn.io/trips/add/";
+      let addUrl = "https://tripline-csci201.herokuapp.com/trips";
       
       // using JQuery to show/hide event fields
       $(document).ready(function(){
@@ -350,8 +366,11 @@
         var location = document.getElementById("pac-input").value;
         var startDate = document.getElementById("start-date").value;
         var endDate = document.getElementById("end-date").value;
-        var accommodations = document.getElementById("accommodations-select").options[select.selectedIndex].value;
+        var dropdown = document.getElementById("accommodations-select")
+        var accommodations = dropdown.options[dropdown.selectedIndex].value;
         var pinned = document.querySelector('#pinned-check');
+
+        var events = null;
         
         if (pinned.checked) {
           pinned = true;
@@ -365,13 +384,18 @@
         // checking if any required field is empty
         if (title === "" || location === "" || startDate === "" || accommodations === "") {
           console.log("At least one field is empty.");
+
+          // displaying appropriate error message
+          document.getElementById("error-msg-p").innerHTML = "At least one field is empty.";
+          document.getElementById("error-add-div").style.display = "block";
+
           return;
         }
 
         // getting user ID from cookies
         let cookies = document.cookie;
         console.log(cookies); 
-        let id = getCookie("id");
+        let id = parseInt(getCookie("userID"));
 
         // constructing API headers
         var myHeaders = new Headers();
@@ -385,7 +409,8 @@
           "location_latitude": -20.8844,
           "timestamp_to": endDate,
           "timestamp_from": startDate, 
-          "pin": pinned
+          "pin": pinned, 
+          "events": events
         });
 
 
@@ -418,8 +443,8 @@
               console.log("Trip was not added successfully.")
               
               // should display some kind of error message on the screen so the user retries adding a trip
-              var errorDiv = document.getElementById("error-add-div");
-              errorDiv.style.display = "block";
+              document.getElementById("error-msg-p").innerHTML = "Error adding trip. Please try again.";
+              document.getElementById("error-add-div").style.display = "block";
             }
           })
           .catch(error => console.log('error', error));
