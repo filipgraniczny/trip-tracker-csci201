@@ -22,7 +22,7 @@ public class TripController {
     @GetMapping("/explore")
     public @ResponseBody Object getTrips(@RequestParam(defaultValue = "10", required = false) Integer limit,
                                          @RequestParam String searchTerm,
-                                         @RequestParam(defaultValue = "to_time", required = false) String sortBy,
+                                         @RequestParam(defaultValue = "toTime", required = false) String sortBy,
                                          @RequestParam(defaultValue = "true", required = false) boolean ascending) {
         List<TripEntity> trips = tripService.getTrips(limit, searchTerm, sortBy, ascending);
         if (Objects.isNull(trips) || trips.isEmpty())
