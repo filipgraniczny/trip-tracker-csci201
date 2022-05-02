@@ -1,6 +1,5 @@
 package com.csci201finalproject.triptracker.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.catalina.User;
 
@@ -9,10 +8,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "photo", schema = "heroku_efbc5c1a3000eab")
 public class PhotoEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @JsonIgnore
     @ManyToOne
@@ -31,11 +30,29 @@ public class PhotoEntity {
     @Basic
     @Column(name = "object_key_aws")
     private String objectKeyAws;
+  
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserEntity userEntity;
 
-    @OneToOne(mappedBy = "photo", orphanRemoval = true)
-    private UserEntity user;
+    @Column(name = "presigned_url")
+    private String presignedUrl;
 
+    public UserEntity getUserEntity() {
+        return this.userEntity;
+    }
 
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public String getPresignedUrl() {
+        return this.presignedUrl;
+    }
+
+    public void setPresignedUrl(String presignedUrl) {
+        this.presignedUrl = presignedUrl;
+    }
 
     public int getId() {
         return id;
@@ -79,15 +96,21 @@ public class PhotoEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         PhotoEntity that = (PhotoEntity) o;
 
-        if (id != that.id) return false;
-        if (trip != null ? !trip.equals(that.trip) : that.trip != null) return false;
-        if (event != null ? !event.equals(that.event) : that.event != null) return false;
-        if (caption != null ? !caption.equals(that.caption) : that.caption != null) return false;
+        if (id != that.id)
+            return false;
+        if (trip != null ? !trip.equals(that.trip) : that.trip != null)
+            return false;
+        if (event != null ? !event.equals(that.event) : that.event != null)
+            return false;
+        if (caption != null ? !caption.equals(that.caption) : that.caption != null)
+            return false;
         return objectKeyAws != null ? objectKeyAws.equals(that.objectKeyAws) : that.objectKeyAws == null;
     }
 

@@ -4,29 +4,31 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "user", schema = "heroku_efbc5c1a3000eab")
 public class UserEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
-    @Basic
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Basic
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Basic
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "pfp_id")
-    private PhotoEntity photo;
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @JsonManagedReference
+    @JoinColumn(name = "pfp_id", nullable = true)
+    private PhotoEntity profilePhotoEntity;
 
     @OneToMany(mappedBy = "author", orphanRemoval = true)
     private List<TripEntity> trip;
@@ -38,17 +40,8 @@ public class UserEntity {
     public void setTrip(List<TripEntity> trip) {
         this.trip = trip;
     }
-
-    public PhotoEntity getPfp() {
-        return photo;
-    }
-
-    public void setPfp(PhotoEntity photo) {
-        this.photo = photo;
-    }
-
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -56,7 +49,7 @@ public class UserEntity {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -64,7 +57,7 @@ public class UserEntity {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -72,13 +65,21 @@ public class UserEntity {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public PhotoEntity getProfilePhotoEntity() {
+        return this.profilePhotoEntity;
+    }
+
+    public void setProfilePhotoEntity(PhotoEntity profilePhotoEntity) {
+        this.profilePhotoEntity = profilePhotoEntity;
+      
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,7 +93,6 @@ public class UserEntity {
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         return true;
     }
-
     @Override
     public int hashCode() {
         int result = id;
@@ -101,5 +101,4 @@ public class UserEntity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
-
 }
