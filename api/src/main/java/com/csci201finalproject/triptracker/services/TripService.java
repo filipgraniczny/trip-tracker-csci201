@@ -39,4 +39,8 @@ public class TripService {
         }
     }
 
+    public TripEntity save(TripEntity t) {
+        return tripRepository.save(t);
+    }
+
 }
