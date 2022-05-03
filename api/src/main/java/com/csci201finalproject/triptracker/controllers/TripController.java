@@ -35,4 +35,10 @@ public class TripController {
         boolean success = tripService.deleteTrip(id);
         return "{\"success\":" + success + "}";
     }
+
+    @PostMapping("/")
+    public @ResponseBody Object addTrip(@RequestBody TripEntity trip){
+        TripEntity newTrip = tripService.save(trip);
+        return "{\"success\": true }";
+    }
 }
