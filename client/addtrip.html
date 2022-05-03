@@ -363,14 +363,16 @@
         // getting user input from form fields
         var title = document.getElementById("trip-title").value;
         var description = document.getElementById("trip-description").value;
-        var location = document.getElementById("pac-input").value;
+        var location = document.getElementById("pac-input").value; // todo: get latitude and longitude values
         var startDate = document.getElementById("start-date").value;
         var endDate = document.getElementById("end-date").value;
         var dropdown = document.getElementById("accommodations-select")
         var accommodations = dropdown.options[dropdown.selectedIndex].value;
         var pinned = document.querySelector('#pinned-check');
 
-        var events = null;
+        var events = []; // will store the list of events 
+
+        var validLocation = true; // todo: set this variable conditionally
         
         if (pinned.checked) {
           pinned = true;
@@ -378,15 +380,82 @@
         else {
           pinned = false;
         }
+        console.log("printing here");
+        
+        // looping through the 3 potential events
+        for (let i = 1; i <= 3; i++) {
+          console.log("Adding event " + i + " details.");
+
+          // if the event is showing (not hidden)
+          if (document.getElementById("event" + i).style.display === "block") {
+
+            // getting values from the form for this event
+            var title = document.getElementById("title-e" + i);
+            var location = ""; // todo
+            var start = document.getElementById("start-date-e" + i);
+            var end = document.getElementById("end-date-e" + i);
+            var desc = document.getElementById("description-e" + i);
+            var dropdown = document.getElementById("type-select-e" + i);
+            var eventType = dropdown.options[dropdown.selectedIndex].value;
+
+            // checking if any fields are missing
+            if (title === "" || startDate === "" || start == "" || desc === "" || eventType === "") {
+              console.log("At least one required field for the event is empty.");
+
+              // displaying appropriate error message
+              document.getElementById("error-msg-p").innerHTML = "At least one required field for event " + i + " is empty.";
+              document.getElementById("error-add-div").style.display = "block";
+
+              return;
+            }
+
+            // todo: check for valid location
+            if (!validLocation) {
+
+              // displaying appropriate error message
+              document.getElementById("error-msg-p").innerHTML = "Invalid location for event " + i;
+              document.getElementById("error-add-div").style.display = "block";
+
+              return;
+            }
+
+
+            // at this point, fields should be filled and valid so we can add the event to the list
+            let eventToAdd = {
+              "name": title,
+              "category": eventType,
+              "description": desc,
+              "location": {
+                "name": location,
+                "longitude": 170.2222,
+                "latitude": -20.8844
+              },
+              "timestamp_to": end,
+              "timestamp_from": start,
+              "image_urls": [
+                "http://placeimg.com/640/480",
+                "http://placeimg.com/640/480"
+              ]
+            }
+
+            events.push(eventToAdd);
+           }
+
+           // else, don't do anything. we can return since there won't be any open events after this one
+           else {
+             return;
+           }
+        }
 
         console.log("location: " + location);
 
-        // checking if any required field is empty
+
+        // checking if any required field is empty for the overall trip
         if (title === "" || location === "" || startDate === "" || accommodations === "") {
-          console.log("At least one field is empty.");
+          console.log("At least one field for the trip is empty.");
 
           // displaying appropriate error message
-          document.getElementById("error-msg-p").innerHTML = "At least one field is empty.";
+          document.getElementById("error-msg-p").innerHTML = "At least one field for the trip is empty.";
           document.getElementById("error-add-div").style.display = "block";
 
           return;
