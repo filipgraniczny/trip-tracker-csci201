@@ -44,6 +44,11 @@ function initMap() {
       // marker.setVisible(false);
   
       const place = autocomplete.getPlace();
+      tripLatitude = place.geometry.location.lat();
+      tripLongitude = place.geometry.location.lng();
+      
+      console.log("tripLatitude: " + tripLatitude);
+      console.log("tripLongitude: " + tripLongitude);
   
       if (!place.geometry || !place.geometry.location) {
         // User entered the name of a Place that was not suggested and
