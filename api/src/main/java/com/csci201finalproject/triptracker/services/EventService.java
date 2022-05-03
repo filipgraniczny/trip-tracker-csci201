@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,8 +33,20 @@ public class EventService {
         event.setName(eventDTO.getName());
         event.setCategory(eventDTO.getCategory());
         event.setDescription(eventDTO.getDescription());
-        event.setFromTime(Timestamp.valueOf(eventDTO.getFrom()));
-        event.setToTime(Timestamp.valueOf(eventDTO.getTo()));
+        DateFormat formatter = new SimpleDateFormat("mm-dd-YYYY");
+        try {
+            Date from_date = formatter.parse(eventDTO.getFrom());
+            event.setFromTime(new Timestamp(from_date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            Date to_date = formatter.parse(eventDTO.getTo());
+            event.setToTime(new Timestamp(to_date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         event.setLocation(locationService.createLocation(eventDTO.getLocation()));
         event.setPhotos(photoService.createPhotos(eventDTO.getPhotos()));
 

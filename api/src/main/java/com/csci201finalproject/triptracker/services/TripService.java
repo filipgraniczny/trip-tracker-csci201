@@ -12,7 +12,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,8 +69,21 @@ public class TripService {
         else {
             throw new IllegalArgumentException("User adding trip does not exist");
         }
-        trip.setFromTime(Timestamp.valueOf(tripDTO.getFrom()));
-        trip.setToTime(Timestamp.valueOf(tripDTO.getTo()));
+        DateFormat formatter = new SimpleDateFormat("mm-dd-YYYY");
+        try {
+            Date from_date = formatter.parse(tripDTO.getFrom());
+            trip.setFromTime(new Timestamp(from_date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Date to_date = formatter.parse(tripDTO.getTo());
+            trip.setToTime(new Timestamp(to_date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         trip.setEvents(eventService.createEvents(tripDTO.getEvents()));
         trip.setPhotos(photoService.createPhotos(tripDTO.getPhotos()));
         return trip;
