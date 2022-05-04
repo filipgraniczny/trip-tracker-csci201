@@ -1,4 +1,3 @@
-use `heroku_efbc5c1a3000eab`;
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE User;
 TRUNCATE TABLE Trip;

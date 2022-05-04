@@ -1,4 +1,3 @@
-USE heroku_efbc5c1a3000eab;
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Trip;
@@ -50,26 +49,6 @@ CREATE TABLE Photo (
                        caption varchar(255),
                        object_key_aws varchar(255) not null
 );
-
-insert into location values (1, "Pizza Hut", 36.310964264913835, -95.6181994369886);
-insert into location values (2, "Fils house", 42.19926134458096, -87.94301347820314);
-insert into location values (3, "Chicago", 41.88277533619124, -87.62236465365434);
-insert into location values (4, "Vietnam", 12.597957668941982, 108.37575639536017);
-
-insert into event values (1, "Party at Fils", "rager", "dope rager at fils house. best night of my life", 2, NOW(), NOW(), 1);
-insert into event values (2, "mountain tour", "tour", "hiking and fun in vietnam, had lot of good food", 4, NOW(), NOW(), 2);
-insert into event values (3, "Pan Pizza Tournament", "food", "who can eat the most slices of pan pizza in 30 mins? sponsored by dominos", 1, NOW(), NOW(), 3);
-insert into event values (4, "Bean there, done that", "exploring", "checking out chicagos amazing... bean, erm, sky gate  ;_;", 3, NOW(), NOW(), 4);
-
-
-insert into trip values (1, "visiting fil", "what happens at fils stays at fils ;) ;)", 2, NOW(), NOW(), 1);
-insert into trip values (2, "vietnam", "awesome adventures in vietnam", 4, NOW(), NOW(), 1);
-insert into trip values (3, "pizza tour", "less get some pizza!!", 1, NOW(), NOW(), 1);
-insert into trip values (4, "chicago squad", "fil and ariana vibe in chicago", 3, NOW(), NOW(), 1);
-
-insert into user values (1, "Tommy Ytipline", "tommy@tripline.com", "ttt", 1);
-
-insert into photo values (1, 2, 1, "fil's basement", "aws_poggers");
 
 ALTER TABLE Photo ADD FOREIGN KEY (trip_id) REFERENCES Trip(id);
 ALTER TABLE Photo ADD FOREIGN KEY (event_id) REFERENCES Event(id);
