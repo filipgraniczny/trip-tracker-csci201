@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 @RestController
 public class MainController {
+
     @GetMapping(path = "/")
     public @ResponseBody HashMap<String, String> hello() {
         HashMap<String, String> response = new HashMap<>();
@@ -15,4 +16,5 @@ public class MainController {
         response.put("data", "hello world");
         return response;
     }
+
 }

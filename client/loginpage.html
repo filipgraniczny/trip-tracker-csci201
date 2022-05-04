@@ -1,10 +1,13 @@
 <!-- LOGIN/REGISTER PAGE: ARIANA-->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -13,7 +16,10 @@
     <title>LOGIN/REGISTER</title>
 
     <!-- FontAwesome-->
-    <script src="https://kit.fontawesome.com/36b78d402d.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/36b78d402d.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
 
@@ -21,16 +27,21 @@
       <nav>
           <ul class="nav-list">
             <li class="nav-item">
-              <a id="logo" href="homepage.html"><strong>T | L</strong></a>
+              <a id="logo" href="index.html"><strong>T | L</strong></a>
             </li>
             <li class="nav-item">
-              <a href="homepage.html"><strong>HOME</strong></a>
-            </li>
-            <li class="nav-item">
-              <a href="explorepage.html"><strong>EXPLORE</strong></a>
+              <a href="index.html"><strong>HOME</strong></a>
             </li>
           </ul>
       </nav>
+
+      <div id="error-log-div" style="display: none;">
+        <p class="error" id="log-error-p">Error in login. Please try again.</p>
+      </div>
+
+      <div id="error-reg-div" style="display: none;">
+        <p class="error" id="reg-error-p">Error in registration. Please try again.</p>
+      </div>
 
       <div class="container">
           <div class="row">
@@ -45,11 +56,9 @@
                         <label for="login-pwd-input">PASSWORD</label>
                         <input type="password" class="form-control" id="login-pwd-input">
                       </div>
-                      <button id="btn-login" style="display: block; margin: 0 auto;"">
-                        <a href="#" class="buttons">
+                      <button type="button" id="btn-login" style="display: block; margin: 0 auto;" onclick="loginUser()">
                             <img id="login-logo" src="./images/user-icon.svg" alt="logo">
-                            <strong>LOG IN</strong>
-                        </a>
+                            <strong style="color:white;">LOG IN</strong>
                     </button>
                     </form>
               </div>
@@ -58,7 +67,7 @@
                 <form id="register-form">
                     <div class="form-group">
                         <label for="register-name-input">NAME</label>
-                        <input type="email" class="form-control" id="register-name-input">
+                        <input type="text" class="form-control" id="register-name-input">
                     </div>
                     <div class="form-group">
                         <label for="register-email-input">EMAIL ADDRESS</label>
@@ -66,28 +75,217 @@
                     </div>
                     <div class="form-group">
                         <label for="login-pwd-input">PASSWORD</label>
-                        <input type="password" class="form-control" id="login-pwd-input">
+                        <input type="password" class="form-control" id="register-pwd-input">
                     </div>
                     <div class="form-group">
                         <label for="register-conf-pwd-input">CONFIRM PASSWORD</label>
                         <input type="password" class="form-control" id="register-conf-pwd-input">
                     </div>
-                    <button id="btn-register" style="display: block; margin: 0 auto;">
-                      <a href="#" class="buttons">
+                    <button type="button" id="btn-register" style="display: block; margin: 0 auto;" onclick="registerUser()">
                           <img id="register-logo" src="./images/user-icon.svg" alt="logo">
-                          <strong>REGISTER</strong>
-                      </a>
+                          <strong style="color:white;">REGISTER</strong>
                   </button>
                   </form>
               </div>
           </div>
       </div>
-    
-    
+    </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+
+    <script>
+      let regUrl = "https://tripline-csci201.herokuapp.com/auth/register";
+      let logUrl = "https://tripline-csci201.herokuapp.com/auth/login";
+
+      function validateEmail(email) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+          return true;
+        }
+        return false;
+      }
+
+      function registerUser() {
+        console.log("in registerUser()");
+
+        // getting user input from form fields
+        var name = document.getElementById("register-name-input").value;
+        var email = document.getElementById("register-email-input").value;
+        var password = document.getElementById("register-pwd-input").value;
+        var confirmPassword = document.getElementById("register-conf-pwd-input").value;
+
+        // checking if password is valid
+        if (password != confirmPassword) {
+          console.log("Passwords do not match.");
+
+          // displaying appropriate error message
+          document.getElementById("reg-error-p").innerHTML = "Passwords do not match.";
+          document.getElementById("error-log-div").style.display = "none";
+          document.getElementById("error-reg-div").style.display = "block";
+
+          return;
+        }
+
+        // checking if any field is empty
+        if (name === "" || email === "" || password === "") {
+          console.log("At least one register field is empty.");
+
+          // displaying appropriate error message
+          document.getElementById("reg-error-p").innerHTML = "At least one register field is empty.";
+          document.getElementById("error-log-div").style.display = "none";
+          document.getElementById("error-reg-div").style.display = "block";
+
+          return;
+        }
+
+        // checking if the email is valid using regex
+        if (validateEmail(email) == false) {
+          console.log("Email address is invalid.");
+
+          // displaying appropriate error message
+          document.getElementById("reg-error-p").innerHTML = "Email address is invalid.";
+          document.getElementById("error-log-div").style.display = "none";
+          document.getElementById("error-reg-div").style.display = "block";
+
+          return;
+        }
+
+        // constructing API headers
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "email": email,
+          "password": password,
+          "name": name
+        });
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        // fetching the API response
+        fetch(regUrl, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            let resultObject = data;
+            console.log('Status: ' + resultObject.id);
+
+            // checking if the registration was successful
+            if (resultObject.id) {
+              console.log ("Successful registration.");
+
+              // creating a cookie with the user ID and name
+              let id = resultObject.id;
+              document.cookie = "userID=" + id + "; path=/;";
+
+              // // redirecting to the user page
+              location.href = "userpage.html";
+            }
+            else {
+              console.log("Unsuccessful registration.")
+              
+              // should display some kind of error message on the screen so the user retries registration
+              document.getElementById("reg-error-p").innerHTML = "Registration unsuccessful. Please try again.";
+              document.getElementById("error-log-div").style.display = "none";
+              document.getElementById("error-reg-div").style.display = "block";
+            }
+          })
+          .catch(error => console.log('error', error));
+      }
+
+      function loginUser() {
+        console.log("in loginUser()");
+
+        // getting user input from form fields
+        var email = document.getElementById("login-email-input").value;
+        var password = document.getElementById("login-pwd-input").value;
+
+        // checking if any field is empty
+        if (email === "" || password === "") {
+          console.log("At least one login field is empty.");
+
+          // displaying appropriate error message
+          document.getElementById("log-error-p").innerHTML = "At least one login field is empty.";
+          document.getElementById("error-log-div").style.display = "block";
+          document.getElementById("error-reg-div").style.display = "none";
+        
+          return;
+        }
+        
+        // checking if the email is valid using regex
+        if (validateEmail(email) == false) {
+          console.log("Email address is invalid.");
+
+          // displaying appropriate error message
+          document.getElementById("log-error-p").innerHTML = "Email address is invalid.";
+          document.getElementById("error-log-div").style.display = "block";
+          document.getElementById("error-reg-div").style.display = "none";
+
+          return;
+        }
+
+        // constructing API headers
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "email": email,
+          "password": password
+        });
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        // fetching the API response
+        fetch(logUrl, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            let resultObject = data;
+            console.log('User:' + resultObject.id);
+
+            // checking if the registration was successful
+            if (resultObject.id) {
+            console.log ("Successful login.");
+
+            // creating a cookie with the user ID and name
+            let id = resultObject.id;
+            document.cookie = "userID=" + id + "; path=/;";
+
+            // // redirecting to the user page
+            location.href = "userpage.html";
+            }
+            else {
+              console.log("Unsuccessful login.")
+              
+              // should display some kind of error message on the screen so the user retries registration
+              // displaying appropriate error message
+              document.getElementById("log-error-p").innerHTML = "Unsuccessful login. Please try again.";
+              document.getElementById("error-log-div").style.display = "block";
+              document.getElementById("error-reg-div").style.display = "none";
+            }
+          })
+          .catch(error => console.log('error', error));
+      }
+
+
+    </script>
   </body>
 </html>

@@ -1,0 +1,232 @@
+*{
+	border: none;
+	padding: none;
+}
+
+body{
+	letter-spacing: 0.6em;
+	background-color: #F4F4F4;
+}
+
+/*Henry's navbar CSS*/
+#nav-bar {
+    background-color: black;
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.5);
+    background-position: center;
+    background-size: cover;
+    height: 15vh;
+}
+
+.nav-list {
+    padding: 1rem 3rem;
+    border-radius: var(--radius);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+}
+
+.nav-item {
+	list-style: none;
+	margin-right: 3rem;
+	font-size: 1.3em;
+}
+
+.nav-item a {
+	text-decoration: none;
+	color: white;
+	transition: all 200ms ease-in;
+}
+
+.nav-item a:hover {
+	color: #91CB82;
+}
+
+.nav-item:first-child {
+	margin-right: auto;
+	margin-left: 3rem;
+}
+
+#btn-login {
+    width: 180px;
+    height: 55px;
+    border: 3px solid white;
+    border-radius: 50px;
+    background-color: rgba(0,0,0,0.0);
+    font-size: 0.8em;
+    color: white;
+    transition: all 0.5s;
+}
+
+#btn-login:hover {
+  color: #91CB82;
+  border: 3px solid #91CB82;
+  transition: all 0.5s;
+}
+
+#btn-register {
+    width: 180px;
+    height: 55px;
+    border: 3px solid white;
+    border-radius: 50px;
+    background-color: rgba(0,0,0,0.0);
+    font-size: 0.8em;
+}
+
+#logo {
+    font-size: 2em;
+}
+
+#login-logo {
+    width: 14%;
+    height: auto;
+    margin-right: 1rem;
+}
+
+#register-logo {
+    width: 14%;
+    height: auto;
+    margin-right: 1rem;
+}
+
+.login-register-labels {
+    color: white;
+    letter-spacing: 0.3em;
+    font-weight: bold;
+    text-align: center;
+}
+
+#logo {
+	font-size: 2em;
+}
+
+#title {
+	width: 70%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 5%;
+	font-size: 5em;
+}
+/*End Navbar CSS*/
+
+
+body{
+    background-color: black;
+}
+#overallDetails{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: white;
+    letter-spacing: 0.15em;
+}
+#tripTitle{
+    width: 29%;
+    /*background-color: green;*/
+    font-size: 75px;
+    margin: 0px;
+    padding: 20px;
+    color: #91CB82;
+    font-weight: bold;
+    text-align: left;
+}
+#tripDescription{
+    /*background-color: blue;*/
+    width: 50%;
+    padding: 50px 20px 20px 90px;
+    text-align: justify;
+    font-size: 19px;
+}
+p{
+    margin: 0px;
+    padding: 0px;
+}
+#tripAuthor{
+    width: 29%;
+    text-align: left;
+    /*background-color: pink;*/
+    padding-left: 20px;
+}
+#tripDates{
+    width: 50%;
+    text-align: right;
+    padding-right: 20px;
+}
+#nameStyling{
+    color: #36B069;
+    text-decoration-line: underline;
+    font-weight: bold;
+}
+.fa{
+    font-weight: 900;
+}
+
+/* Overall trip picture  */
+#mainTripImgContainter{
+    width: 80%;
+    max-height: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 125px;
+    overflow: hidden;
+}
+#mainTripImg{
+    width: 100%;
+}
+/* Syling for each event */
+.eventItem{
+    display: flex;
+    color: white;
+    /*background-color: green;*/
+    justify-content: center;
+    margin-top: 70px;
+    letter-spacing: 0.15em;
+    flex-wrap: wrap;
+}
+.eventInfo{
+    /*background-color: pink;*/
+    width: 29%;
+}
+.eventInfo p{
+    padding: 5px;
+}
+.eventTitle{
+    font-size: 45px;
+}
+.eventDescription{
+    width: 50%;
+    /*background-color: red;*/
+}
+.event1Image{
+    width: 79%;
+}
+.event2Image{
+    width: 38%;
+}
+.event3Image{
+    width: 25%;
+}
+.imagesContainer img{
+    object-fit: cover;
+    height: 100%;
+}
+.imagesContainer{
+    margin-top: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+    overflow: hidden;
+    max-height: 450px;
+}
+.fa-route{
+    font-size: 40px;
+    color: #91CB82;
+}
+.spacer{
+    background-color: red;
+}
+.leftimg{
+    margin-right: 2%;
+}
+.rightimg{
+    margin-left: 2%;
+}

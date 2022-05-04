@@ -1,5 +1,4 @@
 <!-- ADD TRIP POPUP PAGE: ARIANA/HENRY-->
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,64 +14,307 @@
 
     <!-- FontAwesome-->
     <script src="https://kit.fontawesome.com/36b78d402d.js" crossorigin="anonymous"></script>
+  
+    <!-- stuff for location search -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="./map.js"></script>
+
   </head>
   <body>
-    <h1 id="addtrip-title">ADD TRIP</h1>
+
+    <div class="row">
+      <div class="column">
+        <h1 id="addtrip-title">ADD TRIP</h1>
+      </div>
+      <div class="column">
+        <span class="crosssign" style="cursor: pointer;" onclick="window.location='userpage.html';">  
+          <div class="crosssign_circle"></div>
+          <div class="crosssign_stem"></div>
+          <div class="crosssign_stem2"></div>
+        </span>
+      </div>
+    </div>
+
+    <hr class="big-hr">
+    <hr class="small-hr">
+    <br>
 
     <form>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="trip-title">TITLE OF TRIP*</label>
-          <input type="text" class="form-control" id="trip-title" placeholder="Title" required>
+          <input type="text" class="form-control" id="trip-title" placeholder="Title">
         </div>
-        <div class="form-group col-md-6">
-          <label for="location">LOCATION*</label>
-          <input type="text" class="form-control" id="location" placeholder="Location">
+        <div class="form-group col-md-6 pac-card">
+          <div id="pac-container">
+            <label for="pac-input">LOCATION*</label>
+            <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+          </div>
         </div>
       </div>
+
+      <br>
+
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
           <label for="start-date">START DATE*</label>
-          <input type="date" class="form-control" id="start-date" required>
+          <input type="date" class="form-control" id="start-date">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
           <label for="end-date">END DATE</label>
           <input type="date" class="form-control" id="end-date">
         </div>
+        <div class="form-group col-md-4">
+            <!-- FILE UPLOAD STUFF START -->
+            <label>PHOTO*</label><br>
+            <div class="images" id="trip-img">
+              <div class="pic">
+                add
+              </div>
+            </div>
+          <!-- FILE UPLOAD STUFF END-->
+        </div>
       </div>
+
       <div class="form-group">
         <label for="trip-description">TRIP DESCRIPTION*</label>
         <textarea class="form-control" id="trip-description" placeholder="Description"></textarea>
       </div>
+
+      <br>
+
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
           <select id="accommodations-select" class="form-control">
-            <option selected>Choose...</option>
-            <option>HOTEL</option>
-            <option>AIRBNB</option>
-            <option>HOUSE</option>
+            <option selected value="">Choose...</option>
+            <option value="hotel">HOTEL</option>
+            <option value="airbnb">AIRBNB</option>
+            <option value="house">HOUSE</option>
           </select>
         </div>
         <div class="form-group col-md-4">
           <div class="form-check">
             <p>VISIBILITY*</p>
             <input type="radio" id="public" name="visibility" value="public" checked>
-            <label for="public">PUBLIC</label><br>
+            <label for="public">PUBLIC</label>
             <input type="radio" id="private" name="visibility" value="private">
-            <label for="private">PRIVATE</label><br>
+            <label for="private">PRIVATE</label>
           </div>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-4">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="pinned-check">
-            <label class="form-check-label" for="pinned-check">
-            PIN THIS TRIP?
-            </label>
+            <label class="form-check-label" for="pinned-check"> PIN THIS TRIP? </label><br>
+            <input class="larger" type="checkbox" value="" id="pinned-check">
           </div>
         </div>
       </div>
-      <button type="submit" id="create-trip-btn">CREATE TRIP</button>
+
+
+      <!--------- EVENTS ---------->
+
+      <br>
+      <h5><strong>EVENTS</strong></h5>
+      <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event1">+ ADD EVENT</button>
+
+      <!--START EVENT #1 -->
+      <div id="event1" style="display:none;">
+        <hr class="small-hr">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="title-e1">EVENT #1 TITLE*</label>
+            <input type="text" class="form-control" id="title-e1" placeholder="Title">
+          </div>
+          <div class="form-group col-md-6 pac-card">
+            <div id="pac-container">
+              <label for="pac-input">EVENT #1 LOCATION*</label>
+              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="start-date-e1">START DATE*</label>
+            <input type="date" class="form-control" id="start-date-e1">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="end-date-e1">END DATE</label>
+            <input type="date" class="form-control" id="end-date-e1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description-e1">EVENT #1 DESCRIPTION*</label>
+          <textarea class="form-control" id="description-e1" placeholder="Description"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="type-select-e1">EVENT TYPE*</label>
+            <select id="type-select-e1" class="form-control">
+              <option selected>Choose...</option>
+              <option>ACTIVITY</option>
+              <option>RESTAURANT</option>
+              <option>HOTEL</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+
+            <!-- FILE UPLOAD STUFF START -->
+            <label>PHOTOS*</label><br>
+            <div class="images" id="img-e1">
+              <div class="pic">
+                add
+              </div>
+            </div>
+          <!-- FILE UPLOAD STUFF END-->
+
+          </div>
+          <div class="form-group col-md-4">
+            <button class="remove-event-btn" id="remove-event1">REMOVE</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event2">+ ADD EVENT</button>
+        <br><br>
+      </div>
+      <!-- END EVENT #1-->
+
+      <!--START EVENT #2 -->
+      <div id="event2" style="display:none;">
+        <hr class="small-hr">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="title-e2">EVENT #2 TITLE*</label>
+            <input type="text" class="form-control" id="title-e2" placeholder="Title">
+          </div>
+          <div class="form-group col-md-6 pac-card">
+            <div id="pac-container">
+              <label for="pac-input">EVENT #2 LOCATION*</label>
+              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="start-date-e2">START DATE*</label>
+            <input type="date" class="form-control" id="start-date-e2">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="end-date-e2">END DATE</label>
+            <input type="date" class="form-control" id="end-date-e2">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description-e2">EVENT #2 DESCRIPTION*</label>
+          <textarea class="form-control" id="description-e2" placeholder="Description"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="type-select-e2">EVENT TYPE*</label>
+            <select id="type-select-e2" class="form-control">
+              <option selected>Choose...</option>
+              <option>ACTIVITY</option>
+              <option>RESTAURANT</option>
+              <option>HOTEL</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            
+            <!-- FILE UPLOAD STUFF START -->
+            <label>PHOTOS*</label><br>
+            <div class="images" id="img-e2">
+              <div class="pic">
+                add
+              </div>
+            </div>
+          <!-- FILE UPLOAD STUFF END-->
+
+          </div>
+          <div class="form-group col-md-4">
+            <button class="remove-event-btn" id="remove-event2">REMOVE</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary add-event-btn" id="add-event3">+ ADD EVENT</button>
+        <br><br>
+      </div>
+      <!-- END EVENT #2-->
+
+
+      <!--START EVENT #3 -->
+      <div id="event3" style="display:none;">
+        <hr class="small-hr">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="title-e3">EVENT #3 TITLE*</label>
+            <input type="text" class="form-control" id="title-e3" placeholder="Title">
+          </div>
+          <div class="form-group col-md-6 pac-card">
+            <div id="pac-container">
+              <label for="pac-input">EVENT #3 LOCATION*</label>
+              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="start-date-e3">START DATE*</label>
+            <input type="date" class="form-control" id="start-date-e3">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="end-date-e3">END DATE</label>
+            <input type="date" class="form-control" id="end-date-e3">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description-e3">EVENT #3 DESCRIPTION*</label>
+          <textarea class="form-control" id="description-e3" placeholder="Description"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="type-select-e3">EVENT TYPE*</label>
+            <select id="type-select-e3" class="form-control">
+              <option selected>Choose...</option>
+              <option>ACTIVITY</option>
+              <option>RESTAURANT</option>
+              <option>HOTEL</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            
+            <!-- FILE UPLOAD STUFF START -->
+            <label>PHOTOS*</label><br>
+            <div class="images" id="img-e2">
+              <div class="pic">
+                add
+              </div>
+            </div>
+          <!-- FILE UPLOAD STUFF END-->
+
+          </div>
+          <div class="form-group col-md-4">
+            <button class="remove-event-btn" id="remove-event3">REMOVE</button>
+          </div>
+        </div>
+        <br><br>
+      </div>
+      <!-- END EVENT #3-->
+
+      
+      <div id="error-add-div" style="display: none; float: right;">
+        <p class="error" id="error-msg-p">Trip could not be added successfully. Please try again.</p>
+        <br>
+        <br>
+      </div>
+      
+
+      <button type="button" id="create-trip-btn" onclick="createTrip()">CREATE TRIP</button>
     </form>
 
     
@@ -81,5 +323,485 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+    <!-- for location search -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXd77Qkx4o0sxKlQQKYQJhk_wbFk7vm9o&callback=initMap&libraries=places&v=weekly"
+      async>
+    </script>
+
+    <script>
+      let addUrl = "https://tripline-csci201.herokuapp.com/trips";
+
+      var tripLatitude = 0;
+      var tripLongitude = 0;
+      
+      // using JQuery to show/hide event fields
+      $(document).ready(function(){
+
+        $("#add-event1").click(function(){
+          $("#event1").show();
+        });
+        $("#add-event2").click(function(){
+          $("#event2").show();
+        });
+        $("#add-event3").click(function(){
+          $("#event3").show();
+        });
+  
+        $("#remove-event1").click(function(){
+          $("#event1").hide();
+        });
+        $("#remove-event2").click(function(){
+          $("#event2").hide();
+        });
+        $("#remove-event3").click(function(){
+          $("#event3").hide();
+        });
+
+      });
+
+
+      // CODE TO CONNECT TO API BACKEND STUFF
+      function createTrip() {
+
+        // getting user input from form fields
+        var title = document.getElementById("trip-title").value;
+        var description = document.getElementById("trip-description").value;
+        var location = document.getElementById("pac-input").value; // todo: get latitude and longitude values
+        var startDate = document.getElementById("start-date").value;
+        var endDate = document.getElementById("end-date").value;
+        var dropdown = document.getElementById("accommodations-select")
+        var accommodations = dropdown.options[dropdown.selectedIndex].value;
+        var pinned = document.querySelector('#pinned-check');
+
+        var events = []; // will store the list of events 
+
+        var validLocation = true; // todo: set this variable conditionally
+        
+        if (pinned.checked) {
+          pinned = true;
+        }
+        else {
+          pinned = false;
+        }
+        
+        // looping through the 3 potential events
+        for (let i = 1; i <= 3; i++) {
+        
+          // if the event is showing (not hidden)
+          if (document.getElementById("event" + i).style.display != "none") {
+            console.log("Adding event " + i + " details.");
+
+            // getting values from the form for this event
+            var title = document.getElementById("title-e" + i).value;
+            var location = ""; // todo
+            var start = document.getElementById("start-date-e" + i).value;
+            var end = document.getElementById("end-date-e" + i).value;
+            var desc = document.getElementById("description-e" + i).value;
+            var dropdown = document.getElementById("type-select-e" + i);
+            var eventType = dropdown.options[dropdown.selectedIndex].value;
+
+            // checking if any fields are missing
+            if (title === "" || startDate === "" || start == "" || desc === "" || eventType === "") {
+              console.log("At least one required field for the event is empty.");
+
+              // displaying appropriate error message
+              document.getElementById("error-msg-p").innerHTML = "At least one required field for event " + i + " is empty.";
+              document.getElementById("error-add-div").style.display = "block";
+
+              return;
+            }
+
+            // todo: check for valid location
+            if (!validLocation) {
+
+              // displaying appropriate error message
+              document.getElementById("error-msg-p").innerHTML = "Invalid location for event " + i;
+              document.getElementById("error-add-div").style.display = "block";
+
+              return;
+            }
+
+
+            // at this point, fields should be filled and valid so we can add the event to the list
+            let eventToAdd = {
+              "name": title,
+              "category": eventType,
+              "description": desc,
+              "location": {
+                "name": location,
+                "longitude": 170.2222,
+                "latitude": -20.8844
+              },
+              "timestamp_to": end,
+              "timestamp_from": start,
+              "image_urls": [
+                "http://placeimg.com/640/480",
+                "http://placeimg.com/640/480"
+              ]
+            }
+
+            events.push(eventToAdd);
+           }
+
+           // else, don't do anything. we can return since there won't be any open events after this one
+           else {
+             console.log("Event " + i + " not selected-- exiting.")
+             break;
+           }
+        }
+
+        // checking if any required field is empty for the overall trip
+        if (title === "" || location === "" || startDate === "" || accommodations === "") {
+          console.log("At least one field for the trip is empty.");
+   
+          // displaying appropriate error message
+          document.getElementById("error-msg-p").innerHTML = "At least one field for the trip is empty.";
+          document.getElementById("error-add-div").style.display = "block";
+
+          return;
+        }
+
+        // getting user ID from cookies
+        let cookies = document.cookie;
+        console.log(cookies); 
+        let id = parseInt(getCookie("userID"));
+
+        // constructing API headers
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "title": title,
+          "description": description,
+          "author_id": id,
+          "location_longitude": tripLongitude,
+          "location_latitude": tripLatitude,
+          "timestamp_to": endDate,
+          "timestamp_from": startDate, 
+          "pin": pinned, 
+          "events": events
+        });
+
+
+        console.log(raw);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+
+        // fetching the API response
+        fetch(addUrl, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            let resultObject = data;
+            console.log('User:' + resultObject.id);
+
+            // checking if the registration was successful
+            if (resultObject.success) {
+              console.log ("Successfully added trip.");
+
+              // redirecting to the user page
+              location.href = "userpage.html";
+            }
+            else {
+              console.log("Trip was not added successfully.")
+              
+              // should display some kind of error message on the screen so the user retries adding a trip
+              document.getElementById("error-msg-p").innerHTML = "Error adding trip. Please try again.";
+              document.getElementById("error-add-div").style.display = "block";
+            }
+          })
+          .catch(error => console.log('error', error));
+      }
+    
+
+
+
+
+      // function that returns a string with the value of the cookie
+      function getCookie(cookieName) {
+        let name = cookieName + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+    </script>
+
+    
+
+
+
+
+
+    <script>
+      // Javascript for the photo upload stuff
+      // source: https://speckyboy.com/custom-file-upload-fields/
+
+      (function ($) {
+        $(document).ready(function () {
+          
+          generateID()
+          choose()
+          generateOption()
+          selectionOption()
+          removeClass()
+          uploadImage()
+          submit()
+          resetButton()
+          removeNotification()
+          autoRemoveNotification()
+          autoDequeue()
+          
+          var ID
+          var way = 0
+          var queue = []
+          var fullStock = 10
+          var speedCloseNoti = 1000
+          
+          function generateID() {
+            var text = $('header span')
+            var newID = ''
+          
+            for(var i = 0; i < 3; i++) {
+              newID += Math.floor(Math.random() * 3)
+            }
+            
+            ID = 'ID: 5988' + newID
+            text.html(ID)
+          }
+          
+          function choose() {
+            var li = $('.ways li')
+            var section = $('.sections section')
+            var index = 0
+            li.on('click', function () {
+              index = $(this).index()
+              $(this).addClass('active')
+              $(this).siblings().removeClass('active')
+              
+              section.siblings().removeClass('active')
+              section.eq(index).addClass('active')
+              if(!way) {
+                way = 1
+              }  else {
+                way = 0
+              }
+            })
+          }
+          
+          function generateOption() {
+            var select = $('select option')
+            var selectAdd = $('.select-option .option')
+            $.each(select, function (i, val) {
+                $('.select-option .option').append('<div rel="'+ $(val).val() +'">'+ $(val).html() +'</div>')
+            })
+          }
+          
+          function selectionOption() {
+            var select = $('.select-option .head')
+            var option = $('.select-option .option div')
+          
+            select.on('click', function (event) {
+              event.stopPropagation()
+              $('.select-option').addClass('active')
+            })
+            
+            option.on('click', function () {
+              var value = $(this).attr('rel')
+              $('.select-option').removeClass('active')  
+              select.html(value)
+          
+              $('select#category').val(value)
+            })
+          }
+          
+          function removeClass() {
+            $('body').on('click', function () { 
+              $('.select-option').removeClass('active')   
+            })                  
+          }
+          
+          function uploadImage() {
+            var button = $('.images .pic')
+            var uploader = $('<input type="file" accept="image/*" />')
+            var images = $('.images')
+            
+            button.on('click', function () {
+              uploader.click()
+            })
+            
+            uploader.on('change', function () {
+                var reader = new FileReader()
+                reader.onload = function(event) {
+                  images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="'+ event.target.result  +'"><span>remove</span></div>')
+                }
+                reader.readAsDataURL(uploader[0].files[0])
+        
+            })
+            
+            images.on('click', '.img', function () {
+              $(this).remove()
+            })
+          
+          }
+          
+          function submit() {  
+            var button = $('#send')
+            
+            button.on('click', function () {
+              if(!way) {
+                var title = $('#title')
+                var cate  = $('#category')
+                var images = $('.images .img')
+                var imageArr = []
+
+                
+                for(var i = 0; i < images.length; i++) {
+                  imageArr.push({url: $(images[i]).attr('rel')})
+                }
+                
+                var newStock = {
+                  title: title.val(),
+                  category: cate.val(),
+                  images: imageArr,
+                  type: 1
+                }
+                
+                saveToQueue(newStock)
+              } else {
+                // discussion
+                var topic = $('#topic')
+                var message = $('#msg')
+                
+                var newStock = {
+                  title: topic.val(),
+                  message: message.val(),
+                  type: 2
+                }
+                
+                saveToQueue(newStock)
+              }
+            })
+          }
+          
+          function removeNotification() {
+            var close = $('.notification')
+            close.on('click', 'span', function () {
+              var parent = $(this).parent()
+              //parent.fadeOut(300)
+              setTimeout(function() {
+                parent.remove()
+              }, 300)
+            })
+          }
+          
+          function autoRemoveNotification() {
+            setInterval(function() {
+              var notification = $('.notification')
+              var notiPage = $(notification).children('.btn')
+              var noti = $(notiPage[0])
+              
+              setTimeout(function () {
+                setTimeout(function () {
+                noti.remove()
+                }, speedCloseNoti)
+                //noti.fadeOut(speedCloseNoti)
+              }, speedCloseNoti)
+            }, speedCloseNoti)
+          }
+          
+          function autoDequeue() {
+            var notification = $('.notification')
+            var text
+            
+            setInterval(function () {
+
+                if(queue.length > 0) {
+                  if(queue[0].type == 2) {
+                    text = ' Your discusstion is sent'
+                  } else {
+                    text = ' Your order is allowed.'
+                  }
+                  
+                  notification.append('<div class="success btn"><p><strong>Success:</strong>'+ text +'</p><span><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span></div>')
+                  queue.splice(0, 1)
+                  
+                }  
+            }, 10000)
+          }
+          
+          function resetButton() {
+            var resetbtn = $('#reset')
+            resetbtn.on('click', function () {
+              reset()
+            })
+          }
+          
+          // helpers
+          function saveToQueue(stock) {
+            var notification = $('.notification')
+            var check = 0
+            
+            if(queue.length <= fullStock) {
+              if(stock.type == 2) {
+                  if(!stock.title || !stock.message) {
+                    check = 1
+                  }
+              } else {
+                if(!stock.title || !stock.category || stock.images == 0) {
+                  check = 1
+                }
+              }
+              
+              if(check) {
+                notification.append('<div class="error btn"><p><strong>Error:</strong> Please fill in the form.</p><span><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span></div>')
+              } else {
+                notification.append('<div class="success btn"><p><strong>Success:</strong> '+ ID +' is submitted.</p><span><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span></div>')
+                queue.push(stock)
+                reset()
+              }
+            } else {
+              notification.append('<div class="error btn"><p><strong>Error:</strong> Please waiting a queue.</p><span><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span></div>')
+            } 
+          }
+          function reset() {
+            
+            $('#title').val('')
+            $('.select-option .head').html('Category')
+            $('select#category').val('')
+            
+            var images = $('.images .img')
+            for(var i = 0; i < images.length; i++) {
+              $(images)[i].remove()
+            }
+            
+            var topic = $('#topic').val('')
+            var message = $('#msg').val('')
+          }
+        })
+      })(jQuery)
+
+
+
+
+    </script>
+  
   </body>
 </html>

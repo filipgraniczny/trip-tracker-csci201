@@ -1,3 +1,4 @@
+/* START MAIN FORMATTING */
 #addtrip-title {
     font-style: normal;
     font-weight: 700;
@@ -22,3 +23,290 @@
     color: #34945C;
     float: right;
 }
+
+.add-event-btn {
+    border: 3px solid #34945C;
+    border-radius: 30px;
+    font-weight: 700;
+    color: #34945C;
+    letter-spacing: 0.15em;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.remove-event-btn {
+    border: 3px solid #34945C;
+    border-radius: 30px;
+    font-weight: 700;
+    color: #34945C;
+    letter-spacing: 0.15em;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    float: right;
+}
+
+.img-upload {
+    padding: 0.3rem;
+    cursor: pointer;
+    border: 3px solid #34945C;
+    border-radius: 30px;
+    font-weight: 700;
+    color: #34945C;
+    letter-spacing: 0.15em;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+
+body {
+    padding-top: 3%;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-bottom: 3%;
+}
+
+#img {
+   background-color: white; 
+}
+
+.big-hr {
+    border: 3px solid #34945C;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
+}
+
+.small-hr {
+    border: 1px solid #34945C;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
+}
+
+input.larger {
+    width: 30px;
+    height: 30px;
+}
+
+/* formatting for x button */
+
+.crosssign {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  position: relative;
+  transform: rotate(45deg);
+}
+
+.crosssign_circle {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-color: #34945C;
+  border-radius: 11px;
+  left: 0;
+  top: 0;
+}
+
+.crosssign_stem,
+.crosssign_stem2 {
+  position: absolute;
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.crosssign_stem {
+  width: 3px;
+  height: 9px;
+}
+
+.crosssign_stem2 {
+  width: 9px;
+  height: 3px;
+}
+
+
+.error {
+  color: red;
+}
+
+/* END MAIN FORMATTING */
+
+
+
+
+/* CSS FOR LOCATION SEARCH WITH GOOGLE MAPS */
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+height: 100%;
+}
+
+#description {
+font-family: Roboto;
+font-size: 15px;
+font-weight: 300;
+}
+
+#infowindow-content .title {
+font-weight: bold;
+}
+
+#infowindow-content {
+display: none;
+}
+
+#map #infowindow-content {
+display: inline;
+}
+
+/* .pac-card {
+background-color: #fff;
+border: 0;
+border-radius: 2px;
+box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+margin: 10px;
+padding: 0 0.5em;
+font: 400 18px Roboto, Arial, sans-serif;
+overflow: hidden;
+font-family: Roboto;
+padding: 0;
+} */
+
+/* #pac-container {
+padding-bottom: 12px;
+margin-right: 12px;
+} */
+
+.pac-controls {
+display: inline-block;
+padding: 5px 11px;
+}
+
+.pac-controls label {
+font-family: Roboto;
+font-size: 13px;
+font-weight: 300;
+}
+
+/* #pac-input {
+background-color: #fff;
+font-family: Roboto;
+font-size: 15px;
+font-weight: 300;
+margin-left: 12px;
+padding: 0 11px 0 13px;
+text-overflow: ellipsis;
+width: 400px;
+} */
+
+/* #pac-input:focus {
+border-color: #4d90fe;
+} */
+
+#title {
+color: #fff;
+background-color: #4d90fe;
+font-size: 25px;
+font-weight: 500;
+padding: 6px 12px;
+}
+/* END GOOGLE MAPS STUFF */
+
+
+
+/* START PHOTO UPLOAD STUFF */
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .wrapper  {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 5px;
+    width: 360px;
+    max-width: 100%;
+    margin: 50px auto;
+    align-self: center;
+    box-sizing: border-box;
+  }
+
+  .images {
+    display: flex;
+    flex-wrap:  wrap;
+    /* margin-top: 5px; */
+  }
+
+  .images .img,
+  .images .pic {
+    flex-basis: 31%;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  .images .img {
+    width: 70px;
+    height: 60px;
+    background-size: cover;
+    margin-right: 10px;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .images .img:nth-child(3n) {
+    margin-right: 0;
+  }
+  .images .img span {
+    display: none;
+    text-transform: capitalize;
+    z-index: 2;
+  }
+  .images .img::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    transition: opacity .1s ease-in;
+    border-radius: 4px;
+    opacity: 0;
+    position: absolute;
+  }
+  .images .img:hover::after {
+    display: block;
+    background-color: #000;
+    opacity: .5;
+  }
+  .images .img:hover span {
+    display: block;
+    color: #fff;
+  }
+  .images .pic {
+    background-color: #F5F7FA;
+    align-self: center;
+    text-align: center;
+    padding: 15px 0;
+    text-transform: uppercase;
+    color: #848EA1;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  @media screen and (max-width: 400px) {
+    .wrapper {
+      margin-top: 0;
+    }
+    header {
+      flex-direction: column;
+    }
+    header span {
+      text-align: left;
+      margin-top: 10px;
+    }
+    .images .img,
+    .images .pic {
+      flex-basis: 100%;
+      margin-right: 0;
+    }
+  }
+/* END PHOTO UPLOAD STUFF */

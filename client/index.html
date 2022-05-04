@@ -1,0 +1,202 @@
+<!-- HOOME PAGE: HENRY -->
+<!doctype html>
+<html>
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home page</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="./styles/homepage.css">
+</head>
+
+<body onload="getTrip()">
+
+    <div id="nav-bar">
+        <nav id="nav-bar-fixed">
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a id="logo" href="#"><strong>T | L</strong></a>
+              </li>
+              <li class="nav-item">
+                <a href="#"><strong>HOME</strong></a>
+              </li>
+              <li class="nav-item">
+                |
+              </li>
+              <li class="nav-item">
+                <button id="btn-login" onclick="checkLogIn()">
+                        <img id="login-logo" src="./images/user-icon.svg" alt="logo">
+                        <strong id="login-btn-change">LOG IN</strong>
+                </button>
+              </li>
+            </ul>
+        </nav>
+
+        <div id="title">
+            <p class="text-wrap text-white"><strong>MAKE</strong></p>
+            <p class="text-wrap text-white"><strong>YOUR TRIP</strong></p>
+            <p class="text-wrap" style="color: #91CB82;"><strong>MEMORABLE</strong></p>
+        </div>
+        <div id="btn-section">
+          <a href="#explore-section"><button id="learn-more-btn"><strong>Learn more</strong></button></a>
+        </div>
+
+        <form action="searchResults.html" id="search-container">
+            <div id="search-bar">
+                <div id="search-logo"><img id="search-img" src="./images/seach-logo.svg" alt="search logo"></div>
+                <div id="search-input"><input type="text" id="input-field" placeholder="S e a r c h   a   t r i p . . ."></div>
+                <button id="submit-btn" type="submit" value="Submit"><img  id="submit-img" src="./images/right-arrow.svg" alt="right arrow"></button>
+            </div>
+            <div id="spacer"></div>
+        </form>
+    </div>
+
+    <div id="explore-section">
+        <div class="explore-title"><strong>Inspiration for your next trips</strong></div>
+        <div class="inspiration-section">
+            <button class="trip-container" id="trip-1">
+              <div class="trip-title"><strong>CANCUN</strong></div>
+              <div class="trip-description"><strong>Cancun is recognized worldwide for its spectacular beaches of fine white sand</strong></div>
+              <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
+            </button>
+            <button class="trip-container" id="trip-2">
+              <div class="trip-title"><strong>VIETNAM</strong></div>
+              <div class="trip-description"><strong>A land of staggering natural beauty and cultural complexities, of dynamic megacities and hill-tribe villages</strong></div>
+              <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
+            </button>
+            <button class="trip-container" id="trip-3">
+                <div class="trip-title"><strong>PHILIPINES</strong></div>
+                <div class="trip-description"><strong>Home to world-renowned natural wonders like an underground river and rice terraces</strong></div>
+                <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
+            </button>
+        </div>
+
+        <div class="explore-title"><strong>Hightlight trips</strong></div>
+        <div class="inspiration-section">
+          <div class="highlight-container">
+            <button id="hightlight-img" onclick="getTripDetail(0)"></button>
+            <div class="highlight-title"><strong id="highlight-title-1">HA LONG</strong></div>
+            <div class="highlight-bio">by <a href="" id="highlight-author-1">Henry Vu</a></div>
+            <div class="highlight-date" id="highlight-date-1">10/11/2012</div>
+          </div>
+
+          <div class="highlight-container">
+            <button id="hightlight-img" onclick="getTripDetail(1)"></button>
+            <div class="highlight-title"><strong id="highlight-title-2">HA LONG</strong></div>
+            <div class="highlight-bio">by <a href="" id="highlight-author-2">Henry Vu</a></div>
+            <div class="highlight-date" id="highlight-date-2">10/11/2012</div>
+          </div>
+
+          <div class="highlight-container">
+            <button id="hightlight-img" onclick="getTripDetail(2)"></button>
+            <div class="highlight-title"><strong id="highlight-title-3">HA LONG</strong></div>
+            <div class="highlight-bio">by <a href="" id="highlight-author-3">Henry Vu</a></div>
+            <div class="highlight-date" id="highlight-date-3">10/11/2012</div>
+          </div>
+
+          <div class="highlight-container">
+            <button id="hightlight-img" onclick="getTripDetail(3)"></button>
+            <div class="highlight-title"><strong id="highlight-title-4">HA LONG</strong></div>
+            <div class="highlight-bio">by <a href="" id="highlight-author-4">Henry Vu</a></div>
+            <div class="highlight-date" id="highlight-date-4">10/11/2012</div>
+          </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+      // CODE TO CONNECT TO API BACKEND STUFF
+      let getTripURL = 'https://tripline-csci201.herokuapp.com/trips/explore?limit=4&searchTerm=&sortBy=toTime';
+      var tripArray;
+      
+      function getTrip() {
+        checkCookie();
+
+        var location;
+        var author;
+        var date;
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+
+        fetch(getTripURL)
+        .then(response => response.json())
+        .then(data => {
+          const result = data;
+          tripArray = data;
+          console.log(result);
+          updateTrip(result);
+        })
+        .catch(console.error);
+      }
+
+      function updateTrip(result) 
+      {
+        for (i = 1; i < 5; i++) {
+          let trip = result[i-1];
+          let location = document.getElementById(`highlight-title-${i}`);
+          location.innerHTML = trip.location.name;
+          
+          let author = document.getElementById(`highlight-author-${i}`);
+          author.innerHTML = trip.author.name;
+
+          let date = document.getElementById(`highlight-date-${i}`);
+          var dateArray = trip.fromTime.substring(0, 10).split("-");
+          let year = dateArray[0];
+          let month = dateArray[1];
+          let day = dateArray[2];
+          var dateFormat = month + "/" +  day + "/" + year;
+          date.innerHTML = dateFormat;
+        }
+      }
+
+      function getTripDetail(id) {
+        let tripDetail = JSON.stringify(tripArray[id]);
+        console.log(tripDetail);
+        sessionStorage.setItem("tripDetail", tripDetail);
+        window.location.href='details.html';
+      }
+
+      function getCookie(id) {
+        let name = "userID: " + id;
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        console.log(ca);
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(id) == 0) {
+            return id;
+          }
+        }
+        return "";
+      }
+
+      function checkCookie() {
+        let id = getCookie("userID=");
+        if (id != "") {
+          let loginBtn = document.getElementById("login-btn-change");
+          loginBtn.innerHTML = "ACCOUNT";
+        }
+      }
+
+      function checkLogIn() {
+        let id = getCookie("userID=");
+        if (id != "") {
+          window.location.href='userpage.html';
+        }
+        else {
+          window.location.href='loginpage.html';
+        }
+      } 
+    </script>
+</body>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>T | L *Insert Trip Name here*</title>
+	<!-- Bootstrap and respective stylesheet -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="./styles/details.css">
+	<style>
+	</style>
+</head>
+
+<body onload="getTripDetail()">
+	<!-- Navbar code courtesy of Henry :) -->
+    <div id="nav-bar">
+        <nav>
+            <ul class="nav-list">
+				<li class="nav-item">
+				  <a id="logo" href="index.html"><strong>T | L</strong></a>
+				</li>
+				<li class="nav-item">
+				  <a href="index.html"><strong>HOME</strong></a>
+				</li>
+				<li class="nav-item">
+				  |
+				</li>
+				<li class="nav-item">
+				  <button id="btn-login" onclick="checkLogIn()">
+						<img id="login-logo" src="./images/user-icon.svg" alt="logo">
+						<strong id="login-btn-change">LOG IN</strong>
+				  </button>
+				</li>
+			  </ul>
+        </nav>
+    </div>
+
+    <div id="overallDetails">
+    	<h2 id="tripTitle">INSERT TRIP NAME HERE IN CAPS</h2>
+    	<p id="tripDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin. Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque ac magna fringilla, ut maximus odio laoreet.</p>
+    	<p id="tripAuthor">By <span id="nameStyling">Kelly Kenyon</span></p>
+    	<p id="tripDates"><span id="startDate">10/11/2012</span> <i class="fa fa-arrow-right"></i> <span id="endDate">12/21/2012</span></p>
+    </div>
+    <br>
+    <br>
+
+    <div id="mainTripImgContainter">
+    	<img id="mainTripImg" src="./images/phillipines.png">
+    </div>
+
+	<div id="container"></div>
+
+    <!-- <div class="eventItem">
+    	<div class="eventInfo">
+	    	<h3 class="eventTitle">EVENT 1 TITLE</h3>
+	    	<p class="eventLocation"><i class="fas fa-map-marker-alt"></i> Los Angeles, CA</p>
+	    	<p class="eventType"><i class="fas fa-clipboard-list"></i> Attraction</p>
+	    	<p class="eventDate">10/11/2012 <i class="fa fa-arrow-right"></i> 12/21/2012</p>
+	    </div>
+	    <p class="eventDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin. Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque ac magna fringilla, ut maximus odio laoreet.</p>
+
+	    <div class="imagesContainer">
+	    	<img class="event1Image" src="./images/background.png">
+	    </div>
+
+	    <i class="fa fa-route"></i>
+    </div>
+
+    <div class="eventItem">
+    	<div class="eventInfo">
+	    	<h3 class="eventTitle">EVENT 2 TITLE</h3>
+	    	<p class="eventLocation"><i class="fas fa-map-marker-alt"></i> ur mom's house</p>
+	    	<p class="eventType"><i class="fas fa-clipboard-list"></i> Attraction</p>
+	    	<p class="eventDate">10/11/2012 <i class="fa fa-arrow-right"></i> 12/21/2012</p>
+	    </div>
+	    <p class="eventDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin. Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque ac magna fringilla, ut maximus odio laoreet.</p>
+
+	    <div class="imagesContainer">
+	    	<img class="event2Image leftimg" src="./images/background.png">
+	    	<img class="event2Image" src="./images/nyc2.png">
+	    </div>
+
+	    <i class="fa fa-route"></i>
+    </div>
+
+    <div class="eventItem">
+    	<div class="eventInfo">
+	    	<h3 class="eventTitle">EVENT 3 TITLE</h3>
+	    	<p class="eventLocation"><i class="fas fa-map-marker-alt"></i> ur mom's house</p>
+	    	<p class="eventType"><i class="fas fa-clipboard-list"></i> Attraction</p>
+	    	<p class="eventDate">10/11/2012 <i class="fa fa-arrow-right"></i> 12/21/2012</p>
+	    </div>
+	    <p class="eventDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin. Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque ac magna fringilla, ut maximus odio laoreet.</p>
+
+	    <div class="imagesContainer">
+	    	<img class="event3Image leftimg" src="./images/berlin2.png">
+	    	<img class="event3Image" src="./images/background.png">
+	    	<img class="event3Image rightimg" src="./images/cancun.png">
+	    </div>
+    </div> -->
+</body>
+
+<script>
+
+	// Get Trip Detail
+	function getTripDetail() {
+		checkCookie();
+
+		let trip = JSON.parse(sessionStorage.getItem("tripDetail"));
+		console.log(trip);
+
+		let author = document.getElementById('nameStyling');
+		author.innerHTML = trip.author.name;
+
+		let title = document.getElementById('tripTitle');
+		title.innerHTML = trip.title;
+
+		let description = document.getElementById('tripDescription');
+		description.innerHTML = trip.description;
+
+		let startDate = document.getElementById('startDate');
+		let startDateString = getDate(trip.fromTime);
+		startDate.innerHTML = startDateString;
+
+		let endDate = document.getElementById('endDate');
+		let endDateString = getDate(trip.toTime);
+		endDate.innerHTML = endDateString;
+
+		getEvents(trip.events);
+	}
+
+	function getEvents(events) {
+		console.log(events);
+
+		let container = document.getElementById('container');
+		var content = "";
+		for (i = 0; i < events.length; i++) {
+			console.log(events[i]);
+			let event = events[i];
+			content += "<div class=\"eventItem\">";
+			content += "<div class=\"eventInfo\">"
+			content += `<h3 class=\"eventTitle\">${event.name}</h3>`
+			content += `<p class=\"eventLocation\"><i class=\"fas fa-map-marker-alt\"></i> ${event.location.name}</p>`
+			content += `<p class="eventType"><i class="fas fa-clipboard-list"></i> ${event.category}</p>`
+			content += `<p class="eventDate">${getDate(event.fromTime)} <i class="fa fa-arrow-right"></i> ${getDate(event.toTime)}</p>`
+			content += "</div>";
+			content += `<p class="eventDescription">${event.description}</p>`
+			content += '<div class="imagesContainer">'
+			let photos = event.photos;
+			for (k = 0; k < photos.length; k++) {
+				content += `<img class="event1Image" src="./images/background.png">`;
+			}
+			content += '</div>';
+			content += '<i class="fa fa-route"></i>';	
+			content += "</div>";
+		}
+		container.innerHTML = content;
+		
+	}
+
+	function getDate(timestamp) {
+		var dateArray = timestamp.substring(0, 10).split("-");
+		let year = dateArray[0];
+		let month = dateArray[1];
+		let day = dateArray[2];
+		var dateFormat = month + "/" +  day + "/" + year;
+		return dateFormat;
+	}
+
+	function getCookie(id) {
+		let name = "userID: " + id;
+		let decodedCookie = decodeURIComponent(document.cookie);
+		let ca = decodedCookie.split(';');
+		console.log(ca);
+		for(let i = 0; i <ca.length; i++) {
+			let c = ca[i];
+			while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+			}
+			if (c.indexOf(id) == 0) {
+			return id;
+			}
+		}
+		return "";
+	}
+
+	function checkCookie() {
+		let id = getCookie("userID=");
+		if (id != "") {
+			let loginBtn = document.getElementById("login-btn-change");
+			loginBtn.innerHTML = "ACCOUNT";
+		}
+	}
+
+	function checkLogIn() {
+		let id = getCookie("userID=");
+		if (id != "") {
+			window.location.href='userpage.html';
+		}
+		else {
+			window.location.href='loginpage.html';
+		}
+	} 
+</script>
+
+</html>
