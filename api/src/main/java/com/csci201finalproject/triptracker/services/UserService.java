@@ -150,7 +150,7 @@ public class UserService {
         photoEntity.setObjectKeyAws(objectAwsKey);
         URL presignedUrl = s3Service.getObjectURLFromKey(configService.getS3BucketName(), objectAwsKey);
         photoEntity.setPresignedUrl(presignedUrl.toString());
-        photoRepository.save(photoEntity);
+        photoEntity = photoRepository.save(photoEntity);
 
         // save photo entity to user record
         foundUserEntity.setProfilePhotoEntity(photoEntity);
