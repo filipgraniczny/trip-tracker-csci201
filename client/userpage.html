@@ -40,7 +40,7 @@
 
         </div>
         <div id="user-description">
-          <h2>User Name</h2><br>
+          <h2 id ="UserName">User Name</h2><br>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
           Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
           ac magna fringilla, ut maximus odio laoreet. </p>
@@ -81,11 +81,11 @@
           </div>
           
           <div class="post">
-            <h2>Long Weekend in NYC</h2><br>
-            NEW YORK, NY, USA<br>
-            4/15/2022 - 4/20/2022<br>
+            <h2 class="post-title">Long Weekend in NYC</h2><br>
+            <div class="location">NEW YORK, NY, USA<br></div>
+            <div class="dates">4/15/2022 - 4/20/2022<br>></div>
 
-            <p>
+            <p class="description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
               Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
               ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
@@ -96,11 +96,12 @@
           </div>
 
           <div class="post">
-            <h2>Spring Break in Berlin</h2><br>
-            BERLIN, GERMANY<br>
-            3/13/2022 - 3/20/2022<br>
+            <h2 class="post-title">Spring Break in Berlin</h2><br>
+            <div class="location">BERLIN, GERMANY<br></div>
+            <div class="dates"> 3/13/2022 - 3/20/2022<br></div>
+           
 
-            <p>
+            <p class="description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
               Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
               ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
@@ -121,7 +122,151 @@
          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d26359294.213879205!2d-113.71754000532057!3d36.24708982631333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1649550562301!5m2!1sen!2sus" id="map" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
+      <script>
+        let logUrl = "https://tripline-csci201.herokuapp.com/users/1";
 
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+
+        function getTripDetail(id) {
+          let tripDetail = JSON.stringify(tripArray[id]);
+          console.log(tripDetail);
+          sessionStorage.setItem("tripDetail", tripDetail);
+          window.location.href='details.html';
+        }
+
+        function getCookie(id) {
+          let name = "userID: " + id;
+          let decodedCookie = decodeURIComponent(document.cookie);
+          let ca = decodedCookie.split(';');
+          console.log(ca);
+          for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+            }
+            if (c.indexOf(id) == 0) {
+              return id;
+            }
+          }
+          return "";
+        }
+
+        function checkCookie() {
+          let id = getCookie("userID=");
+          if (id != "") {
+            let loginBtn = document.getElementById("login-btn-change");
+            loginBtn.innerHTML = "ACCOUNT";
+          }
+        }
+
+        function updateTrip(result) 
+        {
+          let trip = result[i-1];
+          let location = document.getElementById(`trip-${i}`);
+          location.innerHTML = trip.location.name;
+  
+
+          let date = document.getElementById(`trip-${i}`);
+          var dateArray = trip.fromTime.substring(0, 10).split("-");
+          let year = dateArray[0];
+          let month = dateArray[1];
+          let day = dateArray[2];
+          var dateFormat = month + "/" +  day + "/" + year;
+          date.innerHTML = dateFormat;
+        
+        }
+
+        function updatePost(result) 
+        {
+        
+          let trip = result[i-1];
+          let title = document.getElementById(`post-title`);
+          title.innerHTML = trip.title.name;
+  
+
+          let date = document.getElementById(`date`);
+          var dateArray = trip.fromTime.substring(0, 10).split("-");
+          let year = dateArray[0];
+          let month = dateArray[1];
+          let day = dateArray[2];
+          var dateFormat = month + "/" +  day + "/" + year;
+          date.innerHTML = dateFormat;
+
+          let loc = document.getElementById(`location`);
+          loc.innerHTML = trip.loc.name;
+        }
+
+        function getTrip() {
+          checkCookie();
+
+          var location;
+          var author;
+          var date;
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+
+          var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+          };
+
+          fetch(getTripURL)
+          .then(response => response.json())
+          .then(data => {
+            const result = data;
+            tripArray = data;
+            console.log(result);
+            updateTrip(result);
+          })
+          .catch(console.error);
+        }
+
+        function updateUserInfo(data){
+          //update user name
+          let name = document.getElementById("UserName");
+          name.innerHTML = data;
+
+          //update user pfp
+          let pfp = document.getElementById("pfp");
+          pfp.styles.backgroundImage = "url('" + data.pfp + "')";
+        }
+
+        function updateHighlights(data){
+          for (let i = 0; i < 3; i++) {
+            updateTrip(data[i]);
+          }
+        }
+
+        function updateTrips(data){
+          for (let i = 0; i < data.length; i++) {
+            updatePost(data[i]);
+          }
+        }
+
+
+        fetch(logUrl, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            let resultObject = data;
+
+            console.log('User:' + resultObject.id);
+            
+            //updateUserInfo(resultObject);
+            //updateHighlights(resultObject);
+            //updateTrips(resultObject);
+          })
+          .catch(error => console.log('error', error));
+      
+      </script>
 
 
 
