@@ -47,8 +47,8 @@
         </div>
         <div class="form-group col-md-6 pac-card">
           <div id="pac-container">
-            <label for="pac-input">LOCATION*</label>
-            <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+            <label for="trip-loc-input">LOCATION*</label>
+            <input id="trip-loc-input" type="text" class="form-control" placeholder="Location"/>
           </div>
         </div>
       </div>
@@ -127,8 +127,8 @@
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="pac-input">EVENT #1 LOCATION*</label>
-              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+              <label for="event1-loc-input">EVENT #1 LOCATION*</label>
+              <input id="event1-loc-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
         </div>
@@ -190,8 +190,8 @@
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="pac-input">EVENT #2 LOCATION*</label>
-              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+              <label for="event2-loc-input">EVENT #2 LOCATION*</label>
+              <input id="event2-loc-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
         </div>
@@ -254,8 +254,8 @@
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="pac-input">EVENT #3 LOCATION*</label>
-              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+              <label for="event3-loc-input">EVENT #3 LOCATION*</label>
+              <input id="event3-loc-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
         </div>
@@ -335,6 +335,13 @@
 
       var tripLatitude = 0;
       var tripLongitude = 0;
+
+      var event1Latitude = 0;
+      var event1Longitude = 0;
+      var event2Latitude = 0;
+      var event2Longitude = 0;
+      var event3Latitude = 0;
+      var event3Longitude = 0;
       
       // using JQuery to show/hide event fields
       $(document).ready(function(){
@@ -368,7 +375,7 @@
         // getting user input from form fields
         var title = document.getElementById("trip-title").value;
         var description = document.getElementById("trip-description").value;
-        var location = document.getElementById("pac-input").value; // todo: get latitude and longitude values
+        var location = document.getElementById("trip-loc-input").value;
         var startDate = document.getElementById("start-date").value;
         var endDate = document.getElementById("end-date").value;
         var dropdown = document.getElementById("accommodations-select")
@@ -395,7 +402,7 @@
 
             // getting values from the form for this event
             var title = document.getElementById("title-e" + i).value;
-            var location = ""; // todo
+            var location = document.getElementById("event" + i + "-loc-input").value;
             var start = document.getElementById("start-date-e" + i).value;
             var end = document.getElementById("end-date-e" + i).value;
             var desc = document.getElementById("description-e" + i).value;
@@ -423,6 +430,22 @@
               return;
             }
 
+            var lat = 0;
+            var long = 0;
+
+            // get latitude and longitude values for this particular event
+            if (i == 1) {
+              lat = event1Latitude;
+              long = event1Longitude;
+            } 
+            else if (i == 2) {
+              lat = event2Latitude;
+              long = event2Longitude;
+            } 
+            else if (i == 3) {
+              lat = event3Latitude;
+              long = event3Longitude;
+            }
 
             // at this point, fields should be filled and valid so we can add the event to the list
             let eventToAdd = {
@@ -431,8 +454,8 @@
               "description": desc,
               "location": {
                 "name": location,
-                "longitude": 170.2222,
-                "latitude": -20.8844
+                "longitude": long,
+                "latitude": lat
               },
               "timestamp_to": end,
               "timestamp_from": start,
