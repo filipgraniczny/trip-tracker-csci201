@@ -65,14 +65,18 @@
           <input type="date" class="form-control" id="end-date">
         </div>
         <div class="form-group col-md-4">
-            <!-- FILE UPLOAD STUFF START -->
-            <label>PHOTO*</label><br>
+            <!-- FANCY FILE UPLOAD STUFF START -->
+            <!-- <label>PHOTO*</label><br>
             <div class="images" id="trip-img">
               <div class="pic">
                 add
               </div>
-            </div>
-          <!-- FILE UPLOAD STUFF END-->
+            </div> -->
+          <!-- FANCY FILE UPLOAD STUFF END-->
+
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img-trip" name="img-trip" accept="image/*" multiple>
+
         </div>
       </div>
 
@@ -161,14 +165,17 @@
           </div>
           <div class="form-group col-md-4">
 
-            <!-- FILE UPLOAD STUFF START -->
-            <label>PHOTOS*</label><br>
+            <!-- FANCY FILE UPLOAD STUFF START -->
+            <!-- <label>PHOTOS*</label><br>
             <div class="images" id="img-e1">
               <div class="pic">
                 add
               </div>
-            </div>
-          <!-- FILE UPLOAD STUFF END-->
+            </div> -->
+          <!-- FANCY FILE UPLOAD STUFF END-->
+
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img-e1" name="img-e1" accept="image/*" multiple>
 
           </div>
           <div class="form-group col-md-4">
@@ -224,14 +231,17 @@
           </div>
           <div class="form-group col-md-4">
             
-            <!-- FILE UPLOAD STUFF START -->
-            <label>PHOTOS*</label><br>
+            <!-- FANCY FILE UPLOAD STUFF START -->
+            <!-- <label>PHOTOS*</label><br>
             <div class="images" id="img-e2">
               <div class="pic">
                 add
               </div>
-            </div>
-          <!-- FILE UPLOAD STUFF END-->
+            </div> -->
+          <!-- FANCY FILE UPLOAD STUFF END-->
+
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img-e2" name="img-e2" accept="image/*" multiple>
 
           </div>
           <div class="form-group col-md-4">
@@ -288,14 +298,17 @@
           </div>
           <div class="form-group col-md-4">
             
-            <!-- FILE UPLOAD STUFF START -->
-            <label>PHOTOS*</label><br>
+            <!-- FANCY FILE UPLOAD STUFF START -->
+            <!-- <label>PHOTOS*</label><br>
             <div class="images" id="img-e2">
               <div class="pic">
                 add
               </div>
-            </div>
-          <!-- FILE UPLOAD STUFF END-->
+            </div> -->
+          <!-- FANCY FILE UPLOAD STUFF END-->
+
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img-e3" name="img-e3" accept="image/*" multiple>
 
           </div>
           <div class="form-group col-md-4">
@@ -413,7 +426,7 @@
 
             // getting values from the form for this event
             var title = document.getElementById("title-e" + i).value;
-            var location = document.getElementById("event" + i + "-loc-input").value;
+            var eLocation = document.getElementById("event" + i + "-loc-input").value;
             var start = document.getElementById("start-date-e" + i).value;
             var end = document.getElementById("end-date-e" + i).value;
             var desc = document.getElementById("description-e" + i).value;
@@ -463,13 +476,13 @@
               "name": title,
               "category": eventType,
               "description": desc,
+              "from": start,
+              "to": end,
               "location": {
-                "name": location,
+                "name": eLocation,
                 "longitude": long,
                 "latitude": lat
-              },
-              "timestamp_to": end,
-              "timestamp_from": start
+              }
             }
 
             events.push(eventToAdd);
@@ -505,13 +518,17 @@
         var raw = JSON.stringify({
           "title": title,
           "description": description,
-          "author_id": id,
-          "location_longitude": tripLongitude,
-          "location_latitude": tripLatitude,
-          "timestamp_to": endDate,
-          "timestamp_from": startDate, 
-          "pin": pinned, 
-          "events": events
+          "location": {
+            "name": location,
+            "longitude": tripLongitude,
+            "latitude": tripLatitude,
+          },
+          "author": id,
+          "from": startDate, 
+          "to": endDate,
+          // "pin": pinned, // commented out because I don't see it on the API anymore
+          "events": events,
+          "photos": []
         });
 
 
@@ -538,6 +555,7 @@
               console.log ("Successfully added trip.");
 
               var id = resultObject.id;
+              console.log("trip id just created: " + id);
 
               // calling function to make an API call to the update trip photos
               updateTripPhotos(id);
@@ -547,7 +565,8 @@
               for (let i = 0; i < events.length; i++) {
                 let event = events[i];
                 let eventId = event.id;
-                updateTripPhotos(eventId);
+                let eventNum = i + 1;
+                updateTripPhotos(eventId, eventNum);
               }
 
               // redirecting to the user page
@@ -587,62 +606,62 @@
       // START PHOTO UPLOAD STUFF --------------------------------------------------------------------------------------------------------------
         // source: https://speckyboy.com/custom-file-upload-fields/
 
-      (function ($) {
-        $(document).ready(function () {
+      // (function ($) {
+      //   $(document).ready(function () {
           
-          // two functions for the image upload
-          uploadImage()
-          submit()
+      //     // two functions for the image upload
+      //     uploadImage()
+      //     submit()
 
-          var way = 0
-          tripImageArr = []
+      //     var way = 0
+      //     tripImageArr = []
       
-          // function that takes care of the image uploading
-          function uploadImage() {
-            var button = $('.images .pic')
-            var uploader = $('<input type="file" accept="image/*" />')
-            var images = $('.images')
+      //     // function that takes care of the image uploading
+      //     function uploadImage() {
+      //       var button = $('.images .pic')
+      //       var uploader = $('<input type="file" accept="image/*" />')
+      //       var images = $('.images')
             
-            button.on('click', function () {
-              uploader.click()
-            })
+      //       button.on('click', function () {
+      //         uploader.click()
+      //       })
             
-            uploader.on('change', function () {
-                var reader = new FileReader()
-                reader.onload = function(event) {
-                  // makes a preview of the image show up in a list fashion with the option to remove it by clicking on it
-                  images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="'+ event.target.result  +'"><span>remove</span></div>')
-                }
-                reader.readAsDataURL(uploader[0].files[0])
+      //       uploader.on('change', function () {
+      //           var reader = new FileReader()
+      //           reader.onload = function(event) {
+      //             // makes a preview of the image show up in a list fashion with the option to remove it by clicking on it
+      //             images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="'+ event.target.result  +'"><span>remove</span></div>')
+      //           }
+      //           reader.readAsDataURL(uploader[0].files[0])
         
-            })
+      //       })
             
-            // if you hover over an image, the word "remove" appears. if you click, the image goes away.
-            images.on('click', '.img', function () {
-              $(this).remove()
-            })
+      //       // if you hover over an image, the word "remove" appears. if you click, the image goes away.
+      //       images.on('click', '.img', function () {
+      //         $(this).remove()
+      //       })
           
-          }
+      //     }
           
-          // right now, this function is never triggered, but it creates a list of image URLs
-          function submit() {  
-            var button = $('#create-trip-btn')
+      //     // right now, this function is never triggered, but it creates a list of image URLs
+      //     function submit() {  
+      //       var button = $('#create-trip-btn')
             
-            button.on('click', function () {
-              if(!way) {
-                var images = $('.images .img')
-                // var imageArr = [] // moving this line to the top of the javascript to make it global
+      //       button.on('click', function () {
+      //         if(!way) {
+      //           var images = $('.images .img')
+      //           // var imageArr = [] // moving this line to the top of the javascript to make it global
 
-                for(var i = 0; i < images.length; i++) {
-                  tripImageArr.push({url: $(images[i]).attr('rel')})
-                }
+      //           for(var i = 0; i < images.length; i++) {
+      //             tripImageArr.push({url: $(images[i]).attr('rel')})
+      //           }
                 
-              } 
-            })
-          }
+      //         } 
+      //       })
+      //     }
 
-        })
-      })(jQuery)
+      //   })
+      // })(jQuery)
 
       // END PHOTO UPLOAD STUFF -------------------------------------------------------------------------------------------------------------
 
@@ -653,36 +672,50 @@
       function updateTripPhotos(id) {
 
         var formdata = new FormData();
+
+        // storing the file upload HTML element for the trip
+        var fileInput = document.getElementById("img-trip");
+
         formdata.append("files", fileInput.files[0], "file");
 
         var requestOptions = {
-          method: 'PUT',
+          method: 'POST',
           body: formdata,
           redirect: 'follow'
         };
 
         fetch("https://tripline-csci201.herokuapp.com/trips/" + id + "/photos", requestOptions)
           .then(response => response.text())
-          .then(result => console.log(result))
+          .then(result => {
+            let resultObject = result;
+            console.log(result);
+          })
           .catch(error => console.log('error', error));
 
       }
 
       // in progress
-      function updateEventPhotos(id) {
+      function updateEventPhotos(eventId, eventNum) {
 
         var formdata = new FormData();
+
+        // storing the file upload HTML element for this specific event
+        var fileInput = document.getElementById("img-e" + eventNum);
+
         formdata.append("files", fileInput.files[0], "file");
 
         var requestOptions = {
-          method: 'PUT',
+          method: 'POST',
           body: formdata,
           redirect: 'follow'
         };
 
         fetch("https://tripline-csci201.herokuapp.com/events/" + id + "/photos", requestOptions)
           .then(response => response.text())
-          .then(result => console.log(result))
+          .then(result => {
+            let resultObject = result;
+            console.log(result);
+          })
           .catch(error => console.log('error', error));
 
       }
