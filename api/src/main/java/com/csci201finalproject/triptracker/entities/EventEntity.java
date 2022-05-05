@@ -1,6 +1,7 @@
 package com.csci201finalproject.triptracker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -27,6 +28,7 @@ public class EventEntity {
     private String description;
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "location_id")
     private LocationEntity location;
 
@@ -40,10 +42,11 @@ public class EventEntity {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "trip_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JoinColumn(name = "trip_id", referencedColumnName = "id", nullable = false)
     private TripEntity trip;
 
-    @OneToMany(mappedBy = "event", orphanRemoval = true)
+    @OneToMany(mappedBy = "event", orphanRemoval = true, cascade=CascadeType.ALL)
     private List<PhotoEntity> photos;
 
     public int getId() {

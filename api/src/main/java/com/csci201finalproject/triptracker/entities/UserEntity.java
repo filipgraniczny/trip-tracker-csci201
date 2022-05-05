@@ -31,7 +31,7 @@ public class UserEntity {
     private PhotoEntity profilePhotoEntity;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "author", orphanRemoval = true)
+    @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<TripEntity> trip;
 
     public List<TripEntity> getTrip() {
