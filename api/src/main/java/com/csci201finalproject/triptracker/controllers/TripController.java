@@ -2,11 +2,14 @@ package com.csci201finalproject.triptracker.controllers;
 
 import com.csci201finalproject.triptracker.dtos.auth.LoginDTO;
 import com.csci201finalproject.triptracker.dtos.auth.RegisterDTO;
+import com.csci201finalproject.triptracker.dtos.trips.TripDTO;
 import com.csci201finalproject.triptracker.entities.TripEntity;
 import com.csci201finalproject.triptracker.entities.UserEntity;
 import com.csci201finalproject.triptracker.interfaces.ErrorResponseClass;
 import com.csci201finalproject.triptracker.services.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -37,8 +40,15 @@ public class TripController {
     }
 
     @PostMapping("/")
-    public @ResponseBody Object addTrip(@RequestBody TripEntity trip){
-        TripEntity newTrip = tripService.save(trip);
+    public @ResponseBody Object addTrip(@RequestBody TripDTO tripDTO){
+        try {
+            TripEntity trip = tripService.createTrip(tripDTO);
+
+        } catch (Exception e) {
+            ErrorResponseClass error = new ErrorResponseClass(false, "INVALID_TRIP", "Invalid trip object");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
         return "{\"success\": true }";
     }
 }

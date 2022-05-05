@@ -83,9 +83,15 @@ public class TripService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        tripRepository.save(trip);
 
-        trip.setEvents(eventService.createEvents(tripDTO.getEvents()));
-        trip.setPhotos(photoService.createPhotos(tripDTO.getPhotos()));
+        trip = tripRepository.save(trip);
+
+        eventService.createEvents(tripDTO.getEvents(), trip);
+        photoService.createPhotos(tripDTO.getPhotos());
+//        trip.setEvents(eventService.createEvents(tripDTO.getEvents()));
+//        trip.setPhotos(photoService.createPhotos(tripDTO.getPhotos()));
+
         return trip;
     }
 

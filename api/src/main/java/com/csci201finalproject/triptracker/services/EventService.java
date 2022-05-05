@@ -2,6 +2,8 @@ package com.csci201finalproject.triptracker.services;
 
 import com.csci201finalproject.triptracker.dtos.trips.EventDTO;
 import com.csci201finalproject.triptracker.entities.EventEntity;
+import com.csci201finalproject.triptracker.entities.TripEntity;
+import com.csci201finalproject.triptracker.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +21,18 @@ public class EventService {
     LocationService locationService;
     @Autowired
     PhotoService photoService;
+    @Autowired
+    EventRepository eventRepository;
 
-    public List<EventEntity> createEvents(List<EventDTO> eventDTOS) {
+    public List<EventEntity> createEvents(List<EventDTO> eventDTOS, TripEntity trip) {
         List<EventEntity> events = new ArrayList<>();
         for(EventDTO eventDTO : eventDTOS) {
-            events.add(createEvent(eventDTO));
+            events.add(createEvent(eventDTO, trip));
         }
         return events;
     }
 
-    public EventEntity createEvent(EventDTO eventDTO) {
+    public EventEntity createEvent(EventDTO eventDTO, TripEntity trip) {
         EventEntity event = new EventEntity();
         event.setName(eventDTO.getName());
         event.setCategory(eventDTO.getCategory());
@@ -49,6 +53,9 @@ public class EventService {
 
         event.setLocation(locationService.createLocation(eventDTO.getLocation()));
         event.setPhotos(photoService.createPhotos(eventDTO.getPhotos()));
+        event.setTrip(trip);
+
+        event = eventRepository.save(event);
 
         return event;
     }
