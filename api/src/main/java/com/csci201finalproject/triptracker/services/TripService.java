@@ -78,7 +78,7 @@ public class TripService {
         Date to_date = timestampToDate(tripDTO.getTo());
         trip.setToTime(new Timestamp(to_date.getTime()));
 
-        tripRepository.save(trip);
+//        tripRepository.save(trip);
 
         trip = tripRepository.save(trip);
 

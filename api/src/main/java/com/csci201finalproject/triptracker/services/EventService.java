@@ -48,11 +48,10 @@ public class EventService {
         event.setToTime(new Timestamp(to_date.getTime()));
 
         event.setTrip(trip);
-        event.setLocation(locationService.createLocation(eventDTO.getLocation()));
-        event.setPhotos(photoService.createPhotos(eventDTO.getPhotos(), event));
-
 
         event = eventRepository.save(event);
+        event.setLocation(locationService.createLocation(eventDTO.getLocation()));
+        event.setPhotos(photoService.createPhotos(eventDTO.getPhotos(), event));
 
         return event;
     }
