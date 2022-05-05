@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="description" content="Hello Tripine user.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,123 +11,347 @@
     <title>Profile Page</title>
     <link rel="stylesheet" href="styles/userpage.css">
     <link type="text/css" rel="stylesheet" href="widget/css/rcarousel.css" />
+</head>
 
-
-  </head>
-  <body>
-
-
+<body onload="getUserTrips()">
     <div class="navbar">
-    <div id="logo">
-      <a href="index.html">  <h1>T  |  L</h1></a>
-    </div>
-      <div id="clickable">
-        <ul>
-          <li id="home"><a href="index.html">HOME</a></li>
-          <li id="divider"><strong>|</strong></li>
-          <li >
-            <button id="logout" onclick="logOut()">
-              <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
-              <a>LOGOUT</a>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-      <div class="wrapper" id="user">
-        <div id="pfp">
-
+        <div id="logo">
+          <a href="index.html">  <h1>T  |  L</h1></a>
         </div>
+        <div id="clickable">
+            <ul>
+                <li id="home"><a href="index.html">HOME</a></li>
+                <li id="divider"><strong>|</strong></li>
+                <li >
+                    <button id="logout" onclick="logOut()">
+                      <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
+                      <a>LOGOUT</a>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wrapper" id="user">
+        <div id="pfp"></div>
         <div id="user-description">
-          <h2>User Name</h2><br>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
+          <h2 id ="UserName">User Name</h2><br>
+          <p id="userCaption">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
           Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
           ac magna fringilla, ut maximus odio laoreet. </p>
-
         </div>
-      </div>
+    </div>
 
-      <div class="wrapper" id ="highlights">
-        <div class="title"><i class="fa-solid fa-star fa-2x"></i> <h2>YOUR HIGHLIGHTS</h2></div>
+    <div class="wrapper" id ="highlights">
+        <div class="title"><i class="fa-solid fa-star fa-2x"></i> <h2>YOUR PINNED</h2></div>
 
         <button class="trip-container" id="trip-1">
-          <div class="trip-title"><strong>CANCUN</strong></div>
-          <div class="trip-description"><strong>Cancun is recognized worldwide for its spectacular beaches of fine white sand</strong></div>
-          <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
+            <div class="trip-title"><strong>CANCUN</strong></div>
+            <div class="trip-description"><strong>Cancun is recognized worldwide for its spectacular beaches of fine white sand</strong></div>
+            <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
         </button>
         <button class="trip-container" id="trip-2">
-          <div class="trip-title"><strong>VIETNAM</strong></div>
-          <div class="trip-description"><strong>A land of staggering natural beauty and cultural complexities, of dynamic megacities and hill-tribe villages</strong></div>
-          <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
+            <div class="trip-title"><strong>VIETNAM</strong></div>
+            <div class="trip-description"><strong>A land of staggering natural beauty and cultural complexities, of dynamic megacities and hill-tribe villages</strong></div>
+            <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
         </button>
         <button class="trip-container" id="trip-3">
             <div class="trip-title"><strong>PHILIPINES</strong></div>
             <div class="trip-description"><strong>Home to world-renowned natural wonders like an underground river and rice terraces</strong></div>
             <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
         </button>
-      </div>
+    </div>
 
 
-      <div class="wrapper" id="feed">
+    <div class="wrapper" id="feed">
         <div id="content">
-
           <div class="title">
             <i class="fa-solid fa-plane-departure fa-2x"></i> <h2>YOUR TRIPS</h2>
             <button id="add">
-              <a href="addtrip.html">ADD TRIP</a>
-              <i class="fa-solid fa-plus fa-lg"></i>
+                <a href="addtrip.html">ADD TRIP</a>
+                <i class="fa-solid fa-plus fa-lg"></i>
             </button>
           </div>
+
+          <div class="break"></div>
           
-          <div class="post">
-            <h2>Long Weekend in NYC</h2><br>
-            NEW YORK, NY, USA<br>
-            4/15/2022 - 4/20/2022<br>
+            <div class="post">
+                <h2 class="post-title">Long Weekend in NYC</h2><br>
+                <div class="location">NEW YORK, NY, USA<br></div>
+                <div class="dates">4/15/2022 - 4/20/2022<br>></div>
 
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
-              Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
-              ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
-            </p>
-            <img src="images/nyc0.png" alt="new york view">
-            <img src="images/nyc1.png" alt="chinatown">
-            <img src="images/nyc2.png" alt="bbg">
-          </div>
+                <p class="description">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
+                  Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
+                  ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
+                </p>
+                <img src="images/nyc0.png" alt="new york view">
+                <img src="images/nyc1.png" alt="chinatown">
+                <img src="images/nyc2.png" alt="bbg">
+            </div>
 
-          <div class="post">
-            <h2>Spring Break in Berlin</h2><br>
-            BERLIN, GERMANY<br>
-            3/13/2022 - 3/20/2022<br>
+            <div class="post">
+                <h2 class="post-title">Spring Break in Berlin</h2><br>
+                <div class="location">BERLIN, GERMANY<br></div>
+                <div class="dates"> 3/13/2022 - 3/20/2022<br></div>
+               
 
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
-              Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
-              ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
-            </p>
-            <img src="images/berlin0.png" alt="new york view">
-            <img src="images/berlin1.png" alt="chinatown">
-            <img src="images/berlin2.png" alt="bbg">
-          </div>
+                <p class="description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
+                    Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
+                    ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
+                </p>
+                <img src="images/berlin0.png" alt="new york view">
+                <img src="images/berlin1.png" alt="chinatown">
+                <img src="images/berlin2.png" alt="bbg">
+            </div>
+
+            <div class="post">
+                <h2 class="post-title">Spring Break in Berlin</h2><br>
+                <div class="location">BERLIN, GERMANY<br></div>
+                <div class="dates"> 3/13/2022 - 3/20/2022<br></div>
+               
+
+                <p class="description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
+                    Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
+                    ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
+                </p>
+                <img src="images/berlin0.png" alt="new york view">
+                <img src="images/berlin1.png" alt="chinatown">
+                <img src="images/berlin2.png" alt="bbg">
+            </div>
         </div>
+    </div>
+<!-- 
+    <div class="block"></div>
 
-      </div>
+    <div class="wrapper" id="side-panel">
+     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d26359294.213879205!2d-113.71754000532057!3d36.24708982631333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1649550562301!5m2!1sen!2sus" id="map" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div> -->
 
-      <div class="block">
+    <script>
+        var userData;
+        var userTripsArray;
 
-      </div>
+        // cookie/login code ty henry <3
+        function getCookie(id) {
+            let name = "userID: " + id;
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(id) == 0) {
+                return id;
+                }
+            }
+            return "";
+        }
+        function checkLogIn() {
+            let id = getCookie("userID=");
+            if (id != "") {
+                window.location.href='userpage.html';
+            }
+            else {
+                window.location.href='loginpage.html';
+            }
+        }
+        //henry's code to send trip to details page
+        function getTripDetail(id) {
+            let tripDetail = JSON.stringify(tripArray[id]);
+            console.log(tripDetail);
+            sessionStorage.setItem("tripDetail", tripDetail);
+            window.location.href='details.html';
+        }
+        // end login checks
 
-      <div class="wrapper" id="side-panel">
-         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d26359294.213879205!2d-113.71754000532057!3d36.24708982631333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1649550562301!5m2!1sen!2sus" id="map" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
 
-  </body>
+        function getUserTrips() {
+            //Get user id cookie to feed into url
+            let id = getCookie("userID=");
+            id = "1"; //remove after testing
 
-  <script>
-    function logOut() {
-      document.cookie = "userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      window.location.href='homepage.html';
-    }
-  </script>
+            // Call API to get user data.
+            let APICallURL = `https://tripline-csci201.herokuapp.com/users/${id}`;
+
+            fetch(APICallURL)
+            .then(response => response.json())
+            .then(data => {
+                const userData = data;
+                userTripsArray = userData.trips; //undefined as of now, API in progress
+                console.log(userData);
+                updateUserPageWithInfo(userData);
+                // updatePinned(userTripsArray);
+                // updateYourTrips(userTripsArray);
+                console.log("reached end of data population");
+            })
+            .catch(console.error);
+        }
+
+        function updateUserPageWithInfo(info){
+            //populate profile with user's personal data
+            document.getElementById('UserName').innerHTML = info.name; // User's name
+            //document.getElementById('userCaption').innerHTML = info.profilePhotoEntity.caption; // Caption below photo
+            //document.getElementById('pfp').style.backgroundImage = `url(${info.profilePhotoEntity.presignedUrl})`; // Set pfp
+        }
+
+        function updatePinned(trips){
+            //update the pinned trips to show first 3 pinned trips
+            let pinnedContainer = document.getElementById("highlights");
+            let numPinned = 0;
+
+            for(i = 0; i < trips.length; i++){
+                if (trips[i].pinned == true){
+                    pinnedContainer += '<button class="trip-container" id="trip-1" onclick="getTripDetail(${trips[i].id})">';
+                        pinnedContainer += `<div class="trip-title"><strong>${trips[i].title}</strong></div>`
+                        pinnedContainer += `<div class="trip-description"><strong>${trips[i].description}</strong></div>`
+                        pinnedContainer += `<img class="enter-arrow-img" src="${trips[i].imageURL}" alt="enter-arrow">`
+                    pinnedContainer += `</button>`
+
+                    numPinned++;
+                }
+
+                if(numPinned == 3){ //only pin 3 for formatting
+                    break;
+                }
+            }
+        }
+
+        function updateYourTrips(trips){
+            // add all the trip to the "your trips" section
+            let tripsContainer = document.getElementById("content");
+
+            for(i = 0; i < trips.length; i++){
+                tripsContainer += '<div class="post">';
+                    tripsContainer += `<h2 class="post-title" onclick="getTripDetail(${trips[i].id})">${trips[i].title}</h2><br>`
+                    tripsContainer += `<div class="location">${trips[i].location}<br></div>`
+                    tripsContainer += `<div class="dates">${trips[i].from} - ${trips[i].to}<br></div>` // need to change date format later lol
+                    tripsContainer += `<p class="description">${trips[i].description}<a href="#" onclick="getTripDetail(${trips[i].id})">Read more...</a></p>`
+                    tripsContainer += `<img src="${trips[i].images[0].url}" alt="${trips[i].images[0].alt}">`
+                    tripsContainer += `<img src="${trips[i].images[1].url}" alt="${trips[i].images[1].alt}">` // images not yet supported, will do later
+                    tripsContainer += `<img src="${trips[i].images[2].url}" alt="${trips[i].images[2].alt}">`
+                tripsContainer += `</div>`
+            }
+        }
+
+        function logOut(){
+            //delete user id cookie then redirect home
+            document.cookie = "userID=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
+            window.location.href='index.html';
+        }
+//  kelly code above!!!!!!!!!!
+
+
+
+        // function getTripDetail(id) {
+        //   let tripDetail = JSON.stringify(tripArray[id]);
+        //   console.log(tripDetail);
+        //   sessionStorage.setItem("tripDetail", tripDetail);
+        //   window.location.href='details.html';
+        // }
+
+        // function updateTrip(result) 
+        // {
+        //     let trip = result[i-1];
+        //     let location = document.getElementById(`trip-${i}`);
+        //     location.innerHTML = trip.location.name;
+
+
+        //     let date = document.getElementById(`trip-${i}`);
+        //     var dateArray = trip.fromTime.substring(0, 10).split("-");
+        //     let year = dateArray[0];
+        //     let month = dateArray[1];
+        //     let day = dateArray[2];
+        //     var dateFormat = month + "/" +  day + "/" + year;
+        //     date.innerHTML = dateFormat;
+
+        // }
+
+        // function updatePost(result) 
+        // {
+        //     let trip = result[i-1];
+        //     let title = document.getElementById(`post-title`);
+        //     title.innerHTML = trip.title.name;
+
+
+        //     let date = document.getElementById(`date`);
+        //     var dateArray = trip.fromTime.substring(0, 10).split("-");
+        //     let year = dateArray[0];
+        //     let month = dateArray[1];
+        //     let day = dateArray[2];
+        //     var dateFormat = month + "/" +  day + "/" + year;
+        //     date.innerHTML = dateFormat;
+
+        //     let loc = document.getElementById(`location`);
+        //     loc.innerHTML = trip.loc.name;
+        // }
+
+        // function getTrip() {
+        //     checkCookie();
+
+        //     var location;
+        //     var author;
+        //     var date;
+
+        //     var myHeaders = new Headers();
+        //     myHeaders.append("Content-Type", "application/json");
+
+        //     var requestOptions = {
+        //         method: 'GET',
+        //         headers: myHeaders,
+        //         redirect: 'follow'
+        //     };
+
+        //     fetch(getTripURL)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         const result = data;
+        //         tripArray = data;
+        //         console.log(result);
+        //         updateTrip(result);
+        //     })
+        //     .catch(console.error);
+        // }
+
+        // function updateUserInfo(data){
+        //   //update user name
+        //   let name = document.getElementById("UserName");
+        //   name.innerHTML = data;
+
+        //   //update user pfp
+        //   let pfp = document.getElementById("pfp");
+        //   pfp.styles.backgroundImage = "url('" + data.pfp + "')";
+        // }
+
+        // function updateHighlights(data){
+        //   for (let i = 0; i < 3; i++) {
+        //     updateTrip(data[i]);
+        //   }
+        // }
+
+        // function updateTrips(data){
+        //   for (let i = 0; i < data.length; i++) {
+        //     updatePost(data[i]);
+        //   }
+        // }
+
+
+        // fetch(logUrl, requestOptions)
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     console.log(data);
+        //     let resultObject = data;
+
+        //     console.log('User:' + resultObject.id);
+            
+        //     updateUserInfo(resultObject);
+        //     //updateHighlights(resultObject);
+        //     //updateTrips(resultObject);
+        // })
+        // .catch(error => console.log('error', error));
+    </script>
+</body> 
 </html>
-

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class UserEntity {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name", nullable = false)
@@ -41,8 +41,9 @@ public class UserEntity {
     public void setTrip(List<TripEntity> trip) {
         this.trip = trip;
     }
+
     public int getId() {
-        return this.id;
+        return this.id == null ? -1 : this.id;
     }
 
     public void setId(int id) {
@@ -79,21 +80,29 @@ public class UserEntity {
 
     public void setProfilePhotoEntity(PhotoEntity profilePhotoEntity) {
         this.profilePhotoEntity = profilePhotoEntity;
-      
+
     }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         UserEntity that = (UserEntity) o;
 
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (id != that.id)
+            return false;
+        if (name != null ? !name.equals(that.name) : that.name != null)
+            return false;
+        if (email != null ? !email.equals(that.email) : that.email != null)
+            return false;
+        if (password != null ? !password.equals(that.password) : that.password != null)
+            return false;
         return true;
     }
+
     @Override
     public int hashCode() {
         int result = id;

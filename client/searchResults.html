@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
 </head>
 
-<body onload="checkCookie()">
+<body onload="getSearchInput()">
 	<!-- Navbar code courtesy of Henry :) -->
     <div id="nav-bar">
         <nav>
@@ -20,6 +20,9 @@
 				</li>
 				<li class="nav-item">
 				  <a href="index.html"><strong>HOME</strong></a>
+				</li>
+				<li class="nav-item">
+					<a href="searchResults.html"><strong>EXPLORE</strong></a>
 				</li>
 				<li class="nav-item">
 				  |
@@ -34,13 +37,14 @@
         </nav>
 		
 	    <!-- Search Bar-->
-	    <form>
-	        <div id="search-bar">
-	            <div id="search-logo"><img id="search-img" src="./images/seach-logo.svg" alt="search logo"></div>
-	            <div id="search-input"><input type="text" id="input-field" placeholder="S e a r c h   a   t r i p . . ."></div>
-	            <button id="submit-btn" type="submit" value="Submit"><img  id="submit-img" src="./images/right-arrow.svg" alt="right arrow"></button>
-	        </div>
-	    </form>
+	    <form action="searchResults.html" id="search-container">
+            <div id="search-bar">
+                <div id="search-logo"><img id="search-img" src="./images/seach-logo.svg" alt="search logo"></div>
+                <div id="search-input"><input type="text" id="input-field" placeholder="S e a r c h   a   t r i p . . ."></div>
+                <button id="submit-btn" type="submit" value="Submit" onclick="showResult()"><img  id="submit-img" src="./images/right-arrow.svg" alt="right arrow"></button>
+            </div>
+            <div id="spacer"></div>
+        </form>
     </div>
 
     <h1 id="searchTitle">Search Results</h1> 
@@ -59,8 +63,10 @@
 		</select>
 	</form>
 
-    <div class="tripItem">
-    	<div class="imageAndTitle">
+	<div id="container"></div>
+	
+    <!-- <div class="tripItem">
+    	<div class="imageAndTitle" onclick="getTripDetail()">
     		EXAMPLE CITY <br>
     		<span class="subtext">04/01/2022 - 04/11/2022</span>
     	</div>
@@ -97,10 +103,79 @@
 	<br>
 	<div class="plusWrapper">
 		<button class="moreButton"><i class="fa fa-plus"></i></button>
-	</div>
+	</div> -->
 </body>
 
 <script>
+	var tripArray;
+
+	function getSearchInput() {
+		// Check authentication
+		checkCookie();
+
+		// Get search input
+		var searchInput = localStorage.getItem("searchInput");
+		console.log(searchInput);
+
+		let getTripURL = 'https://tripline-csci201.herokuapp.com/trips/explore?limit=&searchTerm=&sortBy=&toTime';
+		if (searchInput) {
+			getTripURL = `https://tripline-csci201.herokuapp.com/trips/explore?limit=&searchTerm=${searchInput}&sortBy=&toTime`
+		}
+
+		fetch(getTripURL)
+        .then(response => response.json())
+        .then(data => {
+          const result = data;
+          tripArray = data;
+          console.log(result);
+		  updateResult(result);
+		  tripArray = result;
+        })
+        .catch(console.error);
+	}
+
+	function updateResult(result) 
+      {
+		let container = document.getElementById('container');
+		let content = "";
+        for (i = 0; i < result.length; i++) {
+        	let trip = result[i];
+			content += '<div class="tripItem">';
+				content += `<div class="imageAndTitle" onclick="getTripDetail(${i})">`;
+					content += `${trip.title} <br>`
+					content += `<span class="subtext">${getDate(trip.fromTime)} - ${getDate(trip.toTime)}</span>`
+				content += '</div>'
+				content += '<div class="debrief">';
+					content += `<h4>by <span class="name">${trip.author.name}</span></h4>`
+					content += '<hr class="descriptionHR">';
+					content += `<span class="tripDescription">${trip.description}</span>`
+				content += '</div>'
+			content += '</div>'
+        }
+		container.innerHTML = content;
+      }
+
+	function getTripDetail(id) {
+		let tripDetail = JSON.stringify(tripArray[id]);
+		console.log(tripDetail);
+		sessionStorage.setItem("tripDetail", tripDetail);
+		window.location.href='details.html';
+	}
+	
+	function getDate(timestamp) {
+		var dateArray = timestamp.substring(0, 10).split("-");
+		let year = dateArray[0];
+		let month = dateArray[1];
+		let day = dateArray[2];
+		var dateFormat = month + "/" +  day + "/" + year;
+		return dateFormat;
+	}
+
+	function showResult() {
+		var input = document.getElementById('input-field').value;
+        localStorage.setItem("searchInput", input);
+	}
+
 	function getCookie(id) {
 		let name = "userID: " + id;
 		let decodedCookie = decodeURIComponent(document.cookie);
