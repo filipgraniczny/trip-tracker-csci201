@@ -1,5 +1,7 @@
 package com.csci201finalproject.triptracker.entities;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -21,6 +23,7 @@ public class TripEntity {
     private String description;
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "location_id")
     private LocationEntity location;
 
@@ -33,13 +36,14 @@ public class TripEntity {
     private Timestamp toTime;
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private UserEntity author;
 
-    @OneToMany(mappedBy = "trip", orphanRemoval = true)
+    @OneToMany(mappedBy = "trip", orphanRemoval = true, cascade=CascadeType.ALL)
     private List<EventEntity> events;
 
-    @OneToMany(mappedBy = "trip", orphanRemoval = true)
+    @OneToMany(mappedBy = "trip", orphanRemoval = true, cascade=CascadeType.ALL)
     private List<PhotoEntity> photos;
 
     public int getId() {
