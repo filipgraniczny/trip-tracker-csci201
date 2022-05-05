@@ -94,6 +94,15 @@ public class S3Service {
                 RequestBody.fromInputStream(multipartFile.getInputStream(), multipartFile.getSize()));
     }
 
+    /**
+     * Delete object with given key in bucket
+     * 
+     * @param bucket
+     * @param key
+     * @throws S3Exception
+     * @throws AwsServiceException
+     * @throws SdkClientException
+     */
     public void deleteObject(String bucket, String key) throws S3Exception, AwsServiceException, SdkClientException {
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder().bucket(bucket).key(key).build();
         s3.deleteObject(deleteObjectRequest);

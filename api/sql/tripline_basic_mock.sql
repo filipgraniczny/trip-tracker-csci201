@@ -19,9 +19,9 @@ INSERT INTO trip (id, title, description, location_id, from_time, to_time, autho
 INSERT INTO trip (id, title, description, location_id, from_time, to_time, author_id)  values (4, 'chicago squad', 'fil and ariana vibe in chicago', 3, NOW(), NOW(), 1);
 
 
-INSERT INTO event (id, name, category, description, location_id ,from_time, to_time, trip_id) values (1, 'Party at Fils', 'rager', "dope rager at fils house. best night of my life", 2, NOW(), NOW(), 1);
-INSERT INTO event (id, name, category, description, location_id ,from_time, to_time, trip_id) values (2, 'mountain tour', 'tour', "hiking and fun in vietnam, had lot of good food", 4, NOW(), NOW(), 2);
-INSERT INTO event (id, name, category, description, location_id ,from_time, to_time, trip_id) values (3, 'Pan Pizza Tournament', 'food', "who can eat the most slices of pan pizza in 30 mins? sponsored by dominos", 1, NOW(), NOW(), 3);
-INSERT INTO event (id, name, category, description, location_id ,from_time, to_time, trip_id) values (4, 'Bean there, done that', 'exploring', "checking out chicagos amazing... bean, erm, sky gate  ;_;", 3, NOW(), NOW(), 4);
+INSERT INTO event (id, name, category, description, location_id ,from_time, to_time, trip_id) values (1, 'Party at Fils', 'rager', 'dope rager at fils house. best night of my life', 2, NOW(), NOW(), 1);
+INSERT INTO event (id, name, category, description, location_id ,from_time, to_time, trip_id) values (2, 'mountain tour', 'tour', 'hiking and fun in vietnam, had lot of good food', 4, NOW(), NOW(), 2);
+INSERT INTO event (id, name, category, description, location_id ,from_time, to_time, trip_id) values (3, 'Pan Pizza Tournament', 'food', 'who can eat the most slices of pan pizza in 30 mins? sponsored by dominos', 1, NOW(), NOW(), 3);
+INSERT INTO event (id, name, category, description, location_id ,from_time, to_time, trip_id) values (4, 'Bean there, done that', 'exploring', 'checking out chicagos amazing... bean, erm, sky gate  ;_;', 3, NOW(), NOW(), 4);
 
-INSERT INTO photo (id, trip_id, event_id, caption, object_key_aws) values (1, 2, 1, "fil's basement", 'aws_poggers');
+INSERT INTO photo (id, trip_id, event_id, caption, object_key_aws) values (1, 2, 1, 'fils basement', 'aws_poggers');
