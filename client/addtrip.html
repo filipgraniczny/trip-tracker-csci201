@@ -393,8 +393,6 @@
         var accommodations = dropdown.options[dropdown.selectedIndex].value;
         var pinned = document.querySelector('#pinned-check');
 
-        console.log("tripImageArr: " + tripImageArr);
-
         var events = []; // will store the list of events 
 
         var validLocation = true; // todo: set this variable conditionally
@@ -471,11 +469,7 @@
                 "latitude": lat
               },
               "timestamp_to": end,
-              "timestamp_from": start,
-              "image_urls": [
-                "http://placeimg.com/640/480",
-                "http://placeimg.com/640/480"
-              ]
+              "timestamp_from": start
             }
 
             events.push(eventToAdd);
@@ -542,6 +536,19 @@
             // checking if the registration was successful
             if (resultObject.success) {
               console.log ("Successfully added trip.");
+
+              var id = resultObject.id;
+
+              // calling function to make an API call to the update trip photos
+              updateTripPhotos(id);
+
+              // calling function to make an API call to the update event photos
+              var events = resultObject.events; // stores list of events
+              for (let i = 0; i < events.length; i++) {
+                let event = events[i];
+                let eventId = event.id;
+                updateTripPhotos(eventId);
+              }
 
               // redirecting to the user page
               location.href = "userpage.html";
@@ -639,7 +646,51 @@
 
       // END PHOTO UPLOAD STUFF -------------------------------------------------------------------------------------------------------------
 
-    </script>
+
+      // START PHOTO UPDATE WITH API STUFF --------------------------------------------------------------------------------------------------------------------
+      
+      // in progress
+      function updateTripPhotos(id) {
+
+        var formdata = new FormData();
+        formdata.append("files", fileInput.files[0], "file");
+
+        var requestOptions = {
+          method: 'PUT',
+          body: formdata,
+          redirect: 'follow'
+        };
+
+        fetch("https://tripline-csci201.herokuapp.com/trips/" + id + "/photos", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+
+      }
+
+      // in progress
+      function updateEventPhotos(id) {
+
+        var formdata = new FormData();
+        formdata.append("files", fileInput.files[0], "file");
+
+        var requestOptions = {
+          method: 'PUT',
+          body: formdata,
+          redirect: 'follow'
+        };
+
+        fetch("https://tripline-csci201.herokuapp.com/events/" + id + "/photos", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+
+      }
+
+      // END PHOTO UPDATE WITH API STUFF --------------------------------------------------------------------------------------------------------------------
+
+   
+   </script>
   
   </body>
 </html>
