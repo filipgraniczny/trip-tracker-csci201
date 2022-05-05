@@ -50,10 +50,10 @@ public class EventService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        event.setLocation(locationService.createLocation(eventDTO.getLocation()));
-        event.setPhotos(photoService.createPhotos(eventDTO.getPhotos()));
         event.setTrip(trip);
+        event.setLocation(locationService.createLocation(eventDTO.getLocation()));
+        event.setPhotos(photoService.createPhotos(eventDTO.getPhotos(), event));
+
 
         event = eventRepository.save(event);
 
