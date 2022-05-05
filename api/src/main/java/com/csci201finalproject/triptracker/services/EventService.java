@@ -20,13 +20,16 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+
+import static com.csci201finalproject.triptracker.util.Timestamp.timestampToDate;
 
 @Service
 public class EventService {
@@ -56,24 +59,19 @@ public class EventService {
         event.setName(eventDTO.getName());
         event.setCategory(eventDTO.getCategory());
         event.setDescription(eventDTO.getDescription());
-        DateFormat formatter = new SimpleDateFormat("mm-dd-YYYY");
-        try {
-            Date from_date = formatter.parse(eventDTO.getFrom());
-            event.setFromTime(new Timestamp(from_date.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-            Date to_date = formatter.parse(eventDTO.getTo());
-            event.setToTime(new Timestamp(to_date.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+        Date from_date = timestampToDate(eventDTO.getFrom());
+        event.setFromTime(new Timestamp(from_date.getTime()));
+
+        Date to_date = timestampToDate(eventDTO.getTo());
+        event.setToTime(new Timestamp(to_date.getTime()));
+
         event.setTrip(trip);
-        event.setLocation(locationService.createLocation(eventDTO.getLocation()));
-        event.setPhotos(photoService.createPhotos(eventDTO.getPhotos(), event));
+
 
         event = eventRepository.save(event);
+        event.setLocation(locationService.createLocation(eventDTO.getLocation()));
+        event.setPhotos(photoService.createPhotos(eventDTO.getPhotos(), event));
 
         return event;
     }
