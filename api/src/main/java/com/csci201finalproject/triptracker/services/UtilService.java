@@ -1,10 +1,10 @@
 package com.csci201finalproject.triptracker.services;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UtilService {
@@ -13,5 +13,15 @@ public class UtilService {
     public boolean isValidProfileMimeType(String mime) {
 
         return Arrays.stream(validUserProfileMimeTypes.toArray()).anyMatch(x -> mime.equals(x));
+    }
+
+    public void verifyAllImagesValid(Iterable<MultipartFile> files) throws IllegalArgumentException {
+        for (MultipartFile file : files) {
+            if (!isValidProfileMimeType(file.getContentType())) {
+                String errorMessage = String.format("Invalid format %s for file %s", file.getContentType(),
+                        file.getOriginalFilename());
+                throw new IllegalArgumentException(errorMessage);
+            }
+        }
     }
 }

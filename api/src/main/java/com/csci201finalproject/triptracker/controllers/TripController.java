@@ -5,6 +5,7 @@ import com.csci201finalproject.triptracker.dtos.trips.TripDTO;
 import com.csci201finalproject.triptracker.entities.TripEntity;
 import com.csci201finalproject.triptracker.interfaces.ErrorResponseClass;
 import com.csci201finalproject.triptracker.services.TripService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,9 +42,9 @@ public class TripController {
         return "{\"success\":" + success + "}";
     }
 
-    @PutMapping("/{id}/photos")
+    @PostMapping("/{id}/photos")
     public ResponseEntity<?> uploadTripPhotos(@PathVariable("id") Integer id,
-            @RequestParam("files") MultipartFile[] files) {
+            @RequestParam(name = "files") List<MultipartFile> files) {
         try {
             List<PhotoEntity> photoEntities = tripService.uploadTripPhotos(id, files);
             return ResponseEntity.ok().body(photoEntities);
@@ -56,16 +57,15 @@ public class TripController {
         }
     }
 
-    @PostMapping("/")
-    public @ResponseBody Object addTrip(@RequestBody TripDTO tripDTO) {
+    @PostMapping
+    public @ResponseBody ResponseEntity<?> addTrip(@RequestBody TripDTO tripDTO) {
         try {
             TripEntity trip = tripService.createTrip(tripDTO);
-
+            return ResponseEntity.ok().body(trip);
         } catch (Exception e) {
             ErrorResponseClass error = new ErrorResponseClass(false, "INVALID_TRIP", "Invalid trip object");
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
-        return "{\"success\": true }";
     }
 }

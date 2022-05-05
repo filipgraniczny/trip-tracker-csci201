@@ -102,10 +102,15 @@ public class TripService {
      * @throws AwsServiceException
      * @throws S3Exception
      */
-    public List<PhotoEntity> uploadTripPhotos(Integer id, MultipartFile[] files)
+    public List<PhotoEntity> uploadTripPhotos(Integer id, Iterable<MultipartFile> files)
             throws IllegalArgumentException, S3Exception, AwsServiceException, SdkClientException, IOException {
+        // validate if there are files at all
+        if (Objects.isNull(files)) {
+            throw new IllegalArgumentException("Must provide 1 or more files");
+        }
+
         // verify images are of valid format
-        verifyAllImagesValid(files);
+        utilService.verifyAllImagesValid(files);
 
         TripEntity tripEntity = findTripById(id);
         // verify if this TripEntity is null
@@ -153,16 +158,6 @@ public class TripService {
         return photoEntities;
     }
 
-    private void verifyAllImagesValid(MultipartFile[] files) throws IllegalArgumentException {
-        for (MultipartFile file : files) {
-            if (!utilService.isValidProfileMimeType(file.getContentType())) {
-                String errorMessage = String.format("Invalid format %s for file %s", file.getContentType(),
-                        file.getOriginalFilename());
-                throw new IllegalArgumentException(errorMessage);
-            }
-        }
-    }
-
     public TripEntity createTrip(TripDTO tripDTO) {
         TripEntity trip = new TripEntity();
         trip.setTitle(tripDTO.getTitle());
@@ -194,8 +189,6 @@ public class TripService {
 
         eventService.createEvents(tripDTO.getEvents(), trip);
         photoService.createPhotos(tripDTO.getPhotos(), trip);
-        // trip.setEvents(eventService.createEvents(tripDTO.getEvents()));
-        // trip.setPhotos(photoService.createPhotos(tripDTO.getPhotos()));
 
         return trip;
     }
