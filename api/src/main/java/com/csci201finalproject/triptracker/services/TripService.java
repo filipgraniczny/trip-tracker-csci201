@@ -17,9 +17,11 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static com.csci201finalproject.triptracker.util.Timestamp.timestampToDate;
 
 @Service
 public class TripService {
@@ -69,20 +71,13 @@ public class TripService {
         else {
             throw new IllegalArgumentException("User adding trip does not exist");
         }
-        DateFormat formatter = new SimpleDateFormat("mm-dd-YYYY");
-        try {
-            Date from_date = formatter.parse(tripDTO.getFrom());
-            trip.setFromTime(new Timestamp(from_date.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
-        try {
-            Date to_date = formatter.parse(tripDTO.getTo());
-            trip.setToTime(new Timestamp(to_date.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date from_date = timestampToDate(tripDTO.getFrom());
+        trip.setFromTime(new Timestamp(from_date.getTime()));
+
+        Date to_date = timestampToDate(tripDTO.getTo());
+        trip.setToTime(new Timestamp(to_date.getTime()));
+
         tripRepository.save(trip);
 
         trip = tripRepository.save(trip);
