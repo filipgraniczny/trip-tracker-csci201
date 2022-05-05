@@ -32,62 +32,61 @@
             <li class="nav-item">
               <a href="index.html"><strong>HOME</strong></a>
             </li>
+            <li class="nav-item">
+              <a href="searchResults.html"><strong>EXPLORE</strong></a>
+            </li>
           </ul>
       </nav>
 
-      <div id="error-log-div" style="display: none;">
-        <p class="error" id="log-error-p">Error in login. Please try again.</p>
-      </div>
-
-      <div id="error-reg-div" style="display: none;">
-        <p class="error" id="reg-error-p">Error in registration. Please try again.</p>
-      </div>
-
-      <div class="container">
-          <div class="row">
-              <div class="col">
-                <h1 class="login-register-labels">LOGIN</h1>
-                <form id="login-form">
-                    <div class="form-group">
-                        <label for="login-email-input">EMAIL ADDRESS</label>
-                        <input type="email" class="form-control" id="login-email-input">
-                      </div>
-                      <div class="form-group">
-                        <label for="login-pwd-input">PASSWORD</label>
-                        <input type="password" class="form-control" id="login-pwd-input">
-                      </div>
-                      <button type="button" id="btn-login" style="display: block; margin: 0 auto;" onclick="loginUser()">
-                            <img id="login-logo" src="./images/user-icon.svg" alt="logo">
-                            <strong style="color:white;">LOG IN</strong>
-                    </button>
-                    </form>
-              </div>
-              <div class="col">
-                <h1 class="login-register-labels">REGISTER</h1>
-                <form id="register-form">
-                    <div class="form-group">
-                        <label for="register-name-input">NAME</label>
-                        <input type="text" class="form-control" id="register-name-input">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-email-input">EMAIL ADDRESS</label>
-                        <input type="email" class="form-control" id="register-email-input">
-                    </div>
-                    <div class="form-group">
-                        <label for="login-pwd-input">PASSWORD</label>
-                        <input type="password" class="form-control" id="register-pwd-input">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-conf-pwd-input">CONFIRM PASSWORD</label>
-                        <input type="password" class="form-control" id="register-conf-pwd-input">
-                    </div>
-                    <button type="button" id="btn-register" style="display: block; margin: 0 auto;" onclick="registerUser()">
-                          <img id="register-logo" src="./images/user-icon.svg" alt="logo">
-                          <strong style="color:white;">REGISTER</strong>
-                  </button>
-                  </form>
-              </div>
+      <div id="new-container">
+        <div id="landmark-img"></div>
+        <div class="col" id="right-container">
+          <div id="error-log-div" style="display: none;">
+            <p class="error" id="log-error-p">Error in login. Please try again.</p>
           </div>
+    
+          <div id="error-reg-div" style="display: none;">
+            <p class="error" id="reg-error-p">Error in registration. Please try again.</p>
+          </div>
+          <h1 class="login-register-labels">LOGIN</h1>
+          <form id="login-form">
+              <div class="form-group">
+                  <label for="login-email-input">EMAIL</label>
+                  <input type="email" class="form-control" id="login-email-input">
+                </div>
+                <div class="form-group">
+                  <label for="login-pwd-input">PASSWORD</label>
+                  <input type="password" class="form-control" id="login-pwd-input">
+                </div>
+                <button type="button" id="btn-login" style="display: block; margin-left: auto; margin-right: auto;" onclick="loginUser()">
+                      <img id="login-logo" src="./images/user-icon.svg" alt="logo">
+                      <strong style="color:white;">LOG IN</strong>
+                </button>
+          </form>
+            <h1 class="login-register-labels" id="register-title">REGISTER</h1>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name-input">NAME</label>
+                    <input type="text" class="form-control" id="register-name-input">
+                </div>
+                <div class="form-group">
+                    <label for="register-email-input">EMAIL ADDRESS</label>
+                    <input type="email" class="form-control" id="register-email-input">
+                </div>
+                <div class="form-group">
+                    <label for="login-pwd-input">PASSWORD</label>
+                    <input type="password" class="form-control" id="register-pwd-input">
+                </div>
+                <div class="form-group">
+                    <label for="register-conf-pwd-input">CONFIRM PASSWORD</label>
+                    <input type="password" class="form-control" id="register-conf-pwd-input">
+                </div>
+                <button type="button" id="btn-register" style="display: block; margin-left: auto; margin-right: auto;" onclick="registerUser()">
+                      <img id="register-logo" src="./images/user-icon.svg" alt="logo">
+                      <strong style="color:white;">REGISTER</strong>
+              </button>
+              </form>
+        </div>
       </div>
     </div>
 
