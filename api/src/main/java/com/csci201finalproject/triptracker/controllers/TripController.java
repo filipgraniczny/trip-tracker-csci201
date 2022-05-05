@@ -1,6 +1,7 @@
 package com.csci201finalproject.triptracker.controllers;
 
 import com.csci201finalproject.triptracker.entities.PhotoEntity;
+import com.csci201finalproject.triptracker.dtos.trips.TripDTO;
 import com.csci201finalproject.triptracker.entities.TripEntity;
 import com.csci201finalproject.triptracker.interfaces.ErrorResponseClass;
 import com.csci201finalproject.triptracker.services.TripService;
@@ -53,5 +54,18 @@ public class TripController {
             ErrorResponseClass errorBody = new ErrorResponseClass(false, "AWS_ERROR", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
         }
+    }
+
+    @PostMapping("/")
+    public @ResponseBody Object addTrip(@RequestBody TripDTO tripDTO) {
+        try {
+            TripEntity trip = tripService.createTrip(tripDTO);
+
+        } catch (Exception e) {
+            ErrorResponseClass error = new ErrorResponseClass(false, "INVALID_TRIP", "Invalid trip object");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+        return "{\"success\": true }";
     }
 }

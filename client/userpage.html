@@ -136,8 +136,8 @@
 
         // cookie/login code ty henry <3
         function getCookie(id) {
-            let name = "userID: " + id;
             let decodedCookie = decodeURIComponent(document.cookie);
+            console.log(decodedCookie);
             let ca = decodedCookie.split(';');
             for(let i = 0; i <ca.length; i++) {
                 let c = ca[i];
@@ -145,7 +145,7 @@
                 c = c.substring(1);
                 }
                 if (c.indexOf(id) == 0) {
-                return id;
+                    return parseInt(c[7]);
                 }
             }
             return "";
@@ -173,6 +173,7 @@
             //Get user id cookie to feed into url
             let id = getCookie("userID=");
             id = "1"; //remove after testing
+            console.log('UserID: ' + id);
 
             // Call API to get user data.
             let APICallURL = `https://tripline-csci201.herokuapp.com/users/${id}`;

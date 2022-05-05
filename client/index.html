@@ -22,6 +22,9 @@
                 <a href="#"><strong>HOME</strong></a>
               </li>
               <li class="nav-item">
+                <a href="searchResults.html"><strong>EXPLORE</strong></a>
+              </li>
+              <li class="nav-item">
                 |
               </li>
               <li class="nav-item">
@@ -75,7 +78,7 @@
         <div class="explore-title"><strong>Hightlight trips</strong></div>
         <div class="inspiration-section">
           <div class="highlight-container">
-            <button id="hightlight-img" onclick="getTripDetail(0)"></button>
+            <button id="hightlight-img" id="img-1" onclick="getTripDetail(0)"></button>
             <div class="highlight-title"><strong id="highlight-title-1">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-1">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-1">10/11/2012</div>
@@ -154,6 +157,9 @@
           let day = dateArray[2];
           var dateFormat = month + "/" +  day + "/" + year;
           date.innerHTML = dateFormat;
+
+          let img = document.getElementById(`img-${i}`);
+          // img.style.backgroundImage = `url(${})`;
         }
       }
 
@@ -175,7 +181,6 @@
       }
 
       function getCookie(id) {
-        let name = "userID: " + id;
         let decodedCookie = decodeURIComponent(document.cookie);
         let ca = decodedCookie.split(';');
         console.log(ca);
