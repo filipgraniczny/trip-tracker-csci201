@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -132,6 +131,10 @@ public class TripService {
             PhotoEntity photoEntity = new PhotoEntity();
             photoEntity.setObjectKeyAws(key);
             photoEntity.setTrip(tripEntity);
+            // get presigned url to save to DB
+            String entityPresignedURL = s3Service.getObjectURLFromKey(s3Bucket, photoEntity.getObjectKeyAws())
+                    .toString();
+            photoEntity.setPresignedUrl(entityPresignedURL);
             photoEntities.add(photoEntity);
         }
         Iterable<PhotoEntity> photoEntitiesIterable = photoRepository.saveAll(photoEntities);
