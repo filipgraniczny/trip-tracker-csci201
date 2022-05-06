@@ -135,11 +135,16 @@ a:hover {
 }
 
 #landmark-img {
-  background-image: url("../images/goldengate.jpg");
-  background-position: center;
-  background-size: cover;
-  width: 48%;
+  width: 52%;
   height: 95%;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+#landmark-img video {
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
 }
 
 #register-title {
