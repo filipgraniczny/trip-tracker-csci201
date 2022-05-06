@@ -258,7 +258,7 @@
                 newPost += `<div class="location">${trip.location.name}<br></div>`
                 newPost += `<div class="dates">${getDate(trip.fromTime)} - ${getDate(trip.toTime)}<br></div>` // need to change date format later lol
                 newPost += `<p class="description">${trip.description}<br><a href="#" onclick="getTripDetail(${trip.id})">Read more...</a></p>`
-                if(numPinned < 1){
+                if(numPics < 1){
                     newPost += `<img class="wideImg" src="../images/pfp_placeholder.jpg">`
                 }
                 else if(numPics > 0){
