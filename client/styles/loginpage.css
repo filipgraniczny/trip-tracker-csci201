@@ -1,14 +1,15 @@
 
+html {
+  background-color: black;
+}
+
 body {
   letter-spacing: 0.6em;
 }
 
 #nav-bar {
-    background-image: url("../images/loginmountains.jpg");
+    background-color: black;
     box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.5);
-    background-position: center;
-    background-size: cover;
-    height: 100vh;
 }
 
 .nav-list {
@@ -44,19 +45,34 @@ body {
   #btn-login {
     width: 180px;
     height: 55px;
+    margin-top: 50px;
     border: 3px solid white;
     border-radius: 50px;
     background-color: rgba(0,0,0,0.0);
     font-size: 0.8em;
-}
+    transition: all 0.5s;
+  }
+
+  #btn-login:hover {
+    opacity: 0.5;
+    transition: all 0.5s;
+  }
+
 
 #btn-register {
     width: 180px;
     height: 55px;
+    margin-top: 50px;
     border: 3px solid white;
     border-radius: 50px;
     background-color: rgba(0,0,0,0.0);
     font-size: 0.8em;
+    transition: all 0.5s;
+}
+
+#btn-register:hover {
+  opacity: 0.5;
+  transition: all 0.5s;
 }
 
 #logo {
@@ -108,3 +124,50 @@ a:hover {
   text-align: center;
   letter-spacing: 0.1em;
 }
+
+#new-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+#landmark-img {
+  background-image: url("../images/goldengate.jpg");
+  background-position: center;
+  background-size: cover;
+  width: 48%;
+  height: 90%;
+}
+
+#register-title {
+  margin-top: 30%;
+}
+
+#right-container {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 4%;
+}
+
+.form-control {
+  color: white;
+  border: 0px;
+  border-bottom: solid 1px;
+  border-radius: 0px;
+  background-color: transparent;
+  outline: none;
+}
+
+.form-control:focus {
+  color: white;
+  background: transparent;
+  outline: none;
+}
+
+.button-container-style {
+  margin-top: 50px;
+}
+

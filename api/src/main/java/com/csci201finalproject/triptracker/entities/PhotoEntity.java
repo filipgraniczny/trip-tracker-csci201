@@ -2,6 +2,7 @@ package com.csci201finalproject.triptracker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.catalina.User;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -14,20 +15,22 @@ public class PhotoEntity {
     private Integer id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(optional = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "trip_id")
     private TripEntity trip;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(optional = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "event_id")
     private EventEntity event;
 
-    @Basic
+    @Basic(optional = true)
     @Column(name = "caption")
     private String caption;
 
-    @Basic
+    @Basic(optional = false)
     @Column(name = "object_key_aws")
     private String objectKeyAws;
   
@@ -55,7 +58,7 @@ public class PhotoEntity {
     }
 
     public int getId() {
-        return id;
+        return id == null ? -1 : id;
     }
 
     public void setId(int id) {

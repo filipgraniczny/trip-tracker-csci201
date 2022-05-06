@@ -1,8 +1,6 @@
 package com.csci201finalproject.triptracker.controllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +9,6 @@ import com.csci201finalproject.triptracker.entities.UserEntity;
 import com.csci201finalproject.triptracker.interfaces.ErrorResponseClass;
 import com.csci201finalproject.triptracker.services.UserService;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +39,9 @@ public class UserController {
 
     @PutMapping("/{id}/pfp")
     public @ResponseBody ResponseEntity<Object> updateUserProfilePhoto(
-            @RequestParam(name = "file", required = true) MultipartFile multipart,
+            @RequestParam(name = "file") MultipartFile multipart,
             @PathVariable(name = "id") Integer id) {
+        System.out.println("hello");
         try {
             UserEntity user = userService.findUserById(id);
             List<Object> resultList = userService.updateProfileImageUser(user, multipart);

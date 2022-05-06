@@ -47,8 +47,8 @@
         </div>
         <div class="form-group col-md-6 pac-card">
           <div id="pac-container">
-            <label for="pac-input">LOCATION*</label>
-            <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+            <label for="trip-loc-input">LOCATION*</label>
+            <input id="trip-loc-input" type="text" class="form-control" placeholder="Location"/>
           </div>
         </div>
       </div>
@@ -65,14 +65,18 @@
           <input type="date" class="form-control" id="end-date">
         </div>
         <div class="form-group col-md-4">
-            <!-- FILE UPLOAD STUFF START -->
-            <label>PHOTO*</label><br>
+            <!-- FANCY FILE UPLOAD STUFF START -->
+            <!-- <label>PHOTO*</label><br>
             <div class="images" id="trip-img">
               <div class="pic">
                 add
               </div>
-            </div>
-          <!-- FILE UPLOAD STUFF END-->
+            </div> -->
+          <!-- FANCY FILE UPLOAD STUFF END-->
+
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img-trip" name="img-trip" accept="image/*" multiple>
+
         </div>
       </div>
 
@@ -87,7 +91,7 @@
         <div class="form-group col-md-4">
           <label for="accommodations-select">TYPE OF ACCOMMODATIONS*</label>
           <select id="accommodations-select" class="form-control">
-            <option selected>Choose...</option>
+            <option selected value="">Choose...</option>
             <option value="hotel">HOTEL</option>
             <option value="airbnb">AIRBNB</option>
             <option value="house">HOUSE</option>
@@ -127,8 +131,8 @@
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="pac-input">EVENT #1 LOCATION*</label>
-              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+              <label for="event1-loc-input">EVENT #1 LOCATION*</label>
+              <input id="event1-loc-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
         </div>
@@ -161,14 +165,17 @@
           </div>
           <div class="form-group col-md-4">
 
-            <!-- FILE UPLOAD STUFF START -->
-            <label>PHOTOS*</label><br>
+            <!-- FANCY FILE UPLOAD STUFF START -->
+            <!-- <label>PHOTOS*</label><br>
             <div class="images" id="img-e1">
               <div class="pic">
                 add
               </div>
-            </div>
-          <!-- FILE UPLOAD STUFF END-->
+            </div> -->
+          <!-- FANCY FILE UPLOAD STUFF END-->
+
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img-e1" name="img-e1" accept="image/*" multiple>
 
           </div>
           <div class="form-group col-md-4">
@@ -190,8 +197,8 @@
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="pac-input">EVENT #2 LOCATION*</label>
-              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+              <label for="event2-loc-input">EVENT #2 LOCATION*</label>
+              <input id="event2-loc-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
         </div>
@@ -224,14 +231,17 @@
           </div>
           <div class="form-group col-md-4">
             
-            <!-- FILE UPLOAD STUFF START -->
-            <label>PHOTOS*</label><br>
+            <!-- FANCY FILE UPLOAD STUFF START -->
+            <!-- <label>PHOTOS*</label><br>
             <div class="images" id="img-e2">
               <div class="pic">
                 add
               </div>
-            </div>
-          <!-- FILE UPLOAD STUFF END-->
+            </div> -->
+          <!-- FANCY FILE UPLOAD STUFF END-->
+
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img-e2" name="img-e2" accept="image/*" multiple>
 
           </div>
           <div class="form-group col-md-4">
@@ -254,8 +264,8 @@
           </div>
           <div class="form-group col-md-6 pac-card">
             <div id="pac-container">
-              <label for="pac-input">EVENT #3 LOCATION*</label>
-              <input id="pac-input" type="text" class="form-control" placeholder="Location"/>
+              <label for="event3-loc-input">EVENT #3 LOCATION*</label>
+              <input id="event3-loc-input" type="text" class="form-control" placeholder="Location"/>
             </div>
           </div>
         </div>
@@ -288,14 +298,17 @@
           </div>
           <div class="form-group col-md-4">
             
-            <!-- FILE UPLOAD STUFF START -->
-            <label>PHOTOS*</label><br>
+            <!-- FANCY FILE UPLOAD STUFF START -->
+            <!-- <label>PHOTOS*</label><br>
             <div class="images" id="img-e2">
               <div class="pic">
                 add
               </div>
-            </div>
-          <!-- FILE UPLOAD STUFF END-->
+            </div> -->
+          <!-- FANCY FILE UPLOAD STUFF END-->
+
+          <label for="img">PHOTOS*</label><br>
+          <input type="file" id="img-e3" name="img-e3" accept="image/*" multiple>
 
           </div>
           <div class="form-group col-md-4">
@@ -309,8 +322,10 @@
       
       <div id="error-add-div" style="display: none; float: right;">
         <p class="error" id="error-msg-p">Trip could not be added successfully. Please try again.</p>
+        <br>
+        <br>
       </div>
-      <br>
+      
 
       <button type="button" id="create-trip-btn" onclick="createTrip()">CREATE TRIP</button>
     </form>
@@ -329,8 +344,29 @@
     </script>
 
     <script>
+
+      // GLOBAL VARIABLES ----------------------------------------------------------------------------------------
       let addUrl = "https://tripline-csci201.herokuapp.com/trips";
+
+      // global variables to keep track of the latitude and longitude of the locations the user chooses for the trip and events
+      // global so that they can be modified by map.js and accessed in addtrip.html
+      var tripLatitude = 0;
+      var tripLongitude = 0;
+      var event1Latitude = 0;
+      var event1Longitude = 0;
+      var event2Latitude = 0;
+      var event2Longitude = 0;
+      var event3Latitude = 0;
+      var event3Longitude = 0;
+
+      // initializing global arrays to keep track of the images the user uploads to the trip and each event
+      var tripImageArr = [];
+      var event1ImageArr = [];
+      var event2ImageArr = [];
+      var event3ImageArr = [];
       
+
+
       // using JQuery to show/hide event fields
       $(document).ready(function(){
 
@@ -357,20 +393,22 @@
       });
 
 
-      // CODE TO CONNECT TO API BACKEND STUFF
+      // START API CONNECTION STUFF ----------------------------------------------------------------------------------------
       function createTrip() {
 
         // getting user input from form fields
         var title = document.getElementById("trip-title").value;
         var description = document.getElementById("trip-description").value;
-        var location = document.getElementById("pac-input").value;
+        var location = document.getElementById("trip-loc-input").value;
         var startDate = document.getElementById("start-date").value;
         var endDate = document.getElementById("end-date").value;
         var dropdown = document.getElementById("accommodations-select")
         var accommodations = dropdown.options[dropdown.selectedIndex].value;
         var pinned = document.querySelector('#pinned-check');
 
-        var events = null;
+        var events = []; // will store the list of events 
+
+        var validLocation = true; // todo: set this variable conditionally
         
         if (pinned.checked) {
           pinned = true;
@@ -378,15 +416,92 @@
         else {
           pinned = false;
         }
+        
+        // looping through the 3 potential events
+        for (let i = 1; i <= 3; i++) {
+        
+          // if the event is showing (not hidden)
+          if (document.getElementById("event" + i).style.display != "none") {
+            console.log("Adding event " + i + " details.");
 
-        console.log("location: " + location);
+            // getting values from the form for this event
+            var title = document.getElementById("title-e" + i).value;
+            var eLocation = document.getElementById("event" + i + "-loc-input").value;
+            var start = document.getElementById("start-date-e" + i).value;
+            var end = document.getElementById("end-date-e" + i).value;
+            var desc = document.getElementById("description-e" + i).value;
+            var dropdown = document.getElementById("type-select-e" + i);
+            var eventType = dropdown.options[dropdown.selectedIndex].value;
 
-        // checking if any required field is empty
+            // checking if any fields are missing
+            if (title === "" || startDate === "" || start == "" || desc === "" || eventType === "") {
+              console.log("At least one required field for the event is empty.");
+
+              // displaying appropriate error message
+              document.getElementById("error-msg-p").innerHTML = "At least one required field for event " + i + " is empty.";
+              document.getElementById("error-add-div").style.display = "block";
+
+              return;
+            }
+
+            // todo: check for valid location
+            if (!validLocation) {
+
+              // displaying appropriate error message
+              document.getElementById("error-msg-p").innerHTML = "Invalid location for event " + i;
+              document.getElementById("error-add-div").style.display = "block";
+
+              return;
+            }
+
+            var lat = 0;
+            var long = 0;
+
+            // get latitude and longitude values for this particular event
+            if (i == 1) {
+              lat = event1Latitude;
+              long = event1Longitude;
+            } 
+            else if (i == 2) {
+              lat = event2Latitude;
+              long = event2Longitude;
+            } 
+            else if (i == 3) {
+              lat = event3Latitude;
+              long = event3Longitude;
+            }
+
+            // at this point, fields should be filled and valid so we can add the event to the list
+            let eventToAdd = {
+              "name": title,
+              "category": eventType,
+              "description": desc,
+              "from": start,
+              "to": end,
+              "location": {
+                "name": eLocation,
+                "longitude": long,
+                "latitude": lat
+              },
+              "photos": []
+            }
+
+            events.push(eventToAdd);
+           }
+
+           // else, don't do anything. we can return since there won't be any open events after this one
+           else {
+             console.log("Event " + i + " not selected-- exiting.")
+             break;
+           }
+        }
+
+        // checking if any required field is empty for the overall trip
         if (title === "" || location === "" || startDate === "" || accommodations === "") {
-          console.log("At least one field is empty.");
-
+          console.log("At least one field for the trip is empty.");
+   
           // displaying appropriate error message
-          document.getElementById("error-msg-p").innerHTML = "At least one field is empty.";
+          document.getElementById("error-msg-p").innerHTML = "At least one field for the trip is empty.";
           document.getElementById("error-add-div").style.display = "block";
 
           return;
@@ -404,17 +519,21 @@
         var raw = JSON.stringify({
           "title": title,
           "description": description,
-          "author_id": id,
-          "location_longitude": 170.2222,
-          "location_latitude": -20.8844,
-          "timestamp_to": endDate,
-          "timestamp_from": startDate, 
-          "pin": pinned, 
-          "events": events
+          "location": {
+            "name": location,
+            "longitude": tripLongitude,
+            "latitude": tripLatitude,
+          },
+          "author": id,
+          "from": startDate, 
+          "to": endDate,
+          // "pin": pinned, // commented out because I don't see it on the API anymore
+          "events": events,
+          "photos": []
         });
 
 
-        console.log(raw);
+        console.log("raw: " + raw);
 
         var requestOptions = {
           method: 'POST',
@@ -428,13 +547,30 @@
         fetch(addUrl, requestOptions)
           .then(response => response.json())
           .then(data => {
-            console.log(data);
+            console.log("result of addTrip request, our resultObject: " + data);
             let resultObject = data;
             console.log('User:' + resultObject.id);
 
             // checking if the registration was successful
-            if (resultObject.success) {
+            if (resultObject.id) {
               console.log ("Successfully added trip.");
+
+              var id = resultObject.id;
+              console.log("trip id just created: " + id);
+
+              // calling function to make an API call to the update trip photos
+              updateTripPhotos(id);
+
+              console.log("resultObject.events: " + resultObject.events);
+
+              // calling function to make an API call to the update event photos
+              var events = resultObject.events; // stores list of events
+              for (let i = 0; i < events.length; i++) {
+                let event = events[i];
+                let eventId = event.id;
+                let eventNum = i + 1;
+                updateTripPhotos(eventId, eventNum);
+              }
 
               // redirecting to the user page
               location.href = "userpage.html";
@@ -450,8 +586,7 @@
           .catch(error => console.log('error', error));
       }
     
-
-
+      // END API CONNECTION STUFF --------------------------------------------------------------------------------------------------------------
 
 
       // function that returns a string with the value of the cookie
@@ -471,266 +606,129 @@
         return "";
       }
 
-    </script>
+      // START FANCY PHOTO UPLOAD STUFF --------------------------------------------------------------------------------------------------------------
+        // source: https://speckyboy.com/custom-file-upload-fields/
 
-    
-
-
-
-
-
-    <script>
-      // Javascript for the photo upload stuff
-      // source: https://speckyboy.com/custom-file-upload-fields/
-
-      (function ($) {
-        $(document).ready(function () {
+      // (function ($) {
+      //   $(document).ready(function () {
           
-          generateID()
-          choose()
-          generateOption()
-          selectionOption()
-          removeClass()
-          uploadImage()
-          submit()
-          resetButton()
-          removeNotification()
-          autoRemoveNotification()
-          autoDequeue()
-          
-          var ID
-          var way = 0
-          var queue = []
-          var fullStock = 10
-          var speedCloseNoti = 1000
-          
-          function generateID() {
-            var text = $('header span')
-            var newID = ''
-          
-            for(var i = 0; i < 3; i++) {
-              newID += Math.floor(Math.random() * 3)
-            }
+      //     // two functions for the image upload
+      //     uploadImage()
+      //     submit()
+
+      //     var way = 0
+      //     tripImageArr = []
+      
+      //     // function that takes care of the image uploading
+      //     function uploadImage() {
+      //       var button = $('.images .pic')
+      //       var uploader = $('<input type="file" accept="image/*" />')
+      //       var images = $('.images')
             
-            ID = 'ID: 5988' + newID
-            text.html(ID)
-          }
-          
-          function choose() {
-            var li = $('.ways li')
-            var section = $('.sections section')
-            var index = 0
-            li.on('click', function () {
-              index = $(this).index()
-              $(this).addClass('active')
-              $(this).siblings().removeClass('active')
-              
-              section.siblings().removeClass('active')
-              section.eq(index).addClass('active')
-              if(!way) {
-                way = 1
-              }  else {
-                way = 0
-              }
-            })
-          }
-          
-          function generateOption() {
-            var select = $('select option')
-            var selectAdd = $('.select-option .option')
-            $.each(select, function (i, val) {
-                $('.select-option .option').append('<div rel="'+ $(val).val() +'">'+ $(val).html() +'</div>')
-            })
-          }
-          
-          function selectionOption() {
-            var select = $('.select-option .head')
-            var option = $('.select-option .option div')
-          
-            select.on('click', function (event) {
-              event.stopPropagation()
-              $('.select-option').addClass('active')
-            })
+      //       button.on('click', function () {
+      //         uploader.click()
+      //       })
             
-            option.on('click', function () {
-              var value = $(this).attr('rel')
-              $('.select-option').removeClass('active')  
-              select.html(value)
-          
-              $('select#category').val(value)
-            })
-          }
-          
-          function removeClass() {
-            $('body').on('click', function () { 
-              $('.select-option').removeClass('active')   
-            })                  
-          }
-          
-          function uploadImage() {
-            var button = $('.images .pic')
-            var uploader = $('<input type="file" accept="image/*" />')
-            var images = $('.images')
-            
-            button.on('click', function () {
-              uploader.click()
-            })
-            
-            uploader.on('change', function () {
-                var reader = new FileReader()
-                reader.onload = function(event) {
-                  images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="'+ event.target.result  +'"><span>remove</span></div>')
-                }
-                reader.readAsDataURL(uploader[0].files[0])
+      //       uploader.on('change', function () {
+      //           var reader = new FileReader()
+      //           reader.onload = function(event) {
+      //             // makes a preview of the image show up in a list fashion with the option to remove it by clicking on it
+      //             images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="'+ event.target.result  +'"><span>remove</span></div>')
+      //           }
+      //           reader.readAsDataURL(uploader[0].files[0])
         
-            })
+      //       })
             
-            images.on('click', '.img', function () {
-              $(this).remove()
-            })
+      //       // if you hover over an image, the word "remove" appears. if you click, the image goes away.
+      //       images.on('click', '.img', function () {
+      //         $(this).remove()
+      //       })
           
-          }
+      //     }
           
-          function submit() {  
-            var button = $('#send')
+      //     // right now, this function is never triggered, but it creates a list of image URLs
+      //     function submit() {  
+      //       var button = $('#create-trip-btn')
             
-            button.on('click', function () {
-              if(!way) {
-                var title = $('#title')
-                var cate  = $('#category')
-                var images = $('.images .img')
-                var imageArr = []
+      //       button.on('click', function () {
+      //         if(!way) {
+      //           var images = $('.images .img')
+      //           // var imageArr = [] // moving this line to the top of the javascript to make it global
 
+      //           for(var i = 0; i < images.length; i++) {
+      //             tripImageArr.push({url: $(images[i]).attr('rel')})
+      //           }
                 
-                for(var i = 0; i < images.length; i++) {
-                  imageArr.push({url: $(images[i]).attr('rel')})
-                }
-                
-                var newStock = {
-                  title: title.val(),
-                  category: cate.val(),
-                  images: imageArr,
-                  type: 1
-                }
-                
-                saveToQueue(newStock)
-              } else {
-                // discussion
-                var topic = $('#topic')
-                var message = $('#msg')
-                
-                var newStock = {
-                  title: topic.val(),
-                  message: message.val(),
-                  type: 2
-                }
-                
-                saveToQueue(newStock)
-              }
-            })
-          }
-          
-          function removeNotification() {
-            var close = $('.notification')
-            close.on('click', 'span', function () {
-              var parent = $(this).parent()
-              //parent.fadeOut(300)
-              setTimeout(function() {
-                parent.remove()
-              }, 300)
-            })
-          }
-          
-          function autoRemoveNotification() {
-            setInterval(function() {
-              var notification = $('.notification')
-              var notiPage = $(notification).children('.btn')
-              var noti = $(notiPage[0])
-              
-              setTimeout(function () {
-                setTimeout(function () {
-                noti.remove()
-                }, speedCloseNoti)
-                //noti.fadeOut(speedCloseNoti)
-              }, speedCloseNoti)
-            }, speedCloseNoti)
-          }
-          
-          function autoDequeue() {
-            var notification = $('.notification')
-            var text
-            
-            setInterval(function () {
+      //         } 
+      //       })
+      //     }
 
-                if(queue.length > 0) {
-                  if(queue[0].type == 2) {
-                    text = ' Your discusstion is sent'
-                  } else {
-                    text = ' Your order is allowed.'
-                  }
-                  
-                  notification.append('<div class="success btn"><p><strong>Success:</strong>'+ text +'</p><span><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span></div>')
-                  queue.splice(0, 1)
-                  
-                }  
-            }, 10000)
-          }
-          
-          function resetButton() {
-            var resetbtn = $('#reset')
-            resetbtn.on('click', function () {
-              reset()
-            })
-          }
-          
-          // helpers
-          function saveToQueue(stock) {
-            var notification = $('.notification')
-            var check = 0
-            
-            if(queue.length <= fullStock) {
-              if(stock.type == 2) {
-                  if(!stock.title || !stock.message) {
-                    check = 1
-                  }
-              } else {
-                if(!stock.title || !stock.category || stock.images == 0) {
-                  check = 1
-                }
-              }
-              
-              if(check) {
-                notification.append('<div class="error btn"><p><strong>Error:</strong> Please fill in the form.</p><span><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span></div>')
-              } else {
-                notification.append('<div class="success btn"><p><strong>Success:</strong> '+ ID +' is submitted.</p><span><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span></div>')
-                queue.push(stock)
-                reset()
-              }
-            } else {
-              notification.append('<div class="error btn"><p><strong>Error:</strong> Please waiting a queue.</p><span><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span></div>')
-            } 
-          }
-          function reset() {
-            
-            $('#title').val('')
-            $('.select-option .head').html('Category')
-            $('select#category').val('')
-            
-            var images = $('.images .img')
-            for(var i = 0; i < images.length; i++) {
-              $(images)[i].remove()
-            }
-            
-            var topic = $('#topic').val('')
-            var message = $('#msg').val('')
-          }
-        })
-      })(jQuery)
+      //   })
+      // })(jQuery)
+
+      // END FANCY PHOTO UPLOAD STUFF -------------------------------------------------------------------------------------------------------------
 
 
+      // START PHOTO UPDATE WITH API STUFF --------------------------------------------------------------------------------------------------------------------
+      
+      // in progress
+      function updateTripPhotos(id) {
+        console.log("in updateTripPhotos() with trip id " + id);
 
+        var formdata = new FormData();
 
-    </script>
+        // storing the file upload HTML element for the trip
+        var fileInput = document.getElementById("img-trip");
+
+        formdata.append("files", fileInput.files[0], "file");
+
+        var requestOptions = {
+          method: 'POST',
+          body: formdata,
+          redirect: 'follow'
+        };
+
+        fetch("https://tripline-csci201.herokuapp.com/trips/" + id + "/photos", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            let resultObject = result;
+            console.log(result);
+          })
+          .catch(error => console.log('error', error));
+
+      }
+
+      // in progress
+      function updateEventPhotos(eventId, eventNum) {
+        console.log("in updateEventPhotos() with event id " + eventId + " and eventNum " + eventNum);
+
+        var formdata = new FormData();
+
+        // storing the file upload HTML element for this specific event
+        var fileInput = document.getElementById("img-e" + eventNum);
+
+        formdata.append("files", fileInput.files[0], "file");
+
+        var requestOptions = {
+          method: 'POST',
+          body: formdata,
+          redirect: 'follow'
+        };
+
+        fetch("https://tripline-csci201.herokuapp.com/events/" + id + "/photos", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            let resultObject = result;
+            console.log(result);
+          })
+          .catch(error => console.log('error', error));
+
+      }
+
+      // END PHOTO UPDATE WITH API STUFF --------------------------------------------------------------------------------------------------------------------
+
+   
+   </script>
   
   </body>
 </html>
