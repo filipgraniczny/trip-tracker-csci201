@@ -482,7 +482,8 @@
                 "name": eLocation,
                 "longitude": long,
                 "latitude": lat
-              }
+              },
+              "photos": []
             }
 
             events.push(eventToAdd);
@@ -532,7 +533,7 @@
         });
 
 
-        console.log(raw);
+        console.log("raw: " + raw);
 
         var requestOptions = {
           method: 'POST',
@@ -546,12 +547,12 @@
         fetch(addUrl, requestOptions)
           .then(response => response.json())
           .then(data => {
-            console.log(data);
+            console.log("result of addTrip request, our resultObject: " + data);
             let resultObject = data;
             console.log('User:' + resultObject.id);
 
             // checking if the registration was successful
-            if (resultObject.success) {
+            if (resultObject.id) {
               console.log ("Successfully added trip.");
 
               var id = resultObject.id;
@@ -559,6 +560,8 @@
 
               // calling function to make an API call to the update trip photos
               updateTripPhotos(id);
+
+              console.log("resultObject.events: " + resultObject.events);
 
               // calling function to make an API call to the update event photos
               var events = resultObject.events; // stores list of events
@@ -603,7 +606,7 @@
         return "";
       }
 
-      // START PHOTO UPLOAD STUFF --------------------------------------------------------------------------------------------------------------
+      // START FANCY PHOTO UPLOAD STUFF --------------------------------------------------------------------------------------------------------------
         // source: https://speckyboy.com/custom-file-upload-fields/
 
       // (function ($) {
@@ -663,13 +666,14 @@
       //   })
       // })(jQuery)
 
-      // END PHOTO UPLOAD STUFF -------------------------------------------------------------------------------------------------------------
+      // END FANCY PHOTO UPLOAD STUFF -------------------------------------------------------------------------------------------------------------
 
 
       // START PHOTO UPDATE WITH API STUFF --------------------------------------------------------------------------------------------------------------------
       
       // in progress
       function updateTripPhotos(id) {
+        console.log("in updateTripPhotos() with trip id " + id);
 
         var formdata = new FormData();
 
@@ -696,6 +700,7 @@
 
       // in progress
       function updateEventPhotos(eventId, eventNum) {
+        console.log("in updateEventPhotos() with event id " + eventId + " and eventNum " + eventNum);
 
         var formdata = new FormData();
 
