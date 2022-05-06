@@ -36,9 +36,7 @@
         <div id="pfp"></div>
         <div id="user-description">
           <h2 id ="UserName">User Name</h2><br>
-          <p id="userCaption">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
-          Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
-          ac magna fringilla, ut maximus odio laoreet. </p>
+          <p id="userCaption">Here you can see all of your logged trips, past and present.<br>Click each trip to learn more about what you did and where you've been!</p>
         </div>
     </div>
 
@@ -49,7 +47,7 @@
             <div class="trip-title"><strong>CANCUN</strong></div>
             <div class="trip-description"><strong>Cancun is recognized worldwide for its spectacular beaches of fine white sand</strong></div>
             <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
-        </button>
+        </button><!-- 
         <button class="trip-container" id="trip-2">
             <div class="trip-title"><strong>VIETNAM</strong></div>
             <div class="trip-description"><strong>A land of staggering natural beauty and cultural complexities, of dynamic megacities and hill-tribe villages</strong></div>
@@ -59,7 +57,7 @@
             <div class="trip-title"><strong>PHILIPINES</strong></div>
             <div class="trip-description"><strong>Home to world-renowned natural wonders like an underground river and rice terraces</strong></div>
             <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
-        </button>
+        </button> -->
     </div>
 
 
@@ -75,7 +73,7 @@
 
           <div class="break"></div>
           
-            <div class="post">
+            <!-- <div class="post">
                 <h2 class="post-title">Long Weekend in NYC</h2><br>
                 <div class="location">NEW YORK, NY, USA<br></div>
                 <div class="dates">4/15/2022 - 4/20/2022<br>></div>
@@ -88,8 +86,8 @@
                 <img src="images/nyc0.png" alt="new york view">
                 <img src="images/nyc1.png" alt="chinatown">
                 <img src="images/nyc2.png" alt="bbg">
-            </div>
-
+            </div> -->
+<!-- 
             <div class="post">
                 <h2 class="post-title">Spring Break in Berlin</h2><br>
                 <div class="location">BERLIN, GERMANY<br></div>
@@ -120,7 +118,7 @@
                 <img src="images/berlin0.png" alt="new york view">
                 <img src="images/berlin1.png" alt="chinatown">
                 <img src="images/berlin2.png" alt="bbg">
-            </div>
+            </div> -->
         </div>
     </div>
 <!-- 
@@ -132,7 +130,7 @@
 
     <script>
         var userData;
-        var userTripsArray;
+        var tripArray;
 
         // cookie/login code ty henry <3
         function getCookie(id) {
@@ -159,12 +157,15 @@
                 window.location.href='loginpage.html';
             }
         }
-        //henry's code to send trip to details page
-        function getTripDetail(id) {
-            let tripDetail = JSON.stringify(tripArray[id]);
-            console.log(tripDetail);
-            sessionStorage.setItem("tripDetail", tripDetail);
-            window.location.href='details.html';
+
+        //Henry's date formatting code
+        function getDate(timestamp) {
+            var dateArray = timestamp.substring(0, 10).split("-");
+            let year = dateArray[0];
+            let month = dateArray[1];
+            let day = dateArray[2];
+            var dateFormat = month + "/" +  day + "/" + year;
+            return dateFormat;
         }
         // end login checks
 
@@ -175,19 +176,43 @@
             // id = "1"; //remove after testing
             console.log('UserID: ' + id);
 
-            // Call API to get user data.
-            let APICallURL = `https://tripline-csci201.herokuapp.com/users/${id}`;
+            //Call API to get user data.
+            let userAPICallURL = `https://tripline-csci201.herokuapp.com/users/${id}`;
 
-            fetch(APICallURL)
+            fetch(userAPICallURL)
             .then(response => response.json())
             .then(data => {
                 const userData = data;
-                userTripsArray = userData.trips; //undefined as of now, API in progress
                 console.log(userData);
                 updateUserPageWithInfo(userData);
+            })
+            .catch(console.error);
+
+            let APICallURL = `https://tripline-csci201.herokuapp.com/trips/explore?limit=&searchTerm=&sortBy=&toTime`;
+            fetch(APICallURL)
+            .then(response => response.json())
+            .then(data => {
+                const allTrips = data;
+                tripArray = data;
+                //userTripsArray = userData.trips; //undefined as of now, API in progress
+                console.log(allTrips);
+                // console.log(userTripsArray);
+                // console.log(data);
+                // updateUserPageWithInfo(userData);
                 // updatePinned(userTripsArray);
                 // updateYourTrips(userTripsArray);
                 console.log("reached end of data population");
+
+                for(let i = 0; i < allTrips.length; i++){
+                    if(allTrips[i].author.id == id){
+                        addTripToPage(allTrips[i]);
+
+                        // if(allTrips[i].pinned == true){
+                        //     addPinnedToPage(allTrips[i]);
+                        // }
+                        console.log(allTrips.length);
+                    }
+                }
             })
             .catch(console.error);
         }
@@ -199,18 +224,19 @@
             //document.getElementById('pfp').style.backgroundImage = `url(${info.profilePhotoEntity.presignedUrl})`; // Set pfp
         }
 
-        function updatePinned(trips){
+        function addPinnedToPage(trip){
             //update the pinned trips to show first 3 pinned trips
             let pinnedContainer = document.getElementById("highlights");
+            let newPinned = "";
             let numPinned = 0;
 
             for(i = 0; i < trips.length; i++){
                 if (trips[i].pinned == true){
-                    pinnedContainer += '<button class="trip-container" id="trip-1" onclick="getTripDetail(${trips[i].id})">';
-                        pinnedContainer += `<div class="trip-title"><strong>${trips[i].title}</strong></div>`
-                        pinnedContainer += `<div class="trip-description"><strong>${trips[i].description}</strong></div>`
-                        pinnedContainer += `<img class="enter-arrow-img" src="${trips[i].imageURL}" alt="enter-arrow">`
-                    pinnedContainer += `</button>`
+                    newPinned += `<button class="trip-container" id="trip-1" onclick="getTripDetail(${trip.id})">`;
+                        newPinned += `<div class="trip-title"><strong>${trip.title}</strong></div>`
+                        newPinned += `<div class="trip-description"><strong>${trip.description}</strong></div>`
+                        newPinned += `<img class="enter-arrow-img" src="${trip.photos[0].presignedUrl}" alt="enter-arrow">`
+                    newPinned += `</button>`
 
                     numPinned++;
                 }
@@ -221,21 +247,46 @@
             }
         }
 
-        function updateYourTrips(trips){
+        function addTripToPage(trip){
             // add all the trip to the "your trips" section
             let tripsContainer = document.getElementById("content");
+            let newPost = "";
+            let numPics = trip.photos.length;
 
-            for(i = 0; i < trips.length; i++){
-                tripsContainer += '<div class="post">';
-                    tripsContainer += `<h2 class="post-title" onclick="getTripDetail(${trips[i].id})">${trips[i].title}</h2><br>`
-                    tripsContainer += `<div class="location">${trips[i].location}<br></div>`
-                    tripsContainer += `<div class="dates">${trips[i].from} - ${trips[i].to}<br></div>` // need to change date format later lol
-                    tripsContainer += `<p class="description">${trips[i].description}<a href="#" onclick="getTripDetail(${trips[i].id})">Read more...</a></p>`
-                    tripsContainer += `<img src="${trips[i].images[0].url}" alt="${trips[i].images[0].alt}">`
-                    tripsContainer += `<img src="${trips[i].images[1].url}" alt="${trips[i].images[1].alt}">` // images not yet supported, will do later
-                    tripsContainer += `<img src="${trips[i].images[2].url}" alt="${trips[i].images[2].alt}">`
-                tripsContainer += `</div>`
+            newPost += '<div class="post">';
+                newPost += `<h2 class="post-title" onclick="getTripDetail(${trip.id})">${trip.title}</h2><br>`
+                newPost += `<div class="location">${trip.location.name}<br></div>`
+                newPost += `<div class="dates">${getDate(trip.fromTime)} - ${getDate(trip.toTime)}<br></div>` // need to change date format later lol
+                newPost += `<p class="description">${trip.description}<br><a href="#" onclick="getTripDetail(${trip.id})">Read more...</a></p>`
+                if(numPics > 0){
+                    newPost += `<img class="wideImg" src="${trip.photos[0].presignedUrl}">`
+                }
+                else if(numPics > 1){
+                    newPost += `<img class="halfImg" src="${trip.photos[0].presignedUrl}">`
+                    newPost += `<img class="halfImg" src="${trip.photos[1].presignedUrl}">`
+                }
+                else if(numPics > 2){
+                    newPost += `<img class="smallImg" src="${trip.photos[0].presignedUrl}">`
+                    newPost += `<img class="smallImg" src="${trip.photos[1].presignedUrl}">`
+                    newPost += `<img class="smallImg" src="${trip.photos[2].presignedUrl}">`
+                }
+            newPost += `</div>`
+
+            tripsContainer.innerHTML += newPost;
+        }
+
+        function getTripDetail(id) {
+            let tripToDetail = null;
+
+            for(let i = 0; i < tripArray.length; i++){
+                if(tripArray[i].id == id){
+                    tripToDetail = tripArray[i];
+                }
             }
+            let tripDetail = JSON.stringify(tripToDetail);
+            console.log("HERE" + tripDetail);
+            sessionStorage.setItem("tripDetail", tripDetail);
+            window.location.href='details.html';
         }
 
         function logOut(){
