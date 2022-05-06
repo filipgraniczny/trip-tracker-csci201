@@ -29,13 +29,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
-import java.util.List;
-import java.util.Optional;
 
 import static com.csci201finalproject.triptracker.util.Timestamp.timestampToDate;
 
@@ -109,9 +109,11 @@ public class TripService {
      * @throws SdkClientException
      * @throws AwsServiceException
      * @throws S3Exception
+     * @throws TimeoutException
      */
     public List<PhotoEntity> uploadTripPhotos(Integer id, List<MultipartFile> files)
-            throws IllegalArgumentException, S3Exception, AwsServiceException, SdkClientException, IOException {
+            throws IllegalArgumentException, S3Exception, AwsServiceException, SdkClientException, IOException,
+            TimeoutException {
         // create a thread pool with size = number of files since we need that much
         // number of tasks to execute concurrently
         ExecutorService executorService = Executors.newFixedThreadPool(files.size());
@@ -147,12 +149,25 @@ public class TripService {
             executorService.execute(imageUploadAddRecordRunner);
         }
 
+        // initiate timeout timer
+        executorService.shutdown();
+        try {
+            Integer TIMEOUT_SECONDS_UPLOADING_PHOTOS = 5;
+            if (!executorService.awaitTermination(TIMEOUT_SECONDS_UPLOADING_PHOTOS, TimeUnit.SECONDS)) {
+                // timed out
+                executorService.shutdownNow();
+                throw new TimeoutException("Image uploading on our end took too long. Please try again");
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+        }
+
         Iterable<PhotoEntity> photoEntitiesIterable = photoRepository.saveAll(photoEntitiesConcurrQueue);
 
         List<PhotoEntity> photoEntitiesReturn = new ArrayList<>();
         // save each one back to a list for returning value
         for (PhotoEntity savedEntity : photoEntitiesIterable) {
-            photoEntitiesConcurrQueue.add(savedEntity);
+            photoEntitiesReturn.add(savedEntity);
         }
 
         return photoEntitiesReturn;

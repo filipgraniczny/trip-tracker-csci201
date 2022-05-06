@@ -18,6 +18,7 @@ import software.amazon.awssdk.core.exception.SdkClientException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping("/trips")
@@ -53,7 +54,10 @@ public class TripController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
         } catch (AwsServiceException | SdkClientException | IOException e) {
             ErrorResponseClass errorBody = new ErrorResponseClass(false, "AWS_ERROR", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
+        } catch (TimeoutException e) {
+            ErrorResponseClass errorBody = new ErrorResponseClass(false, "TIMED_OUT", e.getMessage());
+            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(errorBody);
         }
     }
 

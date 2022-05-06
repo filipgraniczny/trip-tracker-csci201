@@ -17,10 +17,6 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -28,6 +24,11 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static com.csci201finalproject.triptracker.util.Timestamp.timestampToDate;
 
@@ -90,58 +91,87 @@ public class EventService {
      * @throws AwsServiceException
      * @throws S3Exception
      * @throws IllegalArgumentException when there's no event with this ID
+     * @throws TimeoutException         when the amount of time passed
      */
     public List<PhotoEntity> uploadEventPhotos(Integer id, MultipartFile[] files)
-            throws S3Exception, AwsServiceException, SdkClientException, IOException, IllegalArgumentException {
+            throws S3Exception, AwsServiceException, SdkClientException, IOException, IllegalArgumentException,
+            TimeoutException {
         // validate if there are files at all
         if (Objects.isNull(files) || files.length == 0) {
             throw new IllegalArgumentException("Must provide 1 or more files");
         }
 
+        // initialize thread pool with as many threads as files
+        ExecutorService executorService = Executors.newFixedThreadPool(files.length);
+
         // validate valid event entity (must have id field and in record)
-        EventEntity eventEntity = findEventById(id);
-        if (Objects.isNull(eventEntity) || Objects.isNull(eventEntity.getId())) {
+        EventEntity foundEventEntity = findEventById(id);
+        if (Objects.isNull(foundEventEntity)) {
             throw new IllegalArgumentException("Invalid eventEntity passed in");
         }
 
-        // a few variables
-        String s3Bucket = configService.getS3BucketName();
-        List<String> keyFiles = new ArrayList<>();
-        List<PhotoEntity> photoEntities = new ArrayList<>();
+        // keep the successfully completed tasks
+        ConcurrentLinkedQueue<PhotoEntity> photoEntities = new ConcurrentLinkedQueue<>();
 
         // through all files
         for (MultipartFile file : files) {
-            String key = String.format("event_%s_%s.%s", eventEntity.getId(), UUID.randomUUID(),
-                    file.getContentType().split("/")[1]);
-            keyFiles.add(key);
+            Thread uploadImageEventRunner = new Thread(() -> {
+                try {
+                    PhotoEntity photoEntity = addEventPhoto(foundEventEntity, file);
+                    photoEntities.add(photoEntity);
+                } catch (AwsServiceException | SdkClientException | IOException e) {
+                    // TODO: store this error somewhere to indicate this upload has failed
+                    e.printStackTrace();
+                }
+            });
 
-            // upload to S3
-            s3Service.uploadObjectFromMultipart(s3Bucket, key, file);
-
-            // add to the batch of entities to save
-            PhotoEntity photoEntity = new PhotoEntity();
-            photoEntity.setObjectKeyAws(key);
-            photoEntity.setEvent(eventEntity);
-            // get presigned url to save to DB
-            String entityPresignedURL = s3Service.getObjectURLFromKey(s3Bucket, photoEntity.getObjectKeyAws())
-                    .toString();
-            photoEntity.setPresignedUrl(entityPresignedURL);
-            photoEntities.add(photoEntity);
+            executorService.execute(uploadImageEventRunner);
         }
+
+        // initiate timeout timer
+        executorService.shutdown();
+        try {
+            Integer TIMEOUT_SECONDS_UPLOADING_PHOTOS = 5;
+            if (!executorService.awaitTermination(TIMEOUT_SECONDS_UPLOADING_PHOTOS, TimeUnit.SECONDS)) {
+                // timed out
+                executorService.shutdownNow();
+                throw new TimeoutException("Image uploading on our end took too long. Please try again");
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+        }
+
+        // batch save successfully completed uploads
         Iterable<PhotoEntity> photoEntitiesIterable = photoRepository.saveAll(photoEntities);
 
         // save each one to the original list for return value
-        int i = 0;
+        List<PhotoEntity> returningPhotoEntities = new ArrayList<>();
         for (PhotoEntity savedEntity : photoEntitiesIterable) {
-            // stop if it happens to go over to avoid out of bound
-            if (i > photoEntities.size() - 1) {
-                break;
-            }
-            photoEntities.set(i, savedEntity);
-            i++;
+            returningPhotoEntities.add(savedEntity);
         }
 
-        return photoEntities;
+        return returningPhotoEntities;
+    }
+
+    private PhotoEntity addEventPhoto(EventEntity eventEntity, MultipartFile file)
+            throws S3Exception, AwsServiceException, SdkClientException, IOException {
+        String s3Bucket = configService.getS3BucketName();
+        String key = String.format("event_%s_%s.%s", eventEntity.getId(), UUID.randomUUID(),
+                file.getContentType().split("/")[1]);
+
+        // upload to S3
+        s3Service.uploadObjectFromMultipart(s3Bucket, key, file);
+
+        // add to the batch of entities to save
+        PhotoEntity photoEntity = new PhotoEntity();
+        photoEntity.setObjectKeyAws(key);
+        photoEntity.setEvent(eventEntity);
+        // get presigned url to save to DB
+        String entityPresignedURL = s3Service.getObjectURLFromKey(s3Bucket, photoEntity.getObjectKeyAws())
+                .toString();
+        photoEntity.setPresignedUrl(entityPresignedURL);
+
+        return photoEntity;
     }
 
     public EventEntity findEventById(Integer id) {
