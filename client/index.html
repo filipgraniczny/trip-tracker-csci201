@@ -68,8 +68,8 @@
               <div class="trip-description"><strong>A land of staggering natural beauty and cultural complexities, of dynamic megacities and hill-tribe villages</strong></div>
               <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
             </button>
-            <button class="trip-container" id="trip-3">
-                <div class="trip-title"><strong>PHILIPINES</strong></div>
+            <button class="trip-container" id="trip-3" onclick="getInspirationTrip('philippines')">
+                <div class="trip-title"><strong>PHILIPPINES</strong></div>
                 <div class="trip-description"><strong>Home to world-renowned natural wonders like an underground river and rice terraces</strong></div>
                 <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
             </button>
@@ -78,28 +78,28 @@
         <div class="explore-title"><strong>Hightlight trips</strong></div>
         <div class="inspiration-section">
           <div class="highlight-container">
-            <button id="hightlight-img" id="img-1" onclick="getTripDetail(0)"></button>
+            <button class="hightlight-img" id="img-1" onclick="getTripDetail(0)"></button>
             <div class="highlight-title"><strong id="highlight-title-1">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-1">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-1">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
-            <button id="hightlight-img" onclick="getTripDetail(1)"></button>
+            <button class="hightlight-img" id="img-2" onclick="getTripDetail(1)"></button>
             <div class="highlight-title"><strong id="highlight-title-2">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-2">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-2">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
-            <button id="hightlight-img" onclick="getTripDetail(2)"></button>
+            <button class="hightlight-img" id="img-3" onclick="getTripDetail(2)"></button>
             <div class="highlight-title"><strong id="highlight-title-3">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-3">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-3">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
-            <button id="hightlight-img" onclick="getTripDetail(3)"></button>
+            <button class="hightlight-img" id="img-4" onclick="getTripDetail(3)"></button>
             <div class="highlight-title"><strong id="highlight-title-4">HA LONG</strong></div>
             <div class="highlight-bio">by <a href="" id="highlight-author-4">Henry Vu</a></div>
             <div class="highlight-date" id="highlight-date-4">10/11/2012</div>
@@ -159,7 +159,12 @@
           date.innerHTML = dateFormat;
 
           let img = document.getElementById(`img-${i}`);
-          // img.style.backgroundImage = `url(${})`;
+          let photos = trip.photos;
+          if (photos.length >= 1) {
+            let imgURL = photos[0].presignedUrl;
+            console.log(imgURL);
+            img.style.backgroundImage = `url(${imgURL})`;
+          }
         }
       }
 
