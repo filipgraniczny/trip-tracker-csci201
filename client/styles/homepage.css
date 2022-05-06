@@ -303,7 +303,7 @@ html {
     height: 400px;
 }
 
-#hightlight-img {
+.hightlight-img {
     background-image: url("../images/cancun.png");
     background-size: cover;
     background-position: center;

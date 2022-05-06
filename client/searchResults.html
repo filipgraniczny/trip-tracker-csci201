@@ -141,7 +141,7 @@
         for (i = 0; i < result.length; i++) {
         	let trip = result[i];
 			content += '<div class="tripItem">';
-				content += `<div class="imageAndTitle" onclick="getTripDetail(${i})">`;
+				content += `<div class="imageAndTitle" id="result-${i}" onclick="getTripDetail(${i})">`;
 					content += `${trip.title} <br>`
 					content += `<span class="subtext">${getDate(trip.fromTime)} - ${getDate(trip.toTime)}</span>`
 				content += '</div>'
@@ -153,6 +153,13 @@
 			content += '</div>'
         }
 		container.innerHTML = content;
+
+		for (k = 0; k < result.length; k++) {
+			let photos = result[k].photos;
+			let resultBackground = document.getElementById(`result-${k}`);
+			if (photos.length >= 1)
+				resultBackground.style.backgroundImage = `url(${photos[0].presignedUrl})`;
+		}
       }
 
 	function getTripDetail(id) {

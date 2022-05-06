@@ -164,6 +164,7 @@ p{
 /* Overall trip picture  */
 #mainTripImgContainter{
     width: 80%;
+    border-radius: 20px;
     max-height: 750px;
     margin-left: auto;
     margin-right: auto;
@@ -209,6 +210,7 @@ p{
 .imagesContainer img{
     object-fit: cover;
     height: 100%;
+    border-radius: 20px;
 }
 .imagesContainer{
     margin-top: 30px;
@@ -229,4 +231,9 @@ p{
 }
 .rightimg{
     margin-left: 2%;
+}
+
+.icon {
+    margin-left: auto;
+    margin-right: auto;
 }

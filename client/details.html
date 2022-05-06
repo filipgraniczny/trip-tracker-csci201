@@ -130,6 +130,11 @@
 		let endDateString = getDate(trip.toTime);
 		endDate.innerHTML = endDateString;
 
+		let mainTripImgContainter = document.getElementById('mainTripImgContainter');
+		let photos = trip.photos;
+		if (photos.length >= 1)
+			mainTripImgContainter.innerHTML = `<img id="mainTripImg" src="${photos[0].presignedUrl}">`;
+
 		getEvents(trip.events);
 	}
 
@@ -142,20 +147,19 @@
 			console.log(events[i]);
 			let event = events[i];
 			content += "<div class=\"eventItem\">";
-			content += "<div class=\"eventInfo\">"
-			content += `<h3 class=\"eventTitle\">${event.name}</h3>`
-			content += `<p class=\"eventLocation\"><i class=\"fas fa-map-marker-alt\"></i> ${event.location.name}</p>`
-			content += `<p class="eventType"><i class="fas fa-clipboard-list"></i> ${event.category}</p>`
-			content += `<p class="eventDate">${getDate(event.fromTime)} <i class="fa fa-arrow-right"></i> ${getDate(event.toTime)}</p>`
-			content += "</div>";
-			content += `<p class="eventDescription">${event.description}</p>`
-			content += '<div class="imagesContainer">'
-			let photos = event.photos;
-			for (k = 0; k < photos.length; k++) {
-				content += `<img class="event1Image" src="./images/background.png">`;
-			}
-			content += '</div>';
-			content += '<i class="fa fa-route"></i>';	
+				content += "<div class=\"eventInfo\">"
+					content += `<h3 class=\"eventTitle\">${event.name}</h3>`
+					content += `<p class=\"eventLocation\"><i class=\"fas fa-map-marker-alt\"></i> ${event.location}</p>`
+					content += `<p class="eventType"><i class="fas fa-clipboard-list"></i> ${event.category}</p>`
+					content += `<p class="eventDate">${getDate(event.fromTime)} <i class="fa fa-arrow-right"></i> ${getDate(event.toTime)}</p>`
+				content += "</div>";
+				content += `<p class="eventDescription">${event.description}</p>`
+				content += '<div class="imagesContainer">'
+					let photos = event.photos;
+					for (k = 0; k < photos.length; k++) {
+						content += `<img class="event${photos.length}Image" src="${photos[k].presignedUrl}">`;
+					}
+				content += '</div>';	
 			content += "</div>";
 		}
 		container.innerHTML = content;

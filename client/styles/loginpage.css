@@ -139,17 +139,17 @@ a:hover {
   background-position: center;
   background-size: cover;
   width: 48%;
-  height: 90%;
+  height: 95%;
 }
 
 #register-title {
-  margin-top: 30%;
+  margin-top: 20%;
 }
 
 #right-container {
   padding-left: 10%;
   padding-right: 10%;
-  padding-top: 4%;
+  padding-top: 3%;
 }
 
 .form-control {
