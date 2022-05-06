@@ -25,6 +25,10 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,7 +36,6 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
-
 
 import static com.csci201finalproject.triptracker.util.Timestamp.timestampToDate;
 
@@ -107,8 +110,12 @@ public class TripService {
      * @throws AwsServiceException
      * @throws S3Exception
      */
-    public List<PhotoEntity> uploadTripPhotos(Integer id, Iterable<MultipartFile> files)
+    public List<PhotoEntity> uploadTripPhotos(Integer id, List<MultipartFile> files)
             throws IllegalArgumentException, S3Exception, AwsServiceException, SdkClientException, IOException {
+        // create a thread pool with size = number of files since we need that much
+        // number of tasks to execute concurrently
+        ExecutorService executorService = Executors.newFixedThreadPool(files.size());
+
         // validate if there are files at all
         if (Objects.isNull(files)) {
             throw new IllegalArgumentException("Must provide 1 or more files");
@@ -123,44 +130,67 @@ public class TripService {
             throw new IllegalArgumentException("Invalid tripEntity passed in");
         }
 
-        // a few variables
-        String s3Bucket = configService.getS3BucketName();
-        List<String> keyFiles = new ArrayList<>();
-        List<PhotoEntity> photoEntities = new ArrayList<>();
+        // concurrent queue to allow
+        ConcurrentLinkedQueue<PhotoEntity> photoEntitiesConcurrQueue = new ConcurrentLinkedQueue<>();
 
-        // through all files
+        // through all files, PUT to S3 and save to DB record
         for (MultipartFile file : files) {
-            String key = String.format("trip_%s_%s.%s", tripEntity.getId(), UUID.randomUUID(),
-                    file.getContentType().split("/")[1]);
-            keyFiles.add(key);
+            Thread imageUploadAddRecordRunner = new Thread(() -> {
+                try {
+                    PhotoEntity photoEntity = uploadPhotoAddRecordTrip(file, tripEntity);
+                    photoEntitiesConcurrQueue.add(photoEntity);
+                } catch (AwsServiceException | SdkClientException | IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
-            // upload to S3
-            s3Service.uploadObjectFromMultipart(s3Bucket, key, file);
-
-            // add to the batch of entities to save
-            PhotoEntity photoEntity = new PhotoEntity();
-            photoEntity.setObjectKeyAws(key);
-            photoEntity.setTrip(tripEntity);
-            // get presigned url to save to DB
-            String entityPresignedURL = s3Service.getObjectURLFromKey(s3Bucket, photoEntity.getObjectKeyAws())
-                    .toString();
-            photoEntity.setPresignedUrl(entityPresignedURL);
-            photoEntities.add(photoEntity);
+            executorService.execute(imageUploadAddRecordRunner);
         }
-        Iterable<PhotoEntity> photoEntitiesIterable = photoRepository.saveAll(photoEntities);
 
-        // save each one to the original list
-        int i = 0;
+        Iterable<PhotoEntity> photoEntitiesIterable = photoRepository.saveAll(photoEntitiesConcurrQueue);
+
+        List<PhotoEntity> photoEntitiesReturn = new ArrayList<>();
+        // save each one back to a list for returning value
         for (PhotoEntity savedEntity : photoEntitiesIterable) {
-            // stop if it happens to go over to avoid out of bound
-            if (i > photoEntities.size() - 1) {
-                break;
-            }
-            photoEntities.set(i, savedEntity);
-            i++;
+            photoEntitiesConcurrQueue.add(savedEntity);
         }
 
-        return photoEntities;
+        return photoEntitiesReturn;
+    }
+
+    /**
+     * Helper method to upload image and add to DB record a photo associated to this
+     * trip
+     * Assumes that file and tripEntity are objects that have already been validated
+     * for this function
+     * 
+     * @param file
+     * @param tripEntity
+     * @return
+     * @throws IOException
+     * @throws SdkClientException
+     * @throws AwsServiceException
+     * @throws S3Exception
+     */
+    private PhotoEntity uploadPhotoAddRecordTrip(MultipartFile file, TripEntity tripEntity)
+            throws S3Exception, AwsServiceException, SdkClientException, IOException {
+        String s3Bucket = configService.getS3BucketName();
+        String key = String.format("trip_%s_%s.%s", tripEntity.getId(), UUID.randomUUID(),
+                file.getContentType().split("/")[1]);
+
+        // upload to S3
+        s3Service.uploadObjectFromMultipart(s3Bucket, key, file);
+
+        // add to the batch of entities to save
+        PhotoEntity photoEntity = new PhotoEntity();
+        photoEntity.setObjectKeyAws(key);
+        photoEntity.setTrip(tripEntity);
+        // get presigned url to save to DB
+        String entityPresignedURL = s3Service.getObjectURLFromKey(s3Bucket, photoEntity.getObjectKeyAws())
+                .toString();
+        photoEntity.setPresignedUrl(entityPresignedURL);
+
+        return photoEntity;
     }
 
     public TripEntity createTrip(TripDTO tripDTO) {
@@ -181,15 +211,14 @@ public class TripService {
         Date to_date = timestampToDate(tripDTO.getTo());
         trip.setToTime(new Timestamp(to_date.getTime()));
 
-//        tripRepository.save(trip);
+        // tripRepository.save(trip);
 
         trip = tripRepository.save(trip);
 
         eventService.createEvents(tripDTO.getEvents(), trip);
-        if(tripDTO.getPhotos() != null) {
+        if (tripDTO.getPhotos() != null) {
             photoService.createPhotos(tripDTO.getPhotos(), trip);
         }
-
 
         return trip;
     }
