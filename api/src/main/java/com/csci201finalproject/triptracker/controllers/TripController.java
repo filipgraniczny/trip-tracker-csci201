@@ -63,9 +63,9 @@ public class TripController {
             TripEntity trip = tripService.createTrip(tripDTO);
             return ResponseEntity.ok().body(trip);
         } catch (Exception e) {
-            ErrorResponseClass error = new ErrorResponseClass(false, "INVALID_TRIP", "Invalid trip object");
+//            ErrorResponseClass error = new ErrorResponseClass(false, "INVALID_TRIP", "Invalid trip object");
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }
