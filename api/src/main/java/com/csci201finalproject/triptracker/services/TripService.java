@@ -186,7 +186,10 @@ public class TripService {
         trip = tripRepository.save(trip);
 
         eventService.createEvents(tripDTO.getEvents(), trip);
-        photoService.createPhotos(tripDTO.getPhotos(), trip);
+        if(tripDTO.getPhotos() != null) {
+            photoService.createPhotos(tripDTO.getPhotos(), trip);
+        }
+
 
         return trip;
     }

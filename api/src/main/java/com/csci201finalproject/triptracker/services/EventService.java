@@ -71,7 +71,10 @@ public class EventService {
 
         event = eventRepository.save(event);
         event.setLocation(locationService.createLocation(eventDTO.getLocation()));
-        event.setPhotos(photoService.createPhotos(eventDTO.getPhotos(), event));
+        if(eventDTO.getPhotos() != null) {
+            event.setPhotos(photoService.createPhotos(eventDTO.getPhotos(), event));
+        }
+
 
         return event;
     }
