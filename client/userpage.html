@@ -125,6 +125,7 @@
         function populateTrips(trips){
             // add all the trip to the "your trips" section
             let tripsContainer = document.getElementById("content");
+            tripArray = trips;
             let newPost = "";
             let numPics = 0;
 
@@ -158,7 +159,6 @@
 
         function getTripDetail(id) {
             let tripToDetail = null;
-
             for(let i = 0; i < tripArray.length; i++){
                 if(tripArray[i].id == id){
                     tripToDetail = tripArray[i];
