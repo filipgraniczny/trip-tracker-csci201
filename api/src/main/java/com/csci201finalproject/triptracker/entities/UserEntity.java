@@ -30,16 +30,16 @@ public class UserEntity {
     @JoinColumn(name = "pfp_id", nullable = true)
     private PhotoEntity profilePhotoEntity;
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<TripEntity> trip;
+    private List<TripEntity> trips;
 
-    public List<TripEntity> getTrip() {
-        return trip;
+    public List<TripEntity> getTrips() {
+        return trips;
     }
 
-    public void setTrip(List<TripEntity> trip) {
-        this.trip = trip;
+    public void setTrips(List<TripEntity> trip) {
+        this.trips = trip;
     }
 
     public int getId() {
