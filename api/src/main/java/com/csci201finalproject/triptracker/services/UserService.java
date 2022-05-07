@@ -1,12 +1,8 @@
 package com.csci201finalproject.triptracker.services;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -19,7 +15,6 @@ import com.csci201finalproject.triptracker.entities.UserEntity;
 import com.csci201finalproject.triptracker.repositories.PhotoRepository;
 import com.csci201finalproject.triptracker.repositories.UserRepository;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,14 +100,11 @@ public class UserService {
      *                                  image format
      * @throws IOException              if any unexpected errors occur
      */
-    public List<Object> updateProfileImageUser(UserEntity userEntity, MultipartFile multipart)
+    public List<Object> updateProfileImageUser(Integer id, MultipartFile multipart)
             throws IllegalArgumentException, IOException {
 
-        if (Objects.isNull(userEntity.getId())) {
-            throw new IllegalArgumentException("Invalid UserEntity passed in; ID = null");
-        }
-        UserEntity foundUserEntity = findUserById(userEntity.getId());
-        if (userEntity == null || foundUserEntity == null) {
+        UserEntity foundUserEntity = findUserById(id);
+        if (foundUserEntity == null) {
             throw new IllegalArgumentException("Invalid UserEntity passed in; UserEntity must exist in database");
         }
         // standard AWS filename for profile photo on S3
