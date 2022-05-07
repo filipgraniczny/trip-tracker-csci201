@@ -3,6 +3,9 @@ package com.csci201finalproject.triptracker.entities;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -35,15 +38,15 @@ public class TripEntity {
     @Column(name = "to_time")
     private Timestamp toTime;
 
+    @JsonBackReference
     @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private UserEntity author;
 
-    @OneToMany(mappedBy = "trip", orphanRemoval = true, cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "trip", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<EventEntity> events;
 
-    @OneToMany(mappedBy = "trip", orphanRemoval = true, cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "trip", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<PhotoEntity> photos;
 
     public int getId() {
@@ -120,19 +123,29 @@ public class TripEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         TripEntity that = (TripEntity) o;
 
-        if (id != that.id) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (location != null ? !location.equals(that.location) : that.location != null) return false;
-        if (fromTime != null ? !fromTime.equals(that.fromTime) : that.fromTime != null) return false;
-        if (toTime != null ? !toTime.equals(that.toTime) : that.toTime != null) return false;
-        if (author != null ? !author.equals(that.author) : that.author != null) return false;
-        if (events != null ? !events.equals(that.events) : that.events != null) return false;
+        if (id != that.id)
+            return false;
+        if (title != null ? !title.equals(that.title) : that.title != null)
+            return false;
+        if (description != null ? !description.equals(that.description) : that.description != null)
+            return false;
+        if (location != null ? !location.equals(that.location) : that.location != null)
+            return false;
+        if (fromTime != null ? !fromTime.equals(that.fromTime) : that.fromTime != null)
+            return false;
+        if (toTime != null ? !toTime.equals(that.toTime) : that.toTime != null)
+            return false;
+        if (author != null ? !author.equals(that.author) : that.author != null)
+            return false;
+        if (events != null ? !events.equals(that.events) : that.events != null)
+            return false;
         return photos != null ? photos.equals(that.photos) : that.photos == null;
     }
 
