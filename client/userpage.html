@@ -99,7 +99,7 @@
         function getUserTrips() {
             //Get user id cookie to feed into url
             let id = getCookie("userID=");
-            //id = "1"; //remove after testing
+            id = "1"; //remove after testing
             console.log('UserID: ' + id);
 
             //Call API to get user data.
@@ -132,10 +132,10 @@
             for(let i = 0; i < trips.length; i++){
                 numPics = trips[i].photos.length;
                 newPost += '<div class="post">';
-                    newPost += `<h2 class="post-title" onclick="getTripDetail(${trips[i].id})">${trips[i].title}</h2><br>`
+                    newPost += `<h2 class="post-title" onclick="getTripDetail(${i})">${trips[i].title}</h2><br>`
                     newPost += `<div class="location">${trips[i].location.name}<br></div>`
                     newPost += `<div class="dates">${getDate(trips[i].fromTime)} - ${getDate(trips[i].toTime)}<br></div>` // need to change date format later lol
-                    newPost += `<p class="description">${trips[i].description}<br><a href="#" onclick="getTripDetail(${trips[i].id})">Read more...</a></p>`
+                    newPost += `<p class="description">${trips[i].description}<br><a href="#" onclick="getTripDetail(${i})">Read more...</a></p>`
                     if(numPics < 1){
                         newPost += `<img class="wideImg" src="https://a.cdn-hotels.com/gdcs/production31/d625/e9e6be6a-b030-4450-a5fc-0ba96bae63a4.jpg" alt="No user image provided. Placeholder image is of a Los Angeles view.">`
                     }
@@ -157,14 +157,8 @@
             tripsContainer.innerHTML += newPost;
         }
 
-        function getTripDetail(id) {
-            let tripToDetail = null;
-            for(let i = 0; i < tripArray.length; i++){
-                if(tripArray[i].id == id){
-                    tripToDetail = tripArray[i];
-                }
-            }
-            let tripDetail = JSON.stringify(tripToDetail);
+        function getTripDetail(index) {
+            let tripDetail = JSON.stringify(tripArray[index]);
             console.log("HERE" + tripDetail);
             sessionStorage.setItem("tripDetail", tripDetail);
             window.location.href='details.html';
