@@ -1,5 +1,6 @@
 package com.csci201finalproject.triptracker.services;
 
+import com.csci201finalproject.triptracker.entities.EventEntity;
 import com.csci201finalproject.triptracker.entities.PhotoEntity;
 import com.csci201finalproject.triptracker.entities.TripEntity;
 import com.csci201finalproject.triptracker.repositories.PhotoRepository;
@@ -25,16 +26,12 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
 
 import static com.csci201finalproject.triptracker.util.Timestamp.timestampToDate;
@@ -226,13 +223,13 @@ public class TripService {
         Date to_date = timestampToDate(tripDTO.getTo());
         trip.setToTime(new Timestamp(to_date.getTime()));
 
-        // tripRepository.save(trip);
-
         trip = tripRepository.save(trip);
 
-        eventService.createEvents(tripDTO.getEvents(), trip);
+        List<EventEntity> eventsReturn = eventService.createEvents(tripDTO.getEvents(), trip);
+        trip.setEvents(eventsReturn);
         if (tripDTO.getPhotos() != null) {
-            photoService.createPhotos(tripDTO.getPhotos(), trip);
+            List<PhotoEntity> photosReturn = photoService.createPhotos(tripDTO.getPhotos(), trip);
+            trip.setPhotos(photosReturn);
         }
 
         return trip;

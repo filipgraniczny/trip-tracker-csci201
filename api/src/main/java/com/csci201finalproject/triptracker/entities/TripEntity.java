@@ -38,7 +38,6 @@ public class TripEntity {
     @Column(name = "to_time")
     private Timestamp toTime;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "author_id")
     private UserEntity author;
@@ -98,6 +97,7 @@ public class TripEntity {
     }
 
     public UserEntity getAuthor() {
+        author.setTrips(null);
         return author;
     }
 

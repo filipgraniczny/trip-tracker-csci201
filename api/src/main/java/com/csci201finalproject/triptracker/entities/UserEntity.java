@@ -7,6 +7,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import net.bytebuddy.dynamic.loading.PackageDefinitionStrategy.Definition.Undefined;
+
 @Entity
 @Table(name = "user", schema = "heroku_efbc5c1a3000eab")
 public class UserEntity {
@@ -38,8 +40,8 @@ public class UserEntity {
         return trips;
     }
 
-    public void setTrips(List<TripEntity> trip) {
-        this.trips = trip;
+    public void setTrips(List<TripEntity> trips) {
+        this.trips = trips;
     }
 
     public int getId() {
