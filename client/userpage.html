@@ -40,27 +40,6 @@
         </div>
     </div>
 
-    <div class="wrapper" id ="highlights">
-        <div class="title"><i class="fa-solid fa-star fa-2x"></i> <h2>YOUR PINNED</h2></div>
-
-        <button class="trip-container" id="trip-1">
-            <div class="trip-title"><strong>CANCUN</strong></div>
-            <div class="trip-description"><strong>Cancun is recognized worldwide for its spectacular beaches of fine white sand</strong></div>
-            <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
-        </button><!-- 
-        <button class="trip-container" id="trip-2">
-            <div class="trip-title"><strong>VIETNAM</strong></div>
-            <div class="trip-description"><strong>A land of staggering natural beauty and cultural complexities, of dynamic megacities and hill-tribe villages</strong></div>
-            <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
-        </button>
-        <button class="trip-container" id="trip-3">
-            <div class="trip-title"><strong>PHILIPINES</strong></div>
-            <div class="trip-description"><strong>Home to world-renowned natural wonders like an underground river and rice terraces</strong></div>
-            <img class="enter-arrow-img" src="./images/enter-arrow.svg" alt="enter-arrow">
-        </button> -->
-    </div>
-
-
     <div class="wrapper" id="feed">
         <div id="content">
           <div class="title">
@@ -72,61 +51,8 @@
           </div>
 
           <div class="break"></div>
-          
-            <!-- <div class="post">
-                <h2 class="post-title">Long Weekend in NYC</h2><br>
-                <div class="location">NEW YORK, NY, USA<br></div>
-                <div class="dates">4/15/2022 - 4/20/2022<br>></div>
-
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
-                  Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
-                  ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
-                </p>
-                <img src="images/nyc0.png" alt="new york view">
-                <img src="images/nyc1.png" alt="chinatown">
-                <img src="images/nyc2.png" alt="bbg">
-            </div> -->
-<!-- 
-            <div class="post">
-                <h2 class="post-title">Spring Break in Berlin</h2><br>
-                <div class="location">BERLIN, GERMANY<br></div>
-                <div class="dates"> 3/13/2022 - 3/20/2022<br></div>
-               
-
-                <p class="description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
-                    Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
-                    ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
-                </p>
-                <img src="images/berlin0.png" alt="new york view">
-                <img src="images/berlin1.png" alt="chinatown">
-                <img src="images/berlin2.png" alt="bbg">
-            </div>
-
-            <div class="post">
-                <h2 class="post-title">Spring Break in Berlin</h2><br>
-                <div class="location">BERLIN, GERMANY<br></div>
-                <div class="dates"> 3/13/2022 - 3/20/2022<br></div>
-               
-
-                <p class="description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lectus rutrum lacus consectetur sollicitudin.
-                    Etiam a dolor porta, dictum justo mattis, convallis magna. Vivamus venenatis porta tortor. Nam hendrerit neque
-                    ac magna fringilla, ut maximus odio laoreet. <a href="">Read more...</a>
-                </p>
-                <img src="images/berlin0.png" alt="new york view">
-                <img src="images/berlin1.png" alt="chinatown">
-                <img src="images/berlin2.png" alt="bbg">
-            </div> -->
         </div>
     </div>
-<!-- 
-    <div class="block"></div>
-
-    <div class="wrapper" id="side-panel">
-     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d26359294.213879205!2d-113.71754000532057!3d36.24708982631333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1649550562301!5m2!1sen!2sus" id="map" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div> -->
 
     <script>
         var userData;
@@ -173,7 +99,7 @@
         function getUserTrips() {
             //Get user id cookie to feed into url
             let id = getCookie("userID=");
-            // id = "1"; //remove after testing
+            //id = "1"; //remove after testing
             console.log('UserID: ' + id);
 
             //Call API to get user data.
@@ -183,36 +109,8 @@
             .then(response => response.json())
             .then(data => {
                 const userData = data;
-                console.log(userData);
-                updateUserPageWithInfo(userData);
-            })
-            .catch(console.error);
-
-            let APICallURL = `https://tripline-csci201.herokuapp.com/trips/explore?limit=&searchTerm=&sortBy=&toTime`;
-            fetch(APICallURL)
-            .then(response => response.json())
-            .then(data => {
-                const allTrips = data;
-                tripArray = data;
-                //userTripsArray = userData.trips; //undefined as of now, API in progress
-                console.log(allTrips);
-                // console.log(userTripsArray);
-                // console.log(data);
-                // updateUserPageWithInfo(userData);
-                // updatePinned(userTripsArray);
-                // updateYourTrips(userTripsArray);
-                console.log("reached end of data population");
-
-                for(let i = 0; i < allTrips.length; i++){
-                    if(allTrips[i].author.id == id){
-                        addTripToPage(allTrips[i]);
-
-                        // if(allTrips[i].pinned == true){
-                        //     addPinnedToPage(allTrips[i]);
-                        // }
-                        console.log(allTrips.length);
-                    }
-                }
+                updateUserPageWithInfo(userData)
+                populateTrips(userData.trips);
             })
             .catch(console.error);
         }
@@ -224,56 +122,36 @@
             //document.getElementById('pfp').style.backgroundImage = `url(${info.profilePhotoEntity.presignedUrl})`; // Set pfp
         }
 
-        function addPinnedToPage(trip){
-            //update the pinned trips to show first 3 pinned trips
-            let pinnedContainer = document.getElementById("highlights");
-            let newPinned = "";
-            let numPinned = 0;
-
-            for(i = 0; i < trips.length; i++){
-                if (trips[i].pinned == true){
-                    newPinned += `<button class="trip-container" id="trip-1" onclick="getTripDetail(${trip.id})">`;
-                        newPinned += `<div class="trip-title"><strong>${trip.title}</strong></div>`
-                        newPinned += `<div class="trip-description"><strong>${trip.description}</strong></div>`
-                        newPinned += `<img class="enter-arrow-img" src="${trip.photos[0].presignedUrl}" alt="enter-arrow">`
-                    newPinned += `</button>`
-
-                    numPinned++;
-                }
-
-                if(numPinned == 3){ //only pin 3 for formatting
-                    break;
-                }
-            }
-        }
-
-        function addTripToPage(trip){
+        function populateTrips(trips){
             // add all the trip to the "your trips" section
             let tripsContainer = document.getElementById("content");
             let newPost = "";
-            let numPics = trip.photos.length;
+            let numPics = 0;
 
-            newPost += '<div class="post">';
-                newPost += `<h2 class="post-title" onclick="getTripDetail(${trip.id})">${trip.title}</h2><br>`
-                newPost += `<div class="location">${trip.location.name}<br></div>`
-                newPost += `<div class="dates">${getDate(trip.fromTime)} - ${getDate(trip.toTime)}<br></div>` // need to change date format later lol
-                newPost += `<p class="description">${trip.description}<br><a href="#" onclick="getTripDetail(${trip.id})">Read more...</a></p>`
-                if(numPics < 1){
-                    newPost += `<img class="wideImg" src="../images/pfp_placeholder.jpg">`
-                }
-                else if(numPics > 0){
-                    newPost += `<img class="wideImg" src="${trip.photos[0].presignedUrl}">`
-                }
-                else if(numPics > 1){
-                    newPost += `<img class="halfImg" src="${trip.photos[0].presignedUrl}">`
-                    newPost += `<img class="halfImg" src="${trip.photos[1].presignedUrl}">`
-                }
-                else if(numPics > 2){
-                    newPost += `<img class="smallImg" src="${trip.photos[0].presignedUrl}">`
-                    newPost += `<img class="smallImg" src="${trip.photos[1].presignedUrl}">`
-                    newPost += `<img class="smallImg" src="${trip.photos[2].presignedUrl}">`
-                }
-            newPost += `</div>`
+            for(let i = 0; i < trips.length; i++){
+                numPics = trips[i].photos.length;
+                newPost += '<div class="post">';
+                    newPost += `<h2 class="post-title" onclick="getTripDetail(${trips[i].id})">${trips[i].title}</h2><br>`
+                    newPost += `<div class="location">${trips[i].location.name}<br></div>`
+                    newPost += `<div class="dates">${getDate(trips[i].fromTime)} - ${getDate(trips[i].toTime)}<br></div>` // need to change date format later lol
+                    newPost += `<p class="description">${trips[i].description}<br><a href="#" onclick="getTripDetail(${trips[i].id})">Read more...</a></p>`
+                    if(numPics < 1){
+                        newPost += `<img class="wideImg" src="https://a.cdn-hotels.com/gdcs/production31/d625/e9e6be6a-b030-4450-a5fc-0ba96bae63a4.jpg" alt="No user image provided. Placeholder image is of a Los Angeles view.">`
+                    }
+                    else if(numPics > 0){
+                        newPost += `<img class="wideImg" src="${trips[i].photos[0].presignedUrl}" alt="User's only uploaded image">`
+                    }
+                    else if(numPics > 1){
+                        newPost += `<img class="halfImg" src="${trips[i].photos[0].presignedUrl}" alt="User's 1st uploaded image">`
+                        newPost += `<img class="halfImg" src="${trips[i].photos[1].presignedUrl}" alt="User's 2nd uploaded image">`
+                    }
+                    else if(numPics > 2){
+                        newPost += `<img class="smallImg" src="${trips[i].photos[0].presignedUrl}" alt="User's 1st uploaded image">`
+                        newPost += `<img class="smallImg" src="${trips[i].photos[1].presignedUrl}" alt="User's 2nd uploaded image">`
+                        newPost += `<img class="smallImg" src="${trips[i].photos[2].presignedUrl}" alt="User's 3rd uploaded image">`
+                    }
+                newPost += `</div>`
+            }
 
             tripsContainer.innerHTML += newPost;
         }
