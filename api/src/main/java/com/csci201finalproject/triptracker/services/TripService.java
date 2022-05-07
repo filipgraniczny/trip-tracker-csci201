@@ -1,5 +1,6 @@
 package com.csci201finalproject.triptracker.services;
 
+import com.csci201finalproject.triptracker.entities.EventEntity;
 import com.csci201finalproject.triptracker.entities.PhotoEntity;
 import com.csci201finalproject.triptracker.entities.TripEntity;
 import com.csci201finalproject.triptracker.repositories.PhotoRepository;
@@ -25,13 +26,13 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
-import java.util.List;
-import java.util.Optional;
 
 import static com.csci201finalproject.triptracker.util.Timestamp.timestampToDate;
 
@@ -105,9 +106,15 @@ public class TripService {
      * @throws SdkClientException
      * @throws AwsServiceException
      * @throws S3Exception
+     * @throws TimeoutException
      */
-    public List<PhotoEntity> uploadTripPhotos(Integer id, Iterable<MultipartFile> files)
-            throws IllegalArgumentException, S3Exception, AwsServiceException, SdkClientException, IOException {
+    public List<PhotoEntity> uploadTripPhotos(Integer id, List<MultipartFile> files)
+            throws IllegalArgumentException, S3Exception, AwsServiceException, SdkClientException, IOException,
+            TimeoutException {
+        // create a thread pool with size = number of files since we need that much
+        // number of tasks to execute concurrently
+        ExecutorService executorService = Executors.newFixedThreadPool(files.size());
+
         // validate if there are files at all
         if (Objects.isNull(files)) {
             throw new IllegalArgumentException("Must provide 1 or more files");
@@ -122,45 +129,80 @@ public class TripService {
             throw new IllegalArgumentException("Invalid tripEntity passed in");
         }
 
-        // a few variables
-        String s3Bucket = configService.getS3BucketName();
-        List<String> keyFiles = new ArrayList<>();
-        List<PhotoEntity> photoEntities = new ArrayList<>();
+        // concurrent queue to allow
+        ConcurrentLinkedQueue<PhotoEntity> photoEntitiesConcurrQueue = new ConcurrentLinkedQueue<>();
 
-        // through all files
+        // through all files, PUT to S3 and save to DB record
         for (MultipartFile file : files) {
-            String key = String.format("trip_%s_%s.%s", tripEntity.getId(), UUID.randomUUID(),
-                    file.getContentType().split("/")[1]);
-            keyFiles.add(key);
+            Thread imageUploadAddRecordRunner = new Thread(() -> {
+                try {
+                    PhotoEntity photoEntity = uploadPhotoAddRecordTrip(file, tripEntity);
+                    photoEntitiesConcurrQueue.add(photoEntity);
+                } catch (AwsServiceException | SdkClientException | IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
-            // upload to S3
-            s3Service.uploadObjectFromMultipart(s3Bucket, key, file);
-
-            // add to the batch of entities to save
-            PhotoEntity photoEntity = new PhotoEntity();
-            photoEntity.setObjectKeyAws(key);
-            photoEntity.setTrip(tripEntity);
-
-            // get presigned url to save to DB
-            String entityPresignedURL = s3Service.getObjectURLFromKey(s3Bucket, photoEntity.getObjectKeyAws())
-                    .toString();
-            photoEntity.setPresignedUrl(entityPresignedURL);
-            photoEntities.add(photoEntity);
+            executorService.execute(imageUploadAddRecordRunner);
         }
-        Iterable<PhotoEntity> photoEntitiesIterable = photoRepository.saveAll(photoEntities);
 
-        // save each one to the original list
-        int i = 0;
-        for (PhotoEntity savedEntity : photoEntitiesIterable) {
-            // stop if it happens to go over to avoid out of bound
-            if (i > photoEntities.size() - 1) {
-                break;
+        // initiate timeout timer
+        executorService.shutdown();
+        try {
+            Integer TIMEOUT_SECONDS_UPLOADING_PHOTOS = 5;
+            if (!executorService.awaitTermination(TIMEOUT_SECONDS_UPLOADING_PHOTOS, TimeUnit.SECONDS)) {
+                // timed out
+                executorService.shutdownNow();
+                throw new TimeoutException("Image uploading on our end took too long. Please try again");
             }
-            photoEntities.set(i, savedEntity);
-            i++;
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
         }
 
-        return photoEntities;
+        Iterable<PhotoEntity> photoEntitiesIterable = photoRepository.saveAll(photoEntitiesConcurrQueue);
+
+        List<PhotoEntity> photoEntitiesReturn = new ArrayList<>();
+        // save each one back to a list for returning value
+        for (PhotoEntity savedEntity : photoEntitiesIterable) {
+            photoEntitiesReturn.add(savedEntity);
+        }
+
+        return photoEntitiesReturn;
+    }
+
+    /**
+     * Helper method to upload image and add to DB record a photo associated to this
+     * trip
+     * Assumes that file and tripEntity are objects that have already been validated
+     * for this function
+     * 
+     * @param file
+     * @param tripEntity
+     * @return
+     * @throws IOException
+     * @throws SdkClientException
+     * @throws AwsServiceException
+     * @throws S3Exception
+     */
+    private PhotoEntity uploadPhotoAddRecordTrip(MultipartFile file, TripEntity tripEntity)
+            throws S3Exception, AwsServiceException, SdkClientException, IOException {
+        String s3Bucket = configService.getS3BucketName();
+        String key = String.format("trip_%s_%s.%s", tripEntity.getId(), UUID.randomUUID(),
+                file.getContentType().split("/")[1]);
+
+        // upload to S3
+        s3Service.uploadObjectFromMultipart(s3Bucket, key, file);
+
+        // add to the batch of entities to save
+        PhotoEntity photoEntity = new PhotoEntity();
+        photoEntity.setObjectKeyAws(key);
+        photoEntity.setTrip(tripEntity);
+        // get presigned url to save to DB
+        String entityPresignedURL = s3Service.getObjectURLFromKey(s3Bucket, photoEntity.getObjectKeyAws())
+                .toString();
+        photoEntity.setPresignedUrl(entityPresignedURL);
+
+        return photoEntity;
     }
 
     public TripEntity createTrip(TripDTO tripDTO) {
@@ -181,13 +223,13 @@ public class TripService {
         Date to_date = timestampToDate(tripDTO.getTo());
         trip.setToTime(new Timestamp(to_date.getTime()));
 
-        // tripRepository.save(trip);
-
         trip = tripRepository.save(trip);
 
-        eventService.createEvents(tripDTO.getEvents(), trip);
+        List<EventEntity> eventsReturn = eventService.createEvents(tripDTO.getEvents(), trip);
+        trip.setEvents(eventsReturn);
         if (tripDTO.getPhotos() != null) {
-            photoService.createPhotos(tripDTO.getPhotos(), trip);
+            List<PhotoEntity> photosReturn = photoService.createPhotos(tripDTO.getPhotos(), trip);
+            trip.setPhotos(photosReturn);
         }
 
         return trip;

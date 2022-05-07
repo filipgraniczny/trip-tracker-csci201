@@ -2,7 +2,7 @@ package com.csci201finalproject.triptracker.controllers;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 
 import com.csci201finalproject.triptracker.entities.PhotoEntity;
 import com.csci201finalproject.triptracker.interfaces.ErrorResponseClass;
@@ -38,7 +38,10 @@ public class EventController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
         } catch (AwsServiceException | SdkClientException | IOException e) {
             ErrorResponseClass errorBody = new ErrorResponseClass(false, "AWS_ERROR", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
+        } catch (TimeoutException e) {
+            ErrorResponseClass errorBody = new ErrorResponseClass(false, "TIMED_OUT", e.getMessage());
+            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(errorBody);
         }
 
     }

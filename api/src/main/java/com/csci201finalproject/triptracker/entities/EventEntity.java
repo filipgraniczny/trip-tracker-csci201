@@ -42,7 +42,6 @@ public class EventEntity {
 
     @JsonIgnore
     @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "trip_id", referencedColumnName = "id", nullable = false)
     private TripEntity trip;
 

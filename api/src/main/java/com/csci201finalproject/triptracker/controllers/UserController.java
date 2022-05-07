@@ -43,8 +43,7 @@ public class UserController {
             @PathVariable(name = "id") Integer id) {
         System.out.println("hello");
         try {
-            UserEntity user = userService.findUserById(id);
-            List<Object> resultList = userService.updateProfileImageUser(user, multipart);
+            List<Object> resultList = userService.updateProfileImageUser(id, multipart);
             PhotoEntity photoEntity = (PhotoEntity) resultList.get(1);
             return ResponseEntity.ok().body(photoEntity);
         } catch (IllegalArgumentException | IOException exception) {
