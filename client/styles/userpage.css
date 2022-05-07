@@ -115,13 +115,6 @@ body{
   float: left;
 }
 
-#highlights{
-  margin-top:5%;
-  width: 100%;
-  float:left;
-  padding: 0px;
-}
-
 .trip-container {
   padding-bottom:25%;
   width: 25%;
@@ -242,7 +235,7 @@ body{
 }
 
 #content{
-  margin-top: 50%;
+  margin-top: 270px;
   position: absolute;
   /* CSS FOR WITHOUT GMAPS */
   width: 100%;
