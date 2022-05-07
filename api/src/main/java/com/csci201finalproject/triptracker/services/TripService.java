@@ -33,7 +33,6 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
-
 import static com.csci201finalproject.triptracker.util.Timestamp.timestampToDate;
 
 @Service
@@ -141,6 +140,7 @@ public class TripService {
             PhotoEntity photoEntity = new PhotoEntity();
             photoEntity.setObjectKeyAws(key);
             photoEntity.setTrip(tripEntity);
+
             // get presigned url to save to DB
             String entityPresignedURL = s3Service.getObjectURLFromKey(s3Bucket, photoEntity.getObjectKeyAws())
                     .toString();
@@ -181,15 +181,14 @@ public class TripService {
         Date to_date = timestampToDate(tripDTO.getTo());
         trip.setToTime(new Timestamp(to_date.getTime()));
 
-//        tripRepository.save(trip);
+        // tripRepository.save(trip);
 
         trip = tripRepository.save(trip);
 
         eventService.createEvents(tripDTO.getEvents(), trip);
-        if(tripDTO.getPhotos() != null) {
+        if (tripDTO.getPhotos() != null) {
             photoService.createPhotos(tripDTO.getPhotos(), trip);
         }
-
 
         return trip;
     }
