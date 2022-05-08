@@ -130,17 +130,17 @@ public class UserService {
         photoEntity = foundUserEntity.getProfilePhotoEntity();
         if (photoEntity != null) { // TODO: make this perform in parallel?
             // delete from s3 to free up space
-            s3Service.deleteObject(configService.getS3BucketName(), photoEntity.getObjectKeyAws());
+            s3Service.deleteObject(configService.getS3DefaultBucket(), photoEntity.getObjectKeyAws());
         } else {
             photoEntity = new PhotoEntity();
         }
 
         // perform uploading to S3
-        s3Service.uploadObjectFromMultipart(configService.getS3BucketName(), objectAwsKey, multipart);
+        s3Service.uploadObjectFromMultipart(configService.getS3DefaultBucket(), objectAwsKey, multipart);
 
         // set new object key aws + save new name + presigned URL to record
         photoEntity.setObjectKeyAws(objectAwsKey);
-        URL presignedUrl = s3Service.getObjectURLFromKey(configService.getS3BucketName(), objectAwsKey);
+        URL presignedUrl = s3Service.getObjectURLFromKey(configService.getS3DefaultBucket(), objectAwsKey);
         photoEntity.setPresignedUrl(presignedUrl.toString());
         photoEntity = photoRepository.save(photoEntity);
 
@@ -149,7 +149,7 @@ public class UserService {
         userRepository.save(foundUserEntity);
 
         // return url
-        URL objectUrl = s3Service.getObjectURLFromKey(configService.getS3BucketName(), objectAwsKey);
+        URL objectUrl = s3Service.getObjectURLFromKey(configService.getS3DefaultBucket(), objectAwsKey);
         return List.of(objectUrl, photoEntity);
     }
 }

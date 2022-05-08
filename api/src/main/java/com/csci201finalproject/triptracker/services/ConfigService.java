@@ -16,6 +16,14 @@ public class ConfigService {
     private String accessKeyId;
     private String secretAccessKey;
 
+    public String getS3DefaultBucket() {
+        return this.s3DefaultBucket;
+    }
+
+    public void setS3DefaultBucket(String s3DefaultBucket) {
+        this.s3DefaultBucket = s3DefaultBucket;
+    }
+
     public String getAccessKeyId() {
         return this.accessKeyId;
     }
@@ -30,16 +38,6 @@ public class ConfigService {
 
     public void setSecretAccessKey(String secretAccessKey) {
         this.secretAccessKey = secretAccessKey;
-    }
-
-    /**
-     * This will now only return the default S3 bucket but it might change in the
-     * future which is why we put it in a getter
-     * 
-     * @return the S3 bucket name
-     */
-    public String getS3BucketName() {
-        return this.s3DefaultBucket;
     }
 
     public AwsBasicCredentials getAwsBasicCredentials() {

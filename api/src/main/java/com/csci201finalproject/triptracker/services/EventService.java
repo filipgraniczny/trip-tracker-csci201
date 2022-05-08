@@ -155,7 +155,7 @@ public class EventService {
 
     private PhotoEntity addEventPhoto(EventEntity eventEntity, MultipartFile file)
             throws S3Exception, AwsServiceException, SdkClientException, IOException {
-        String s3Bucket = configService.getS3BucketName();
+        String s3Bucket = configService.getS3DefaultBucket();
         String key = String.format("event_%s_%s.%s", eventEntity.getId(), UUID.randomUUID(),
                 file.getContentType().split("/")[1]);
 
