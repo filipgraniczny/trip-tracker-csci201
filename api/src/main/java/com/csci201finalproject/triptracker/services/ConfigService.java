@@ -12,13 +12,9 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 @Service
 @Component
 public class ConfigService {
-    private final String DEFAULT_S3_BUCKET = "tripline-csci201-v2";
+    private String s3DefaultBucket;
     private String accessKeyId;
     private String secretAccessKey;
-
-    public String getDEFAULT_S3_BUCKET() {
-        return this.DEFAULT_S3_BUCKET;
-    }
 
     public String getAccessKeyId() {
         return this.accessKeyId;
@@ -43,7 +39,7 @@ public class ConfigService {
      * @return the S3 bucket name
      */
     public String getS3BucketName() {
-        return this.DEFAULT_S3_BUCKET;
+        return this.s3DefaultBucket;
     }
 
     public AwsBasicCredentials getAwsBasicCredentials() {
