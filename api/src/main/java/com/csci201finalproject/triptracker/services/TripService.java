@@ -186,7 +186,7 @@ public class TripService {
      */
     private PhotoEntity uploadPhotoAddRecordTrip(MultipartFile file, TripEntity tripEntity)
             throws S3Exception, AwsServiceException, SdkClientException, IOException {
-        String s3Bucket = configService.getS3BucketName();
+        String s3Bucket = configService.getS3DefaultBucket();
         String key = String.format("trip_%s_%s.%s", tripEntity.getId(), UUID.randomUUID(),
                 file.getContentType().split("/")[1]);
 
