@@ -74,7 +74,7 @@ public class EventService {
         if (eventDTO.getPhotos() != null) {
             event.setPhotos(photoService.createPhotos(eventDTO.getPhotos(), event));
         }
-
+        event = eventRepository.save(event);
         return event;
     }
 
