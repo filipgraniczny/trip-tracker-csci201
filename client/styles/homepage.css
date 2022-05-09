@@ -348,8 +348,10 @@ html {
     float: left;
 }
 
-.highlight-bio a {
+.highlight-bio p {
     color: #91CB82;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .highlight-date {

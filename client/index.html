@@ -81,28 +81,28 @@
           <div class="highlight-container">
             <button class="hightlight-img" id="img-1" onclick="getTripDetail(0)"></button>
             <div class="highlight-title"><strong id="highlight-title-1">HA LONG</strong></div>
-            <div class="highlight-bio">by <a href="" id="highlight-author-1">Henry Vu</a></div>
+            <div class="highlight-bio"><p id="highlight-author-1" onclick="getUserDetail(0)">Henry Vu</p></div>
             <div class="highlight-date" id="highlight-date-1">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
             <button class="hightlight-img" id="img-2" onclick="getTripDetail(1)"></button>
             <div class="highlight-title"><strong id="highlight-title-2">HA LONG</strong></div>
-            <div class="highlight-bio">by <a href="" id="highlight-author-2">Henry Vu</a></div>
+            <div class="highlight-bio"><p id="highlight-author-2" onclick="getUserDetail(1)">Henry Vu</p></div>
             <div class="highlight-date" id="highlight-date-2">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
             <button class="hightlight-img" id="img-3" onclick="getTripDetail(2)"></button>
             <div class="highlight-title"><strong id="highlight-title-3">HA LONG</strong></div>
-            <div class="highlight-bio">by <a href="" id="highlight-author-3">Henry Vu</a></div>
+            <div class="highlight-bio"><p id="highlight-author-3" onclick="getUserDetail(2)">Henry Vu</p></div>
             <div class="highlight-date" id="highlight-date-3">10/11/2012</div>
           </div>
 
           <div class="highlight-container">
             <button class="hightlight-img" id="img-4" onclick="getTripDetail(3)"></button>
             <div class="highlight-title"><strong id="highlight-title-4">HA LONG</strong></div>
-            <div class="highlight-bio">by <a href="" id="highlight-author-4">Henry Vu</a></div>
+            <div class="highlight-bio"><p id="highlight-author-4" onclick="getUserDetail(3)">Henry Vu</p></div>
             <div class="highlight-date" id="highlight-date-4">10/11/2012</div>
           </div>
         </div>
@@ -174,6 +174,13 @@
         console.log(tripDetail);
         sessionStorage.setItem("tripDetail", tripDetail);
         window.location.href='details.html';
+      }
+
+      function getUserDetail(id) {
+        let userID = JSON.stringify(tripArray[id].author.id);
+        console.log(userID);
+        sessionStorage.setItem("userDetail", userID);
+        window.location.href = 'userpage.html';
       }
 
       function setSearchInput() {
