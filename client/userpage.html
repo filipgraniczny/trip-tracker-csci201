@@ -19,10 +19,10 @@
           <a href="index.html">  <h1>T  |  L</h1></a>
         </div>
         <div id="clickable">
-            <ul>
+            <ul id="right-nav">
                 <li id="home"><a href="index.html">HOME</a></li>
                 <li id="divider"><strong>|</strong></li>
-                <li >
+                <li id="logout-btn">
                     <button id="logout" onclick="logOut()">
                       <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
                       <a>LOGOUT</a>
@@ -42,7 +42,7 @@
 
     <div class="wrapper" id="feed">
         <div id="content">
-          <div class="title">
+          <div id="title">
             <i class="fa-solid fa-plane-departure fa-2x"></i> <h2>YOUR TRIPS</h2>
             <button id="add">
                 <a href="addtrip.html">ADD TRIP</a>
@@ -99,8 +99,21 @@
         function getUserTrips() {
             //Get user id cookie to feed into url
             let id = getCookie("userID=");
-            //id = "1"; //remove after testing
             console.log('UserID: ' + id);
+
+            if (sessionStorage.getItem("userDetail")) {
+                console.log(JSON.parse(sessionStorage.getItem("userDetail")));
+                id = JSON.parse(sessionStorage.getItem("userDetail"));
+                let title = document.getElementById("title");
+                title.innerHTML = "";
+                let logoutButton = document.getElementById("logout-btn");
+                if (getCookie("userID=")) {
+                    logoutButton.innerHTML = '<button id="logout"> <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> <a href="userpage.html">ACCOUNT</a> </button>';
+                }
+                else {
+                    logoutButton.innerHTML = '<button id="logout"> <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> <a href="loginpage.html">SIGN IN</a> </button>';
+                }
+            }
 
             //Call API to get user data.
             let userAPICallURL = `https://tripline-csci201.herokuapp.com/users/${id}`;
@@ -111,6 +124,7 @@
                 const userData = data;
                 updateUserPageWithInfo(userData)
                 populateTrips(userData.trips);
+                sessionStorage.removeItem('userDetail');
             })
             .catch(console.error);
         }

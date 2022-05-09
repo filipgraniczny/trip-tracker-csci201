@@ -49,19 +49,6 @@
 
     <h1 id="searchTitle">Search Results</h1> 
     <hr id="smallLine">
-	<form action="#" id="sortForm">
-		<label for="sortOptions">Sort By: </label> 
-		<select name="sortOptions" id="sortOptions" onchange="this.form.submit()">
-			<!-- use JS to remember which one the user selected when the form resubmits and select -->
-			<option value="none">None</option>
-			<option value="mostRecent">Most Recent</option> <!-- sort these 2 based on end date -->
-			<option value="leastRecent">Least Recent</option>
-			<option value="nameAscending">Trip Name - Ascending</option>
-			<option value="nameDescending">Trip Name - Descending</option>
-			<option value="categoryAscending">Category - Ascending</option>
-			<option value="categoryDescending">Category - Descending</option>
-		</select>
-	</form>
 
 	<div id="container"></div>
 </body>
@@ -106,7 +93,7 @@
 					content += `<span class="subtext">${getDate(trip.fromTime)} - ${getDate(trip.toTime)}</span>`
 				content += '</div>'
 				content += '<div class="debrief">';
-					content += `<h4>by <span class="name">${trip.author.name}</span></h4>`
+					content += `<h4>by <span class="name" onclick="getUserDetail(${i})">${trip.author.name}</span></h4>`
 					content += '<hr class="descriptionHR">';
 					content += `<span class="tripDescription">${trip.description}</span>`
 				content += '</div>'
@@ -128,6 +115,13 @@
 		sessionStorage.setItem("tripDetail", tripDetail);
 		window.location.href='details.html';
 	}
+
+	function getUserDetail(id) {
+        let userID = JSON.stringify(tripArray[id].author.id);
+        console.log(userID);
+        sessionStorage.setItem("userDetail", userID);
+        window.location.href = 'userpage.html';
+      }
 	
 	function getDate(timestamp) {
 		var dateArray = timestamp.substring(0, 10).split("-");
