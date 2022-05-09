@@ -425,7 +425,7 @@
             console.log("Adding event " + i + " details.");
 
             // getting values from the form for this event
-            var title = document.getElementById("title-e" + i).value;
+            var etitle = document.getElementById("title-e" + i).value;
             var eLocation = document.getElementById("event" + i + "-loc-input").value;
             var start = document.getElementById("start-date-e" + i).value;
             var end = document.getElementById("end-date-e" + i).value;
@@ -434,7 +434,7 @@
             var eventType = dropdown.options[dropdown.selectedIndex].value;
 
             // checking if any fields are missing
-            if (title === "" || startDate === "" || start == "" || desc === "" || eventType === "") {
+            if (etitle === "" || startDate === "" || start == "" || desc === "" || eventType === "") {
               console.log("At least one required field for the event is empty.");
 
               // displaying appropriate error message
@@ -473,7 +473,7 @@
 
             // at this point, fields should be filled and valid so we can add the event to the list
             let eventToAdd = {
-              "name": title,
+              "name": etitle,
               "category": eventType,
               "description": desc,
               "from": start,
@@ -516,6 +516,8 @@
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+
+
         var raw = JSON.stringify({
           "title": title,
           "description": description,
@@ -525,7 +527,7 @@
             "latitude": tripLatitude,
           },
           "author": id,
-          "from": startDate, 
+          "from": startDate,
           "to": endDate,
           // "pin": pinned, // commented out because I don't see it on the API anymore
           "events": events,
@@ -543,8 +545,9 @@
         };
 
 
+
         // fetching the API response
-        fetch(addUrl, requestOptions)
+        fetch("https://tripline-csci201.herokuapp.com/trips", requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("result of addTrip request, our resultObject: " + data);
@@ -569,15 +572,15 @@
                 let event = events[i];
                 let eventId = event.id;
                 let eventNum = i + 1;
-                updateTripPhotos(eventId, eventNum);
+                updateEventPhotos(eventId, eventNum);
               }
 
               // redirecting to the user page
-              location.href = "userpage.html";
+              window.location.href = "userpage.html";
             }
             else {
               console.log("Trip was not added successfully.")
-              
+
               // should display some kind of error message on the screen so the user retries adding a trip
               document.getElementById("error-msg-p").innerHTML = "Error adding trip. Please try again.";
               document.getElementById("error-add-div").style.display = "block";
@@ -585,7 +588,6 @@
           })
           .catch(error => console.log('error', error));
           
-        window.location.href=`userpage.html`;
       }
     
       // END API CONNECTION STUFF --------------------------------------------------------------------------------------------------------------
@@ -682,21 +684,25 @@
         // storing the file upload HTML element for the trip
         var fileInput = document.getElementById("img-trip");
 
-        formdata.append("files", fileInput.files[0], "file");
+        // check if there is in fact photo/photos that were uploaded
+        if(fileInput.files.length != 0) {
+          formdata.append("files", fileInput.files[0], "file");
 
-        var requestOptions = {
-          method: 'POST',
-          body: formdata,
-          redirect: 'follow'
-        };
+          var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+          };
 
-        fetch("https://tripline-csci201.herokuapp.com/trips/" + id + "/photos", requestOptions)
-          .then(response => response.text())
-          .then(result => {
-            let resultObject = result;
-            console.log(result);
-          })
-          .catch(error => console.log('error', error));
+          fetch("https://tripline-csci201.herokuapp.com/trips/" + id + "/photos", requestOptions)
+                  .then(response => response.text())
+                  .then(result => {
+                    let resultObject = result;
+                    console.log(result);
+                  })
+                  .catch(error => console.log('error', error));
+        }
+
 
       }
 
@@ -709,21 +715,22 @@
         // storing the file upload HTML element for this specific event
         var fileInput = document.getElementById("img-e" + eventNum);
 
-        formdata.append("files", fileInput.files[0], "file");
+        if(fileInput.files.length != 0) {
+          formdata.append("files", fileInput.files[0], "file");
 
-        var requestOptions = {
-          method: 'POST',
-          body: formdata,
-          redirect: 'follow'
-        };
+          var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+          };
 
-        fetch("https://tripline-csci201.herokuapp.com/events/" + id + "/photos", requestOptions)
-          .then(response => response.text())
-          .then(result => {
-            let resultObject = result;
-            console.log(result);
-          })
-          .catch(error => console.log('error', error));
+          fetch("https://tripline-csci201.herokuapp.com/events/" + eventId + "/photos", requestOptions)
+                  .then(response => response.text())
+                  .then(result => {
+                    console.log(result);
+                  })
+                  .catch(error => console.log('error', error));
+        }
 
       }
 
