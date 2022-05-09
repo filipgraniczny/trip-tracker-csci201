@@ -21,7 +21,9 @@
 
   </head>
   <body>
-
+  <div class="preloader">
+    <img src="./images/infinite-gif-preloader.gif" alt="spinner">
+  </div>
     <div class="row">
       <div class="column">
         <h1 id="addtrip-title">ADD TRIP</h1>
@@ -344,6 +346,9 @@
     </script>
 
     <script>
+      const preloader = document.querySelector('.preloader');
+      preloader.style.display = 'none';
+
 
       // GLOBAL VARIABLES ----------------------------------------------------------------------------------------
       let addUrl = "https://tripline-csci201.herokuapp.com/trips";
@@ -574,9 +579,13 @@
                 let eventNum = i + 1;
                 updateEventPhotos(eventId, eventNum);
               }
-
               // redirecting to the user page
-              window.location.href = "userpage.html";
+              preloader.style.display = 'flex';
+              setTimeout(function() {
+                //your code to be executed after 1 second
+                window.location.href = "userpage.html";
+              }, 5000);
+              // window.location.href = "userpage.html";
             }
             else {
               console.log("Trip was not added successfully.")
@@ -587,7 +596,7 @@
             }
           })
           .catch(error => console.log('error', error));
-          
+
       }
     
       // END API CONNECTION STUFF --------------------------------------------------------------------------------------------------------------
