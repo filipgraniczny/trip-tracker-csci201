@@ -100,7 +100,7 @@
 			content += "<div class=\"eventItem\">";
 				content += "<div class=\"eventInfo\">"
 					content += `<h3 class=\"eventTitle\">${event.name}</h3>`
-					content += `<p class=\"eventLocation\"><i class=\"fas fa-map-marker-alt\"></i> ${event.location}</p>`
+					content += `<p class=\"eventLocation\"><i class=\"fas fa-map-marker-alt\"></i> ${event.location.name}</p>`
 					content += `<p class="eventType"><i class="fas fa-clipboard-list"></i> ${event.category}</p>`
 					content += `<p class="eventDate">${getDate(event.fromTime)} <i class="fa fa-arrow-right"></i> ${getDate(event.toTime)}</p>`
 				content += "</div>";
